@@ -3,7 +3,7 @@ import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from './reducers'
-import apiData from '../utils/api'
+import { apiData, vimeoData, mp4APIData, captionAPIData } from '../utils/api'
 
 export const history = createHistory()
 
@@ -12,7 +12,10 @@ const enhancers = []
 const middleware = [
   thunk,
   routerMiddleware(history),
-  apiData
+  apiData,
+  vimeoData,
+  mp4APIData,
+  captionAPIData
 ]
 
 if (process.env.NODE_ENV === 'development') {

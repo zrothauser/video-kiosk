@@ -12,8 +12,6 @@ const CategoryScreen = (props) => {
     videos
   } = props
 
-  console.log(videos)
-
   return (
     <div>
       <div>
@@ -46,9 +44,6 @@ const mapStateToProps = (state, ownProps) => {
   if (!categoryData) {
     return ownProps
   }
-
-  console.log('video IDs: ', categoryData.videos)
-  console.log(videosData)
 
   return {
     title: categoryData.title,

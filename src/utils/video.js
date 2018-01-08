@@ -7,7 +7,7 @@
  * @param  string vimeoURL The URL to the video.
  * @return int             The video's ID, or null if misshapped URL.
  */
-const extractVimeoIDFromURL = (vimeoURL) => {
+export const extractVimeoIDFromURL = (vimeoURL) => {
 
     if (!vimeoURL) {
         return null
@@ -23,4 +23,38 @@ const extractVimeoIDFromURL = (vimeoURL) => {
     return parseInt(videoID, 10)
 }
 
-export default extractVimeoIDFromURL
+/**
+ * Helper function to get video IDs from a Category.
+ */
+export const extractVideoIDsFromCategoryData = categoryData => {
+    // Start with all videos in the data
+    const categoryVideos = categoryData.videos
+
+    // Strip out ones that are missing the vimeo URL... there could be some
+    const validCategoryVideos = categoryVideos.filter(video => video.video.vimeoid)
+
+    // Strip down to the video IDs
+    const videoIDs = validCategoryVideos.map(video => extractVimeoIDFromURL(video.video.vimeoid))
+    const validatedVideoIDs = videoIDs.filter(videoID => typeof videoID === 'number')
+
+    return validatedVideoIDs
+}
+
+/**
+ * And helper function to get all video IDs from the data.
+ */
+export const extractVideoIDsFromCompleteData = completeData => {
+    const rawData = completeData[0].set
+    let allVideoIDs = []
+
+    rawData.categories.forEach(category => {
+        const videoIDs = extractVideoIDsFromCategoryData(category.category)
+
+        allVideoIDs = [
+            ...allVideoIDs,
+            ...videoIDs
+        ]
+    })
+
+    return allVideoIDs
+}

@@ -6,23 +6,22 @@ import PropTypes from 'prop-types';
 const VideoGrid = (props) => (
     <div>
         {props.videos.map((video, index) => (
-            <Link
-                to={`/video/${video.id}`}
-                key={index}
-            >
-                <div key={video.id} style={{ borderBottom: "1px solid black", marginBottom: "1em" }}>
-                    {video.title}<br />
-                    {video.id}<br />
-                    {video.description}<br />
-                    {video.vimeoURL}<br />
-                </div>
-            </Link>
+            <div key={index} style={{ borderBottom: "1px solid black", marginBottom: "1em" }}>
+                <Link to={`/video/${video.id}`}>
+                    {video.title}
+                </Link>
+                <br />
+                {video.id}<br />
+                {video.description}<br />
+                {video.vimeoURL}<br />
+                {video.thumbnailLarge}<br />
+            </div>
         ))}
     </div>
 )
 
 VideoGrid.defaultProps = {
-    categories: []
+    videos: []
 }
 
 VideoGrid.propTypes = {

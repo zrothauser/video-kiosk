@@ -5,7 +5,7 @@ import slugify from 'slugify'
 import * as types from '../actions/appData'
 
 // Utilities
-import extractVimeoIDFromURL from '../../utils/video'
+import { extractVideoIDsFromCategoryData } from '../../utils/video'
 
 const initialState = {
     categories: [],
@@ -35,21 +35,14 @@ export default (state = initialState, action) => {
             // are nested too deeply
             const rawCategoryData = action.data[0].set.categories
             const processedData = rawCategoryData.map(category => {
-                // Start with all videos in the data
-                const categoryVideos = category.category.videos
-
-                // Strip out ones that are missing the vimeo URL... there could be some
-                const validCategoryVideos = categoryVideos.filter(video => video.video.vimeoid)
-
-                // Strip down to the video IDs
-                const videoIDs = validCategoryVideos.map(video => extractVimeoIDFromURL(video.video.vimeoid))
-                const validatedVideoIDs = videoIDs.filter(videoID => typeof videoID === 'number')
+                const categoryData = category.category;
+                const videoIDs = extractVideoIDsFromCategoryData(categoryData)
 
                 return {
-                    slug: slugify(category.category.title, { lower: true }),
-                    title: category.category.title,
-                    visibility: category.category.visibility,
-                    videos: validatedVideoIDs
+                    slug: slugify(categoryData.title, { lower: true }),
+                    title: categoryData.title,
+                    visibility: categoryData.visibility,
+                    videos: videoIDs
                 }
             });
 
