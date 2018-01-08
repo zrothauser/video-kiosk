@@ -2,8 +2,8 @@
 import request from 'superagent'
 
 // Action types
-import * as appDataActionTypes from '../redux/actions/appData'
-import * as videoActionTypes from '../redux/actions/video'
+import { appAPIActionTypes } from '../redux/actions/appData'
+import { videoActionTypes } from '../redux/actions/video'
 
 // Other utilities
 import { extractVideoIDsFromCompleteData } from './video'
@@ -21,13 +21,13 @@ export const apiData = store => next => action => {
     next(action)
 
     switch (action.type) {
-        case appDataActionTypes.FETCH_APP_DATA:
+        case appAPIActionTypes.FETCH_APP_DATA:
             request
                 .get(API_URL)
                 .end((error, res) => {
                     if (error) {
                         return next({
-                            type: appDataActionTypes.FETCH_APP_DATA_ERROR,
+                            type: appAPIActionTypes.FETCH_APP_DATA_ERROR,
                             error
                         })
                     }
@@ -45,7 +45,7 @@ export const apiData = store => next => action => {
 
                     // Dispatch a success action
                     next({
-                        type: appDataActionTypes.FETCH_APP_DATA_RECEIVED,
+                        type: appAPIActionTypes.FETCH_APP_DATA_RECEIVED,
                         data
                     })
                 })

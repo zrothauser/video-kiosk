@@ -4,23 +4,16 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 
 // Action types
-import * as videoActionTypes from '../../redux/actions/video'
+import { fetchMP4Data, fetchCaptionData } from '../../redux/actions/video'
 
 class VideoScreen extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
-
     const id = parseInt(this.props.match.params.id, 10)
 
-    dispatch({
-      type: videoActionTypes.FETCH_MP4_DATA,
-      id
-    })
-
-    dispatch({
-      type: videoActionTypes.FETCH_CAPTION_DATA,
-      id
-    })
+    // Load additional data
+    dispatch(fetchMP4Data(id))
+    dispatch(fetchCaptionData(id))
   }
 
   render() {

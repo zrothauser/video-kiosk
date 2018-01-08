@@ -1,6 +1,6 @@
 // Action types
-import * as appDataActionTypes from '../actions/appData'
-import * as videoActionTypes from '../actions/video'
+import { appAPIActionTypes } from '../actions/appData'
+import { videoActionTypes } from '../actions/video'
 
 // Utilities
 import { extractVimeoIDFromURL } from '../../utils/video'
@@ -57,13 +57,13 @@ export default (state = initialState, action) => {
     }
 
     switch (action.type) {
-        case appDataActionTypes.FETCH_APP_DATA:
+        case appAPIActionTypes.FETCH_APP_DATA:
             return {
                 ...state,
                 isLoading: true
             }
 
-        case appDataActionTypes.FETCH_APP_DATA_ERROR:
+        case appAPIActionTypes.FETCH_APP_DATA_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -71,7 +71,7 @@ export default (state = initialState, action) => {
                 error: action.error
             }
 
-        case appDataActionTypes.FETCH_APP_DATA_RECEIVED:
+        case appAPIActionTypes.FETCH_APP_DATA_RECEIVED:
             // Flatten the data, the API has some redundancy and things
             // are nested too deeply
             const rawData = action.data[0].set

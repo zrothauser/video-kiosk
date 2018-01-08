@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux'
 
 // Redux
 import store, { history } from './redux/configureStore'
-import * as actionTypes from './redux/actions/appData'
+import { fetchAppData } from './redux/actions/appData'
 
 // Containers
 import App from './containers/App'
@@ -32,7 +32,7 @@ render(
 )
 
 // Load data
-store.dispatch({ type: actionTypes.FETCH_APP_DATA })
+store.dispatch(fetchAppData())
 
 // Set up service worker
 registerServiceWorker();

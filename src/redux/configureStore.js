@@ -1,8 +1,13 @@
+// Dependencies
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
+
+// Reduceres
 import rootReducer from './reducers'
+
+// Our API middleware
 import { apiData, vimeoData, mp4APIData, captionAPIData } from '../utils/api'
 
 export const history = createHistory()
