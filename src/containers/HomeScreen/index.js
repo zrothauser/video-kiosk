@@ -1,27 +1,26 @@
 // Dependencies
 import React from 'react'
-// import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 // Actions
 
 // Components
+import MainMenu from '../../components/MainMenu'
 
 const HomeScreen = props => (
   <div>
-    {props.categories.map((category, index) => (
-      <p key={index}>
-        {category.title}
-      </p>
-    ))}
+    <MainMenu categories={props.categories} />
   </div>
 )
 
 const mapStateToProps = state => {
   const categoriesData = state.categories
 
+  // Only include visible categories
+  const visibleCategories = categoriesData.categories.filter(category => category.visibility === 'visible')
+
   return {
-    categories: categoriesData.categories,
+    categories: visibleCategories,
     isLoading: categoriesData.isLoading,
     isErrored: categoriesData.isErrored,
     error: categoriesData.error
