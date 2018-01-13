@@ -1,9 +1,10 @@
 .b-video-thumbnail {
   display: block;
-  width: 33.3333333333%;
-  float: left;
+  width: 33.333%;
+  flex: 0 0 33.333%;
   position: relative;
   padding-left: 1.5951041667vw;
+  padding-bottom: 1.5951041667vw;
 }
 
 .b-video-thumbnail__image {

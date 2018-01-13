@@ -41,7 +41,7 @@ const VideoThumbnail = (props) => {
           {description && description}
           {duration &&
             <span className="b-video-thumbnail__time">
-              {convertSecondsToMinutesSeconds(duration)}
+              &nbsp;{convertSecondsToMinutesSeconds(duration)}
             </span>
           }
         </div>

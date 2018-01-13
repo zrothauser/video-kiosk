@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // Components
 import VideoThumbnail from '../VideoThumbnail';
 
+// Styles
+import './index.css';
+
 const VideoGrid = props => (
   <div className="b-video-grid">
     {props.videos.map(video => (

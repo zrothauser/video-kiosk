@@ -1,0 +1,4 @@
+.b-video-grid {
+  display: flex;
+  flex-flow: row wrap;
+}
