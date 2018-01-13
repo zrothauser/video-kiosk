@@ -13,10 +13,12 @@ const MainMenu = props => (
     </span>
     <ul className="b-main-menu__list">
       {props.categories.map(category => (
-        <li className="b-main-menu__item">
+        <li
+          className="b-main-menu__item"
+          key={category.slug}
+        >
           <Link
             to={`/category/${category.slug}`}
-            key={`/category/${category.slug}`}
             className="b-main-menu__link"
           >
             {category.title}

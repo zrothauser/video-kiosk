@@ -15,7 +15,7 @@ const TopicsList = props => (
       {props.categories.map(category => (
         <li
           className="b-topics-list__item"
-          key={`/category/${category.slug}`}
+          key={category.slug}
         >
           <Link
             to={`/category/${category.slug}`}
