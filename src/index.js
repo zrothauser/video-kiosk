@@ -15,6 +15,7 @@ import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
 // Base styles
+import './resources/fonts/fonts.css';
 import './index.css';
 
 // Render the app

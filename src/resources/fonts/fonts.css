@@ -1,0 +1,65 @@
+/* Century Gothic */
+
+@font-face {
+	font-family: 'Gothic';
+	font-weight: 400;
+	font-style: normal;
+	src:url('./commercial/340C7B_0_0.eot');
+	src:url('./commercial/340C7B_0_0.eot#iefix') format('embedded-opentype'),
+		url('./commercial/340C7B_0_0.woff2') format('woff2'),
+		url('./commercial/340C7B_0_0.woff') format('woff'),
+		url('./commercial/340C7B_0_0.ttf') format('truetype');
+}
+
+@font-face {
+	/* Century Gothic Bold */
+	font-family:"Gothic";
+	font-weight: 700;
+	font-style: normal;
+	src:url('./commercial/2B5196_0_0.eot');
+	src:url('./commercial/2B5196_0_0.eot#iefix') format('embedded-opentype'),
+		url('./commercial/2B5196_0_0.woff') format('woff'),
+		url('./commercial/2B5196_0_0.ttf') format('truetype');
+}
+
+/* Century Schoolbook */
+
+@font-face {
+	font-family:"Schoolbook";
+	font-weight: 400;
+	font-style: normal;
+	src:url('./commercial/2B5196_1_0.eot');
+	src:url('./commercial/2B5196_1_0.eot#iefix') format('embedded-opentype'),
+		url('./commercial/2B5196_1_0.woff') format('woff'),
+		url('./commercial/2B5196_1_0.ttf') format('truetype');
+}
+
+@font-face {
+	font-family:"Schoolbook";
+	font-weight: 400;
+	font-style: italic;
+	src:url('./commercial/2B5196_2_0.eot');
+	src:url('./commercial/2B5196_2_0.eot#iefix') format('embedded-opentype'),
+		url('./commercial/2B5196_2_0.woff') format('woff'),
+		url('./commercial/2B5196_2_0.ttf') format('truetype');
+}
+
+@font-face {
+	font-family:"Schoolbook";
+	font-weight: 700;
+	font-style: normal;
+	src:url('./commercial/2B5196_0_0.eot');
+	src:url('./commercial/2B5196_0_0.eot#iefix') format('embedded-opentype'),
+		url('./commercial/2B5196_0_0.woff') format('woff'),
+		url('./commercial/2B5196_0_0.ttf') format('truetype');
+}
+
+@font-face {
+	font-family:"Schoolbook";
+	font-weight: 700;
+	font-style: italic;
+	src:url('./commercial/2B5196_1_0.eot');
+	src:url('./commercial/2B5196_1_0.eot#iefix') format('embedded-opentype'),
+		url('./commercial/2B5196_1_0.woff') format('woff'),
+		url('./commercial/2B5196_1_0.ttf') format('truetype');
+}
