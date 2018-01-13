@@ -1,10 +1,13 @@
 :root {
-  --color__background: #4d5a6a;
-  --color__background--darker: #2b3541;
-  --color__text: #ffffff;
-  --color__link: #ffffff;
- }
+  --color__white: #ffffff;
+  --color__grey: #4d5a6a;
+  --color__grey--darker: #2b3541;
 
+  --color__background: var(--color__grey);
+  --color__background--darker: var(--color__grey--darker);
+  --color__text: var(--color__white);
+  --color__link: var(--color__white);
+ }
 
 body {
   font-family: 'Gothic', sans-serif;
@@ -25,8 +28,16 @@ a {
   text-decoration: none;
 }
 
-a:hover,
-a:focus,
-a:active {
-  text-decoration: underline;
+.h-screen-reader {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
 }

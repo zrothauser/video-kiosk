@@ -1,7 +1,7 @@
 // Action types
 import * as types from '../actions/actionTypes';
 
-// Utilities
+// Helpers
 import { extractVimeoIDFromURL } from '../../utils/video';
 
 // Initial state

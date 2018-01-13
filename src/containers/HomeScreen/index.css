@@ -1,0 +1,12 @@
+.b-homescreen {
+  font-size: 1.5625vw;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  height: calc(100vh - 2.6041666667vw);
+}
+
+.b-homescreen__wrapper {
+  height: 100%;
+  position: relative;
+}
