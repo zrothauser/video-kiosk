@@ -1,6 +1,5 @@
 // Action types
-import { appAPIActionTypes } from '../actions/appData'
-import { videoActionTypes } from '../actions/video'
+import * as types from '../actions/actionTypes';
 
 // Utilities
 import { extractVimeoIDFromURL } from '../../utils/video'
@@ -57,13 +56,13 @@ export default (state = initialState, action) => {
     }
 
     switch (action.type) {
-        case appAPIActionTypes.FETCH_APP_DATA:
+        case types.FETCH_APP_DATA:
             return {
                 ...state,
                 isLoading: true
             }
 
-        case appAPIActionTypes.FETCH_APP_DATA_ERROR:
+        case types.FETCH_APP_DATA_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -71,7 +70,7 @@ export default (state = initialState, action) => {
                 error: action.error
             }
 
-        case appAPIActionTypes.FETCH_APP_DATA_RECEIVED:
+        case types.FETCH_APP_DATA_RECEIVED:
             // Flatten the data, the API has some redundancy and things
             // are nested too deeply
             const rawData = action.data[0].set
@@ -127,7 +126,7 @@ export default (state = initialState, action) => {
                 error: null
             }
 
-        case videoActionTypes.FETCH_VIMEO_DATA: {
+        case types.FETCH_VIMEO_DATA: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -145,7 +144,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_VIMEO_DATA_ERROR: {
+        case types.FETCH_VIMEO_DATA_ERROR: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -164,7 +163,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_VIMEO_DATA_RECEIVED: {
+        case types.FETCH_VIMEO_DATA_RECEIVED: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -186,7 +185,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_MP4_DATA: {
+        case types.FETCH_MP4_DATA: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -205,7 +204,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_MP4_DATA_ERROR: {
+        case types.FETCH_MP4_DATA_ERROR: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -224,7 +223,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_MP4_DATA_RECEIVED: {
+        case types.FETCH_MP4_DATA_RECEIVED: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -246,7 +245,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_CAPTION_DATA: {
+        case types.FETCH_CAPTION_DATA: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -265,7 +264,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_CAPTION_DATA_ERROR: {
+        case types.FETCH_CAPTION_DATA_ERROR: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {
@@ -284,7 +283,7 @@ export default (state = initialState, action) => {
             }
         }
 
-        case videoActionTypes.FETCH_CAPTION_DATA_RECEIVED: {
+        case types.FETCH_CAPTION_DATA_RECEIVED: {
             const updatedVideos = [
                 ...videosWithoutUpdatedVideo,
                 {

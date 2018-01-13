@@ -5,15 +5,14 @@ import PropTypes from 'prop-types';
 
 // Action types
 import { fetchMP4Data, fetchCaptionData } from '../../redux/actions/video'
-
-class VideoScreen extends React.Component {
+export class VideoScreen extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props
+    const { fetchMP4Data, fetchCaptionData } = this.props
     const id = parseInt(this.props.match.params.id, 10)
 
     // Load additional data
-    dispatch(fetchMP4Data(id))
-    dispatch(fetchCaptionData(id))
+    fetchMP4Data(id);
+    fetchCaptionData(id);
   }
 
   render() {
@@ -33,7 +32,7 @@ class VideoScreen extends React.Component {
         {description}<br />
         {mp4Link}<br />
         {thumbnailFull}
-        {captions[0].uri}
+        {captions.length && captions[0].uri}
       </div>
     )
   }
@@ -60,6 +59,13 @@ VideoScreen.propTypes = {
 }
 
 // Connect with store
+function mapDispatchToProps(dispatch) {
+	return {
+		fetchMP4Data: (id) => dispatch(fetchMP4Data(id)),
+		fetchCaptionData: (id) => dispatch(fetchCaptionData(id))
+	}
+ }
+
 const mapStateToProps = (state, ownProps) => {
   const videoID = parseInt(ownProps.match.params.id, 10)
   const videoData = state.videos.videos.find(video => video.id === videoID)
@@ -79,5 +85,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(
-  mapStateToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(VideoScreen)

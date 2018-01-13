@@ -2,8 +2,7 @@
 import request from 'superagent'
 
 // Action types
-import { appAPIActionTypes } from '../redux/actions/appData'
-import { videoActionTypes } from '../redux/actions/video'
+import * as types from '../redux/actions/actionTypes';
 
 // Other utilities
 import { extractVideoIDsFromCompleteData } from './video'
@@ -21,13 +20,13 @@ export const apiData = store => next => action => {
     next(action)
 
     switch (action.type) {
-        case appAPIActionTypes.FETCH_APP_DATA:
+        case types.FETCH_APP_DATA:
             request
                 .get(API_URL)
                 .end((error, res) => {
                     if (error) {
                         return next({
-                            type: appAPIActionTypes.FETCH_APP_DATA_ERROR,
+                            type: types.FETCH_APP_DATA_ERROR,
                             error
                         })
                     }
@@ -38,14 +37,14 @@ export const apiData = store => next => action => {
 
                     allVideoIDs.forEach(videoID => {
                         store.dispatch({
-                            type: videoActionTypes.FETCH_VIMEO_DATA,
+                            type: types.FETCH_VIMEO_DATA,
                             id: videoID
                         })
                     })
 
                     // Dispatch a success action
                     next({
-                        type: appAPIActionTypes.FETCH_APP_DATA_RECEIVED,
+                        type: types.FETCH_APP_DATA_RECEIVED,
                         data
                     })
                 })
@@ -63,7 +62,7 @@ export const vimeoData = store => next => action => {
     next(action)
 
     switch (action.type) {
-        case videoActionTypes.FETCH_VIMEO_DATA:
+        case types.FETCH_VIMEO_DATA:
             // Build the API url
             const apiURL = VIMEO_BASE_URL + action.id + '.json'
 
@@ -74,14 +73,14 @@ export const vimeoData = store => next => action => {
                 .end((error, res) => {
                     if (error) {
                         return next({
-                            type: videoActionTypes.FETCH_VIMEO_DATA_ERROR,
+                            type: types.FETCH_VIMEO_DATA_ERROR,
                             id: action.id,
                             error
                         })
                     }
                     const data = JSON.parse(res.text)
                     next({
-                        type: videoActionTypes.FETCH_VIMEO_DATA_RECEIVED,
+                        type: types.FETCH_VIMEO_DATA_RECEIVED,
                         id: action.id,
                         data
                     })
@@ -100,7 +99,7 @@ export const mp4APIData = store => next => action => {
     next(action)
 
     switch (action.type) {
-        case videoActionTypes.FETCH_MP4_DATA:
+        case types.FETCH_MP4_DATA:
             const apiURL = MP4_API_BASE_URL + action.id
 
             request
@@ -108,7 +107,7 @@ export const mp4APIData = store => next => action => {
                 .end((error, res) => {
                     if (error) {
                         return next({
-                            type: videoActionTypes.FETCH_MP4_DATA_ERROR,
+                            type: types.FETCH_MP4_DATA_ERROR,
                             id: action.id,
                             error
                         })
@@ -120,7 +119,7 @@ export const mp4APIData = store => next => action => {
                     const actualData = JSON.parse(data.entire_json)
 
                     next({
-                        type: videoActionTypes.FETCH_MP4_DATA_RECEIVED,
+                        type: types.FETCH_MP4_DATA_RECEIVED,
                         id: action.id,
                         data: actualData
                     })
@@ -139,7 +138,7 @@ export const captionAPIData = store => next => action => {
     next(action)
 
     switch (action.type) {
-        case videoActionTypes.FETCH_CAPTION_DATA:
+        case types.FETCH_CAPTION_DATA:
             const apiURL = MP4_API_BASE_URL + action.id + '/captions'
 
             request
@@ -147,7 +146,7 @@ export const captionAPIData = store => next => action => {
                 .end((error, res) => {
                     if (error) {
                         return next({
-                            type: videoActionTypes.FETCH_CAPTION_DATA_ERROR,
+                            type: types.FETCH_CAPTION_DATA_ERROR,
                             id: action.id,
                             error
                         })
@@ -155,7 +154,7 @@ export const captionAPIData = store => next => action => {
                     const data = JSON.parse(res.text)
 
                     next({
-                        type: videoActionTypes.FETCH_CAPTION_DATA_RECEIVED,
+                        type: types.FETCH_CAPTION_DATA_RECEIVED,
                         id: action.id,
                         data: data.data
                     })

@@ -10,7 +10,7 @@ import VideoScreen from '../VideoScreen'
 // Components
 import Header from '../../components/Header'
 
-const App = () => (
+export const App = () => (
   <div>
     <Header/>
     <main>

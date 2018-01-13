@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 // Components
 import VideoGrid from '../../components/VideoGrid'
 
-const CategoryScreen = (props) => {
+export const CategoryScreen = (props) => {
   const {
     title,
     videos
@@ -53,4 +53,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps
-)(CategoryScreen)
+)(CategoryScreen);

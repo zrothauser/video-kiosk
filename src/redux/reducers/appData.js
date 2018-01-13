@@ -1,4 +1,4 @@
-import { appAPIActionTypes } from '../actions/appData'
+import * as types from '../actions/actionTypes';
 
 const initialState = {
     title: null,
@@ -10,13 +10,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case appAPIActionTypes.FETCH_APP_DATA:
+        case types.FETCH_APP_DATA:
             return {
                 ...state,
                 isLoading: true
             }
 
-        case appAPIActionTypes.FETCH_APP_DATA_ERROR:
+        case types.FETCH_APP_DATA_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
                 error: action.error
             }
 
-        case appAPIActionTypes.FETCH_APP_DATA_RECEIVED:
+        case types.FETCH_APP_DATA_RECEIVED:
             const rawAppData = action.data[0].set
 
             return {
