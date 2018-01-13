@@ -9,16 +9,24 @@
  */
 export const extractVimeoIDFromURL = (vimeoURL) => {
 
-    if (!vimeoURL) {
+		// Return if we're not passed a string
+    if (!vimeoURL || typeof vimeoURL !== 'string') {
         return null
     }
 
+		// Split apart the URL and get the ID
     const urlParts = vimeoURL.split('/')
-    const videoID = urlParts[urlParts.length - 1]
+		const videoID = urlParts[urlParts.length - 1]
 
-    if (!videoID) {
-        return null
-    }
+		// If it's invalid
+		if (!urlParts[0] || !urlParts[0]) {
+			return null;
+		}
+
+		// If it's not a Vimeo link, or there's no ID
+		if (-1 === vimeoURL.indexOf('://vimeo.com') || !videoID) {
+			return null;
+		}
 
     return parseInt(videoID, 10)
 }
