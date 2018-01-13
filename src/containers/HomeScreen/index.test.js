@@ -1,27 +1,26 @@
 // Dependencies
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 
 // Component to test
 import { HomeScreen } from './index';
 
 describe('containers', () => {
-	describe('HomeScreen', () => {
-		let wrapper;
-		const mockProps = {
-			categories: [],
-			isLoading: true,
-			isErrored: false,
-			error: false
-		};
+  describe('HomeScreen', () => {
+    let wrapper;
+    const mockProps = {
+      categories: [],
+      isLoading: true,
+      isErrored: false,
+      error: false,
+    };
 
-		beforeEach(() => {
-			wrapper = shallow(<HomeScreen {...mockProps}/>)
-		});
+    beforeEach(() => {
+      wrapper = shallow(<HomeScreen {...mockProps} />);
+    });
 
-		it('renders without crashing', () => {
-				wrapper.find('div');
-		});
-	});
+    it('renders without crashing', () => {
+      wrapper.find('div');
+    });
+  });
 });

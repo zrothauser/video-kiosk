@@ -1,16 +1,16 @@
 // Dependencies
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Components
-import VideoGrid from '../../components/VideoGrid'
+import VideoGrid from '../../components/VideoGrid';
 
 export const CategoryScreen = (props) => {
   const {
     title,
-    videos
-  } = props
+    videos,
+  } = props;
 
   return (
     <div>
@@ -22,35 +22,28 @@ export const CategoryScreen = (props) => {
         <VideoGrid videos={videos} />
       </div>
     </div>
-  )
-}
-
-CategoryScreen.defaultProps = {
-  title: '',
-  videos: []
-}
+  );
+};
 
 CategoryScreen.propTypes = {
   title: PropTypes.string.isRequired,
   videos: PropTypes.arrayOf(PropTypes.object).isRequired,
-}
+};
 
 // Connect with store
 const mapStateToProps = (state, ownProps) => {
-  const pageSlug = ownProps.match.params.slug
-  const videosData = state.videos.videos
-  const categoryData = state.categories.categories.find(category => category.slug === pageSlug)
+  const pageSlug = ownProps.match.params.slug;
+  const videosData = state.videos.videos;
+  const categoryData = state.categories.categories.find(category => category.slug === pageSlug);
 
   if (!categoryData) {
-    return ownProps
+    return ownProps;
   }
 
   return {
     title: categoryData.title,
-    videos: categoryData.videos.map(videoID => videosData.find(video => video.id === videoID))
-  }
-}
+    videos: categoryData.videos.map(videoID => videosData.find(video => video.id === videoID)),
+  };
+};
 
-export default connect(
-  mapStateToProps
-)(CategoryScreen);
+export default connect(mapStateToProps)(CategoryScreen);

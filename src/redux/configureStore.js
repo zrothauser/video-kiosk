@@ -1,45 +1,45 @@
 // Dependencies
-import { createStore, applyMiddleware, compose } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
-import thunk from 'redux-thunk'
-import createHistory from 'history/createBrowserHistory'
+import { createStore, applyMiddleware, compose } from 'redux';
+import { routerMiddleware } from 'react-router-redux';
+import thunk from 'redux-thunk';
+import createHistory from 'history/createBrowserHistory';
 
 // Reduceres
-import rootReducer from './reducers'
+import rootReducer from './reducers';
 
 // Our API middleware
-import { apiData, vimeoData, mp4APIData, captionAPIData } from '../utils/api'
+import { apiData, vimeoData, mp4APIData, captionAPIData } from '../utils/api';
 
-export const history = createHistory()
+export const history = createHistory();
 
-const initialState = {}
-const enhancers = []
+const initialState = {};
+const enhancers = [];
 const middleware = [
   thunk,
   routerMiddleware(history),
   apiData,
   vimeoData,
   mp4APIData,
-  captionAPIData
-]
+  captionAPIData,
+];
 
 if (process.env.NODE_ENV === 'development') {
-  const devToolsExtension = window.devToolsExtension
+  const { devToolsExtension } = window;
 
   if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension())
+    enhancers.push(devToolsExtension());
   }
 }
 
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
-  ...enhancers
-)
+  ...enhancers,
+);
 
 const store = createStore(
   rootReducer,
   initialState,
-  composedEnhancers
-)
+  composedEnhancers,
+);
 
-export default store
+export default store;
