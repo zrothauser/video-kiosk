@@ -5,36 +5,52 @@ import PropTypes from 'prop-types';
 
 // Components
 import VideoGrid from '../../components/VideoGrid';
+import TopicsList from '../../components/TopicsList';
+
+// Styles
+import './index.css';
 
 export const CategoryScreen = (props) => {
   const {
     title,
     videos,
+    allCategories,
   } = props;
 
   return (
-    <div>
-      <div>
-        <span>Category: {title}</span>
-      </div>
-      <div>
-        <h1>Videos:</h1>
+    <div className="b-category-screen">
+      <h1 className="h-screen-reader">
+        Category: {title}
+      </h1>
+      <div className="b-category-screen__main">
         <VideoGrid videos={videos} />
+      </div>
+      <div className="b-category-screen__sidebar">
+        <TopicsList categories={allCategories} />
       </div>
     </div>
   );
 };
 
+CategoryScreen.defaultProps = {
+  title: '',
+  videos: [],
+  allCategories: [],
+}
+
 CategoryScreen.propTypes = {
-  title: PropTypes.string.isRequired,
-  videos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  title: PropTypes.string,
+  videos: PropTypes.arrayOf(PropTypes.object),
+  allCategories: PropTypes.arrayOf(PropTypes.object),
 };
 
 // Connect with store
 const mapStateToProps = (state, ownProps) => {
+  const { categories } = state.categories;
   const pageSlug = ownProps.match.params.slug;
   const videosData = state.videos.videos;
-  const categoryData = state.categories.categories.find(category => category.slug === pageSlug);
+  const categoryData = categories.find(category => category.slug === pageSlug);
+  const allCategories = categories.filter(category => category.visibility === 'visible');
 
   if (!categoryData) {
     return ownProps;
@@ -43,6 +59,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     title: categoryData.title,
     videos: categoryData.videos.map(videoID => videosData.find(video => video.id === videoID)),
+    allCategories,
   };
 };
 

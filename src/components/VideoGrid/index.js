@@ -1,21 +1,21 @@
 // Dependencies
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+// Components
+import VideoThumbnail from '../VideoThumbnail';
+
 const VideoGrid = props => (
-  <div>
+  <div className="b-video-grid">
     {props.videos.map(video => (
-      <div key={video.id} style={{ borderBottom: '1px solid black', marginBottom: '1em' }}>
-        <Link to={`/video/${video.id}`}>
-          {video.title}
-        </Link>
-        <br />
-        {video.id}<br />
-        {video.description}<br />
-        {video.vimeoURL}<br />
-        {video.thumbnailLarge}<br />
-      </div>
+      <VideoThumbnail
+        id={video.id}
+        title={video.title}
+        description={video.description}
+        thumbnail={video.thumbnailLarge}
+        duration={video.duration}
+        key={video.id}
+      />
     ))}
   </div>
 );

@@ -1,0 +1,17 @@
+.b-category-screen {
+  width: 100vw;
+  height: calc(100vh - 2.6041666667vw);
+}
+
+.b-category-screen__main {
+  width: 75%;
+  float: left;
+  padding-top: 5.2083333333vw;
+}
+
+.b-category-screen__sidebar {
+  margin-top: -.4em;
+  width: 25%;
+  float: right;
+  padding-left: 1.5951041667vw;
+}
