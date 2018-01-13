@@ -1,0 +1,36 @@
+.b-header {
+  height: 2.6041666667vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--color__background--darker);
+  line-height: 1;
+  z-index: 25;
+}
+
+.b-header__title {
+  font-size: 0.8333333333vw;
+  margin: 0;
+  float: left;
+}
+
+.b-header__index {
+  width: 25%;
+  margin: 0;
+  float: right;
+  cursor: pointer;
+}
+
+.b-header__link {
+  -webkit-appearance: none;
+  display: block;
+  padding: 1.0108854167vw 1.5951041667vw;
+  background: transparent;
+  border: 0;
+  color: var(--color__link);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: .160em;
+  font-size: 0.8333333333vw;
+}

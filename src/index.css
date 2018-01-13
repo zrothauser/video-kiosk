@@ -1,5 +1,32 @@
+:root {
+  --color__background: #4d5a6a;
+  --color__background--darker: #2b3541;
+  --color__text: #ffffff;
+  --color__link: #ffffff;
+ }
+
+
 body {
+  font-family: 'Gothic', sans-serif;
+  background: var(--color__background);
+  color: var(--color__link);
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  height: 100vh;
+  font-size: 0.8333333333vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--color__link);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+  text-decoration: underline;
 }
