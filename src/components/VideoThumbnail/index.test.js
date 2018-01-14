@@ -5,7 +5,13 @@ import VideoThumbnail from './index';
 describe('components', () => {
   describe('VideoThumbnail', () => {
     it('renders without crashing', () => {
-      shallow(<VideoThumbnail />);
+      const mockProps = {
+        id: 1000,
+        title: 'Video Title',
+        description: 'Video Description',
+      };
+
+      shallow(<VideoThumbnail {...mockProps} />);
     });
   });
 });

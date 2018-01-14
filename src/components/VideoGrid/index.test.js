@@ -5,7 +5,11 @@ import VideoGrid from './index';
 describe('components', () => {
   describe('VideoGrid', () => {
     it('renders without crashing', () => {
-      shallow(<VideoGrid />);
+      const mockProps = {
+        videos: []
+      };
+
+      shallow(<VideoGrid {...mockProps} />);
     });
   });
 });

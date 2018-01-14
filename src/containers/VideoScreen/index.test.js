@@ -24,11 +24,11 @@ describe('containers', () => {
       }],
       match: {
         params: {
-          id: 1000,
+          id: '1000',
         },
       },
-      fetchMP4Data: mockfetchMP4Data,
-      fetchCaptionData: mockFetchCaptionData,
+      getMP4Data: mockfetchMP4Data,
+      getCaptionData: mockFetchCaptionData,
     };
 
     beforeEach(() => {

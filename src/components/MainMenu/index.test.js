@@ -5,7 +5,12 @@ import MainMenu from './index';
 describe('components', () => {
   describe('MainMenu', () => {
     it('renders without crashing', () => {
-      shallow(<MainMenu />);
+      const mockProps = {
+        isLoading: false,
+        categories: [],
+      };
+
+      shallow(<MainMenu {...mockProps} />);
     });
   });
 });

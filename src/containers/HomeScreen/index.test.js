@@ -12,7 +12,7 @@ describe('containers', () => {
       categories: [],
       isLoading: true,
       isErrored: false,
-      error: false,
+      error: null,
     };
 
     beforeEach(() => {
