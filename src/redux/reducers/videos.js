@@ -1,3 +1,6 @@
+// Dependencies
+import slugify from 'slugify';
+
 // Action types
 import * as types from '../actions/actionTypes';
 
@@ -15,6 +18,8 @@ const initialState = {
 // Lets us keep the struct of an individual video consistent
 const VIDEO_OBJECT_STRUCTURE = {
   id: 0,
+  parentCategory: null,
+  indexInCategory: null,
   title: null,
   description: null,
   vimeoURL: null,
@@ -80,12 +85,13 @@ export default (state = initialState, action) => {
       // do exist
       const maybeAddVideo = (video) => {
         const videoID = extractVimeoIDFromURL(video.vimeoid);
-        const existingVideoIndex = processedData.findIndex(oldVideo => oldVideo.id === videoID);
 
         // Return if something was wrong with the URL or ID
         if (!videoID) {
           return;
         }
+
+        const existingVideoIndex = processedData.findIndex(oldVideo => oldVideo.id === videoID);
 
         if (existingVideoIndex !== -1) {
           processedData[existingVideoIndex] = {
@@ -93,6 +99,8 @@ export default (state = initialState, action) => {
             id: videoID,
             title: video.title,
             vimeoURL: video.vimeoid,
+            parentCategory: video.parentCategory,
+            indexInCategory: video.indexInCategory,
           };
         } else {
           processedData.push({
@@ -100,13 +108,24 @@ export default (state = initialState, action) => {
             id: videoID,
             title: video.title,
             vimeoURL: video.vimeoid,
+            parentCategory: video.parentCategory,
+            indexInCategory: video.indexInCategory,
           });
         }
       };
 
       rawData.categories.forEach((category) => {
-        category.category.videos.forEach((video) => {
+        // Keep track of each video's category slug
+        const categorySlug = slugify(category.category.title, { lower: true });
+
+        category.category.videos.forEach((video, index) => {
           const videoData = video.video;
+
+          // Add additional data that's not in the actual video object from the API
+          videoData.parentCategory = categorySlug;
+          videoData.indexInCategory = index;
+
+          // Add the video to our collection, if needed
           maybeAddVideo(videoData);
         });
       });
