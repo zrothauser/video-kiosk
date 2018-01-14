@@ -13,29 +13,29 @@ import MainMenu from '../../components/MainMenu';
 import './index.css';
 
 export class HomeScreen extends React.Component {
-  static renderLoading() {
-    return (
-      <span>Loading...</span>
-    );
-  }
-
   renderError() {
     const { error } = this.props;
 
     return (
-      <span className="b-homescreen__error">{error}</span>
+      <span className="b-homescreen__error">
+        {error}
+      </span>
     );
   }
 
   renderCategories() {
+    const {
+      isLoading,
+      categories,
+    } = this.props;
+
     return (
-      <MainMenu categories={this.props.categories} />
+      <MainMenu isLoading={isLoading} categories={categories} />
     );
   }
 
   render() {
     const {
-      isLoading,
       isErrored,
       backgroundVideoID,
     } = this.props;
@@ -82,8 +82,6 @@ export class HomeScreen extends React.Component {
 
     if (isErrored) {
       pageContent = this.renderError();
-    } else if (isLoading) {
-      pageContent = HomeScreen.renderLoading();
     } else {
       pageContent = this.renderCategories();
     }

@@ -8,7 +8,38 @@ import * as types from '../actions/actionTypes';
 import { extractVideoIDsFromCategoryData } from '../../utils/video';
 
 const initialState = {
-  categories: [],
+  categories: [
+    {
+      slug: null,
+      title: '',
+      visibility: 'visible',
+      videos: [],
+    },
+    {
+      slug: null,
+      title: '',
+      visibility: 'visible',
+      videos: [],
+    },
+    {
+      slug: null,
+      title: '',
+      visibility: 'visible',
+      videos: [],
+    },
+    {
+      slug: null,
+      title: '',
+      visibility: 'visible',
+      videos: [],
+    },
+    {
+      slug: null,
+      title: '',
+      visibility: 'visible',
+      videos: [],
+    },
+  ],
   isLoading: false,
   isErrored: false,
   error: null,
