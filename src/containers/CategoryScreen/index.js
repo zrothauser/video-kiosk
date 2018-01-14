@@ -12,6 +12,7 @@ import './index.css';
 
 export const CategoryScreen = (props) => {
   const {
+    selectedCategorySlug,
     title,
     videos,
     allCategories,
@@ -26,19 +27,24 @@ export const CategoryScreen = (props) => {
         <VideoGrid videos={videos} />
       </div>
       <div className="b-category-screen__sidebar">
-        <TopicsList categories={allCategories} />
+        <TopicsList
+          categories={allCategories}
+          selectedCategorySlug={selectedCategorySlug}
+        />
       </div>
     </div>
   );
 };
 
 CategoryScreen.defaultProps = {
+  selectedCategorySlug: '',
   title: '',
   videos: [],
   allCategories: [],
-}
+};
 
 CategoryScreen.propTypes = {
+  selectedCategorySlug: PropTypes.string,
   title: PropTypes.string,
   videos: PropTypes.arrayOf(PropTypes.object),
   allCategories: PropTypes.arrayOf(PropTypes.object),
@@ -57,6 +63,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
+    selectedCategorySlug: pageSlug,
     title: categoryData.title,
     videos: categoryData.videos.map(videoID => videosData.find(video => video.id === videoID)),
     allCategories,
