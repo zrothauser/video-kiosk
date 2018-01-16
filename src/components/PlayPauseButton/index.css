@@ -1,0 +1,16 @@
+.b-play-pause-button {
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  width: 4.629vw;
+  height: 4.629vw;
+  position: absolute;
+  z-index: 10;
+  top: calc(50% - 2.31245vw);
+  left: calc(50% - 2.31245vw);
+}
+
+.b-play-pause-button:focus,
+.b-play-pause-button:active {
+  outline: 0;
+}

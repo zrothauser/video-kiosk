@@ -20,5 +20,3 @@ export function fetchCaptionData(id) {
     id,
   };
 }
-
-export default fetchVimeoData;

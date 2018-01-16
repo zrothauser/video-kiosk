@@ -3,37 +3,68 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+// Components
+import VideoPlayer from '../../components/VideoPlayer';
+
 // Action types
-import { fetchMP4Data, fetchCaptionData } from '../../redux/actions/video';
+import * as videoAPIActions from '../../redux/actions/video';
+import * as videoPlayerActions from '../../redux/actions/videoPlayer';
 
 export class VideoScreen extends React.Component {
   componentDidMount() {
-    const { getMP4Data, getCaptionData } = this.props;
+    const {
+      getMP4Data,
+      getCaptionData,
+      setCurrentVideoID,
+    } = this.props;
     const id = parseInt(this.props.match.params.id, 10);
+
+    // Keep track of the current video
+    setCurrentVideoID(id);
 
     // Load additional data
     getMP4Data(id);
     getCaptionData(id);
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  handleSeek() {
+    // const { duration } = this.props;
+    // const clickedTime = (percent / 100) * duration;
+
+    // this.props.actions.seekProgress(clickedTime);
+
+    // eslint-disable-next-line no-console
+    console.log('seek');
+  }
+
+
   render() {
     const {
       title,
-      id,
-      description,
       mp4Link,
       thumbnailFull,
-      captions,
+      playPauseVideo,
+      parentCategory,
+      indexInCategory,
+      otherVideos,
     } = this.props;
 
     return (
       <div>
-        <h1>Video: {title}</h1>
-        {id}<br />
-        {description}<br />
-        {mp4Link}<br />
-        {thumbnailFull}
-        {captions.length && captions[0].uri}
+        <h1 className="h-screen-reader">
+          {title}
+        </h1>
+
+        <VideoPlayer
+          title={title}
+          poster={thumbnailFull}
+          mp4Link={mp4Link}
+          togglePlay={playPauseVideo}
+          parentCategory={parentCategory}
+          indexInCategory={indexInCategory}
+          otherVideos={otherVideos}
+        />
       </div>
     );
   }
@@ -42,21 +73,22 @@ export class VideoScreen extends React.Component {
 VideoScreen.defaultProps = {
   title: '',
   id: null,
-  description: '',
   mp4Link: null,
   thumbnailFull: null,
-  captions: [{
-    uri: null,
-  }],
+  // captions: [{
+  //   uri: null,
+  // }],
+  parentCategory: '',
+  indexInCategory: 0,
+  otherVideos: [],
 };
 
 VideoScreen.propTypes = {
   title: PropTypes.string,
   id: PropTypes.number,
-  description: PropTypes.string,
   mp4Link: PropTypes.string,
   thumbnailFull: PropTypes.string,
-  captions: PropTypes.arrayOf(PropTypes.object),
+  // captions: PropTypes.arrayOf(PropTypes.object),
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -64,23 +96,36 @@ VideoScreen.propTypes = {
   }).isRequired,
   getMP4Data: PropTypes.func.isRequired,
   getCaptionData: PropTypes.func.isRequired,
+  setCurrentVideoID: PropTypes.func.isRequired,
+  playPauseVideo: PropTypes.func.isRequired,
+  parentCategory: PropTypes.string,
+  indexInCategory: PropTypes.number,
+  otherVideos: PropTypes.arrayOf(PropTypes.object),
 };
 
 // Connect with store
 function mapDispatchToProps(dispatch) {
   return {
-    getMP4Data: id => dispatch(fetchMP4Data(id)),
-    getCaptionData: id => dispatch(fetchCaptionData(id)),
+    getMP4Data: id => dispatch(videoAPIActions.fetchMP4Data(id)),
+    getCaptionData: id => dispatch(videoAPIActions.fetchCaptionData(id)),
+    setCurrentVideoID: id => dispatch(videoPlayerActions.setVideoID(id)),
+    playPauseVideo: () => dispatch(videoPlayerActions.playPauseVideo()),
   };
 }
 
 const mapStateToProps = (state, ownProps) => {
+  // Get data for this video, if it exists
+  const allVideos = state.videos.videos;
   const videoID = parseInt(ownProps.match.params.id, 10);
-  const videoData = state.videos.videos.find(video => video.id === videoID);
+  const videoData = allVideos.find(video => video.id === videoID);
 
   if (!videoData) {
     return ownProps;
   }
+
+  // Get the other videos in the category
+  const otherVideos = allVideos.filter(video => video.parentCategory === videoData.parentCategory);
+  const sortedOtherVideos = otherVideos.sort((a, b) => a - b);
 
   return {
     title: videoData.title,
@@ -89,6 +134,10 @@ const mapStateToProps = (state, ownProps) => {
     mp4Link: videoData.mp4Link,
     thumbnailFull: videoData.thumbnailFull,
     captions: videoData.captions,
+    duration: videoData.duration,
+    parentCategory: videoData.parentCategory,
+    indexInCategory: videoData.indexInCategory,
+    otherVideos: sortedOtherVideos,
   };
 };
 

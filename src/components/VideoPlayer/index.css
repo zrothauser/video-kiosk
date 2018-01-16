@@ -1,0 +1,19 @@
+.b-video-player__wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 0;
+    background-color: transparent;
+    padding-bottom: 56.25%;
+    margin: 0;
+    z-index: 8;
+    top: -2.6041666667vw;
+}
+
+.b-video-player__video {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
