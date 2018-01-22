@@ -1,11 +1,12 @@
 // Dependencies
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Styles
 import './index.css';
 
-const Header = () => (
+const Header = props => (
   <header className="b-header">
     <h1 className="b-header__title">
       <Link
@@ -18,7 +19,7 @@ const Header = () => (
 
     <span className="b-header__index">
       <button
-        onClick={() => console.log('clicked Video Index')}
+        onClick={() => props.toggleVideoIndex()}
         className="b-header__link"
       >
         Video Index
@@ -26,5 +27,9 @@ const Header = () => (
     </span>
   </header>
 );
+
+Header.propTypes = {
+  toggleVideoIndex: PropTypes.func.isRequired,
+};
 
 export default Header;

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ScrollLock from 'react-scrolllock';
 
-// Actions
-
 // Components
 import MainMenu from '../../components/MainMenu';
 
@@ -123,7 +121,7 @@ HomeScreen.propTypes = {
 const mapStateToProps = (state) => {
   const {
     categories: categoriesData,
-    appData,
+    app,
   } = state;
 
   const { categories } = categoriesData;
@@ -136,7 +134,7 @@ const mapStateToProps = (state) => {
     isLoading: categoriesData.isLoading,
     isErrored: categoriesData.isErrored,
     error: categoriesData.error,
-    backgroundVideoID: appData.backgroundVideo,
+    backgroundVideoID: app.data.backgroundVideo,
   };
 };
 

@@ -7,4 +7,8 @@ export function fetchAppData() {
   };
 }
 
-export default fetchAppData;
+export function toggleVideoIndex() {
+  return {
+    type: types.INTERFACE_TOGGLE_VIDEO_INDEX,
+  };
+}

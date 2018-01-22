@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 // Redux
 import store, { history } from './redux/configureStore';
-import { fetchAppData } from './redux/actions/appData';
+import { fetchAppData } from './redux/actions/app';
 
 // Containers
 import App from './containers/App';
