@@ -3,7 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
 // Other containers
 import HomeScreen from '../HomeScreen';
@@ -21,7 +21,7 @@ import { toggleVideoIndex } from '../../redux/actions/app';
 import './index.css';
 
 export const App = props => (
-  <React.Fragment>
+  <div>
     <Header toggleVideoIndex={props.toggleVideoIndex} />
     <main className="b-main">
       <Route exact path="/" component={HomeScreen} />
@@ -32,7 +32,7 @@ export const App = props => (
     {props.isVideoIndexOpen &&
       <VideoIndex />
     }
-  </React.Fragment>
+  </div>
 );
 
 App.propTypes = {
@@ -52,4 +52,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ toggleVideoIndex }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
