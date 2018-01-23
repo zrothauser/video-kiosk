@@ -7,18 +7,40 @@ import * as types from '../actions/actionTypes';
 // Helpers
 import { extractVimeoIDFromURL } from '../../utils/video';
 
+// Helper function to sort videos by title or category
+const sortVideos = (videos, sortKey = 'title') => {
+  let key = sortKey;
+
+  // Change "topic" to "parentCategory" for the actual data
+  if (sortKey === 'topic') {
+    key = 'parentCategory';
+  }
+
+  return [...videos].sort((a, b) => {
+    if (a[key] < b[key]) {
+      return -1;
+    } else if (a[key] > b[key]) {
+      return 1;
+    }
+
+    return 0;
+  });
+};
+
 // Initial state
 const initialState = {
   videos: [],
   isLoading: false,
   isErrored: false,
   error: null,
+  sortKey: 'title',
 };
 
 // Lets us keep the struct of an individual video consistent
 const VIDEO_OBJECT_STRUCTURE = {
   id: 0,
   parentCategory: null,
+  parentCategoryTitle: null,
   indexInCategory: null,
   title: null,
   description: null,
@@ -100,6 +122,7 @@ export default (state = initialState, action) => {
             title: video.title,
             vimeoURL: video.vimeoid,
             parentCategory: video.parentCategory,
+            parentCategoryTitle: video.parentCategoryTitle,
             indexInCategory: video.indexInCategory,
           };
         } else {
@@ -109,6 +132,7 @@ export default (state = initialState, action) => {
             title: video.title,
             vimeoURL: video.vimeoid,
             parentCategory: video.parentCategory,
+            parentCategoryTitle: video.parentCategoryTitle,
             indexInCategory: video.indexInCategory,
           });
         }
@@ -117,12 +141,14 @@ export default (state = initialState, action) => {
       rawData.categories.forEach((category) => {
         // Keep track of each video's category slug
         const categorySlug = slugify(category.category.title, { lower: true });
+        const categoryTitle = category.category.title;
 
         category.category.videos.forEach((video, index) => {
           const videoData = video.video;
 
           // Add additional data that's not in the actual video object from the API
           videoData.parentCategory = categorySlug;
+          videoData.parentCategoryTitle = categoryTitle;
           videoData.indexInCategory = index;
 
           // Add the video to our collection, if needed
@@ -138,7 +164,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: processedData,
+        videos: sortVideos(processedData, state.sortKey),
         isLoading: false,
         isErrored: false,
         error: null,
@@ -159,7 +185,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -178,7 +204,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -200,7 +226,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -219,7 +245,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -238,7 +264,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -260,7 +286,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -279,7 +305,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -298,7 +324,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
       };
     }
 
@@ -318,7 +344,18 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: updatedVideos,
+        videos: sortVideos(updatedVideos, state.sortKey),
+      };
+    }
+
+    case types.INTERFACE_VIDEO_INDEX_SORT: {
+      // Videos can be sorted by either category or title
+      const sortKey = (action.sortKey === 'topic') ? 'parentCategory' : 'title';
+
+      return {
+        ...state,
+        sortKey: action.sortKey,
+        videos: sortVideos(state.videos, sortKey),
       };
     }
 

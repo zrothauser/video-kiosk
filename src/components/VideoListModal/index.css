@@ -1,14 +1,12 @@
 .b-video-index {
   position: absolute;
-  height: 100%;
+  height: 100vh;
   width: 100vw;
+  top: 0;
+  left: 0;
   background: black;
-  background-color: rgb(31, 30, 30);
-  height: 100%;
-  width: 100vw;
   display: flex;
   justify-content: center;
-  position: absolute;
   z-index: 20;
 }
 
@@ -32,6 +30,19 @@
 
 .b-video-index__cell:nth-child(4) {
   text-align: center;
+}
+
+.b-video-index__sorter {
+  cursor: pointer;
+}
+
+.b-video-index__sorter:focus {
+  outline: 0;
+}
+
+.b-video-index__sort-icon {
+  width: 1em;
+  margin-left: 0.5em;
 }
 
 .b-video-index__head {

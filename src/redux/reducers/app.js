@@ -14,6 +14,7 @@ const initialState = {
   },
   interface: {
     isVideoIndexOpen: false,
+    videoIndexSorting: 'title',
   },
 };
 
@@ -62,6 +63,16 @@ export default (state = initialState, action) => {
         interface: {
           ...state.interface,
           isVideoIndexOpen: !state.interface.isVideoIndexOpen,
+        },
+      };
+    }
+
+    case types.INTERFACE_VIDEO_INDEX_SORT: {
+      return {
+        ...state,
+        interface: {
+          ...state.interface,
+          videoIndexSorting: action.sortKey,
         },
       };
     }

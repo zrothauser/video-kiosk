@@ -21,8 +21,8 @@ import { toggleVideoIndex } from '../../redux/actions/app';
 import './index.css';
 
 export const App = props => (
-  <div>
-    <Header toggleVideoIndex={props.toggleVideoIndex}/>
+  <React.Fragment>
+    <Header toggleVideoIndex={props.toggleVideoIndex} />
     <main className="b-main">
       <Route exact path="/" component={HomeScreen} />
       <Route path="/category/:slug" component={CategoryScreen} />
@@ -32,7 +32,7 @@ export const App = props => (
     {props.isVideoIndexOpen &&
       <VideoIndex />
     }
-  </div>
+  </React.Fragment>
 );
 
 App.propTypes = {
