@@ -1,5 +1,6 @@
 // Dependencies
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AllHtmlEntities as Entities } from 'html-entities';
 import ScrollLock from 'react-scrolllock';
@@ -17,11 +18,16 @@ import './index.css';
 const entities = new Entities();
 
 class VideoListModal extends React.Component {
-  static renderRow(video) {
+  renderRow(video) {
     return (
       <tr className="b-video-index__row" key={video.id}>
         <td className="b-video-index__cell">
-          {entities.decode(video.title)}
+          <Link
+            to={`/video/${video.id}`}
+            onClick={() => this.props.toggleVideoIndex()}
+          >
+            {entities.decode(video.title)}
+          </Link>
         </td>
         <td className="b-video-index__cell">
           {video.parentCategoryTitle}
@@ -86,7 +92,7 @@ class VideoListModal extends React.Component {
               </tr>
             </thead>
             <tbody className="b-video-index__body">
-              {videos.map(video => VideoListModal.renderRow(video))}
+              {videos.map(video => this.renderRow(video))}
             </tbody>
           </table>
         </div>
@@ -98,8 +104,9 @@ class VideoListModal extends React.Component {
 
 VideoListModal.propTypes = {
   videos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  sortVideoIndexList: PropTypes.func.isRequired,
   sortingBy: PropTypes.string.isRequired,
+  sortVideoIndexList: PropTypes.func.isRequired,
+  toggleVideoIndex: PropTypes.func.isRequired,
 };
 
 export default VideoListModal;

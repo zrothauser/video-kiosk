@@ -8,20 +8,22 @@ import PropTypes from 'prop-types';
 import VideoListModal from '../../components/VideoListModal';
 
 // Actions
-import { sortVideoIndexList } from '../../redux/actions/app';
+import { sortVideoIndexList, toggleVideoIndex } from '../../redux/actions/app';
 
 export const VideoIndex = props => (
   <VideoListModal
     videos={props.videos}
-    sortVideoIndexList={props.sortVideoIndexList}
     sortingBy={props.sortingBy}
+    sortVideoIndexList={props.sortVideoIndexList}
+    toggleVideoIndex={props.toggleVideoIndex}
   />
 );
 
 VideoIndex.propTypes = {
   videos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  sortVideoIndexList: PropTypes.func.isRequired,
   sortingBy: PropTypes.string.isRequired,
+  sortVideoIndexList: PropTypes.func.isRequired,
+  toggleVideoIndex: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -35,7 +37,7 @@ const mapStateToProps = (state) => {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ sortVideoIndexList }, dispatch);
+  return bindActionCreators({ sortVideoIndexList, toggleVideoIndex }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoIndex);
