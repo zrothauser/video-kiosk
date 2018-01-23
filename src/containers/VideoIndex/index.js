@@ -36,8 +36,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ sortVideoIndexList, toggleVideoIndex }, dispatch);
-}
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({ sortVideoIndexList, toggleVideoIndex }, dispatch));
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoIndex);

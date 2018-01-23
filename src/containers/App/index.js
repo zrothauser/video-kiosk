@@ -48,8 +48,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ toggleVideoIndex }, dispatch);
-}
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({ toggleVideoIndex }, dispatch));
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
