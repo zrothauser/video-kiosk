@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AllHtmlEntities as Entities } from 'html-entities';
+import ScrollLock from 'react-scrolllock';
 
 // Helpers
 import { convertSecondsToMinutesSeconds } from '../../utils/video';
@@ -89,6 +90,7 @@ class VideoListModal extends React.Component {
             </tbody>
           </table>
         </div>
+        <ScrollLock />
       </div>
     );
   }

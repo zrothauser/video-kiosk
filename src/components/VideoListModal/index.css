@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   z-index: 20;
+  overflow-y: scroll;
 }
 
 .b-video-index__container {
