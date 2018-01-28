@@ -48,6 +48,11 @@ export class VideoScreen extends React.Component {
       parentCategory,
       indexInCategory,
       otherVideos,
+      isPlaying,
+      volume,
+      currentTime,
+      showControls,
+      showPlayPauseButton,
     } = this.props;
 
     return (
@@ -64,6 +69,11 @@ export class VideoScreen extends React.Component {
           parentCategory={parentCategory}
           indexInCategory={indexInCategory}
           otherVideos={otherVideos}
+          isPlaying={isPlaying}
+          volume={volume}
+          currentTime={currentTime}
+          showControls={showControls}
+          showPlayPauseButton={showPlayPauseButton}
         />
       </div>
     );
@@ -101,23 +111,20 @@ VideoScreen.propTypes = {
   parentCategory: PropTypes.string,
   indexInCategory: PropTypes.number,
   otherVideos: PropTypes.arrayOf(PropTypes.object),
+  isPlaying: PropTypes.bool.isRequired,
+  volume: PropTypes.number.isRequired,
+  currentTime: PropTypes.number.isRequired,
+  showControls: PropTypes.bool.isRequired,
+  showPlayPauseButton: PropTypes.bool.isRequired,
 };
 
 // Connect with store
-function mapDispatchToProps(dispatch) {
-  return {
-    getMP4Data: id => dispatch(videoAPIActions.fetchMP4Data(id)),
-    getCaptionData: id => dispatch(videoAPIActions.fetchCaptionData(id)),
-    setCurrentVideoID: id => dispatch(videoPlayerActions.setVideoID(id)),
-    playPauseVideo: () => dispatch(videoPlayerActions.playPauseVideo()),
-  };
-}
-
 const mapStateToProps = (state, ownProps) => {
   // Get data for this video, if it exists
   const allVideos = state.videos.videos;
   const videoID = parseInt(ownProps.match.params.id, 10);
   const videoData = allVideos.find(video => video.id === videoID);
+  const playerState = state.videoPlayer;
 
   if (!videoData) {
     return ownProps;
@@ -138,8 +145,22 @@ const mapStateToProps = (state, ownProps) => {
     parentCategory: videoData.parentCategory,
     indexInCategory: videoData.indexInCategory,
     otherVideos: sortedOtherVideos,
+    isPlaying: playerState.isPlaying,
+    volume: playerState.volume,
+    currentTime: playerState.currentTime,
+    showControls: playerState.interface.showControls,
+    showPlayPauseButton: playerState.interface.showPlayPauseButton,
   };
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getMP4Data: id => dispatch(videoAPIActions.fetchMP4Data(id)),
+    getCaptionData: id => dispatch(videoAPIActions.fetchCaptionData(id)),
+    setCurrentVideoID: id => dispatch(videoPlayerActions.setVideoID(id)),
+    playPauseVideo: () => dispatch(videoPlayerActions.playPauseVideo()),
+  };
+}
 
 export default connect(
   mapStateToProps,
