@@ -10,3 +10,19 @@
   height: 100%;
   position: relative;
 }
+
+.b-homescreen__error {
+  display: block;
+  text-transform: none;
+  padding: 1.5625vw;
+}
+
+.b-homescreen__action {
+  display: inline;
+  text-decoration: underline;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  color: var(--color__link);
+  font-size: inherit;
+}

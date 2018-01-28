@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
           ...state.data,
           isLoading: false,
           isErrored: true,
-          error: action.error,
+          error: action.error.message,
         },
       };
 

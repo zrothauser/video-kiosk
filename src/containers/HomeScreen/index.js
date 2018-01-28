@@ -1,11 +1,15 @@
 // Dependencies
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ScrollLock from 'react-scrolllock';
 
 // Components
 import MainMenu from '../../components/MainMenu';
+
+// Actions
+import { fetchAppData } from '../../redux/actions/app';
 
 // Styles
 import './index.css';
@@ -14,9 +18,18 @@ export class HomeScreen extends React.Component {
   renderError() {
     const { error } = this.props;
 
+    // eslint-disable-next-line no-console
+    console.error(`API error:  ${error}`);
+
     return (
       <span className="b-homescreen__error">
-        {error}
+        There was an error loading the video data.
+        <button
+          className="b-homescreen__action"
+          onClick={() => this.props.fetchAppData()}
+        >
+          Try again?
+        </button>
       </span>
     );
   }
@@ -35,6 +48,7 @@ export class HomeScreen extends React.Component {
   render() {
     const {
       isErrored,
+      isLoading,
       backgroundVideoID,
     } = this.props;
 
@@ -78,7 +92,7 @@ export class HomeScreen extends React.Component {
     // Determine what type of content we should show
     let pageContent;
 
-    if (isErrored) {
+    if (isErrored && !isLoading) {
       pageContent = this.renderError();
     } else {
       pageContent = this.renderCategories();
@@ -138,4 +152,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({ fetchAppData }, dispatch));
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+

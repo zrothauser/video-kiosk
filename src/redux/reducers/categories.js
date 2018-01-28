@@ -58,7 +58,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isErrored: true,
-        error: action.error,
+        error: action.error.message,
       };
 
     case types.FETCH_APP_DATA_RECEIVED: {

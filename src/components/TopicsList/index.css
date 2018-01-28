@@ -6,32 +6,32 @@
 }
 
 .b-topics-list__title {
-    font-weight: 700;
-    font-size: 0.8333333333vw;
-    margin: 0;
-    box-sizing: border-box;
-    padding: 2.4479166667vw 0 0 0;
-    height: 5.2083333333vw;
-    letter-spacing: .16em;
+  font-weight: 700;
+  font-size: 0.8333333333vw;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 2.4479166667vw 0 0 0;
+  height: 5.2083333333vw;
+  letter-spacing: .16em;
 }
 
 .b-topics-list__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .b-topics-list__item {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .b-topics-list__link {
-    color: var(--color__grey--darker);
-    opacity: 1;
+  color: var(--color__grey--darker);
+  opacity: 1;
 }
 
 .b-topics-list__link--selected {
-    color: var(--color__white);
-    font-weight: normal;
+  color: var(--color__white);
+  font-weight: normal;
 }
