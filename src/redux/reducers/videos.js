@@ -120,6 +120,7 @@ export default (state = initialState, action) => {
             ...processedData[existingVideoIndex],
             id: videoID,
             title: video.title,
+            description: video.description,
             vimeoURL: video.vimeoid,
             parentCategory: video.parentCategory,
             parentCategoryTitle: video.parentCategoryTitle,
@@ -130,6 +131,7 @@ export default (state = initialState, action) => {
             ...VIDEO_OBJECT_STRUCTURE,
             id: videoID,
             title: video.title,
+            description: video.description,
             vimeoURL: video.vimeoid,
             parentCategory: video.parentCategory,
             parentCategoryTitle: video.parentCategoryTitle,
@@ -220,7 +222,6 @@ export default (state = initialState, action) => {
           error: null,
           thumbnailLarge: action.data[0].thumbnail_large,
           duration: action.data[0].duration,
-          description: action.data[0].description,
         },
       ];
 
