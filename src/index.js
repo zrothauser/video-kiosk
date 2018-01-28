@@ -12,7 +12,7 @@ import { fetchAppData } from './redux/actions/app';
 import App from './containers/App';
 
 // Service worker
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 // Base styles
 import './resources/fonts/fonts.css';
@@ -34,4 +34,4 @@ render(
 store.dispatch(fetchAppData());
 
 // Set up service worker
-registerServiceWorker();
+// registerServiceWorker();
