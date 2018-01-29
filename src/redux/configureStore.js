@@ -10,7 +10,7 @@ import rootReducer from './reducers';
 // Our API middleware
 import { apiData, vimeoData, mp4APIData, captionAPIData } from '../utils/api';
 
-export const history = createHistory();
+export const history = createHistory({basename: '/kiosk-v2'});
 
 const initialState = {};
 const enhancers = [];
