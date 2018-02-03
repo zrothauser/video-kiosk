@@ -46,13 +46,13 @@ export class VideoScreen extends React.Component {
       thumbnailFull,
       playPauseVideo,
       parentCategory,
+      parentCategoryTitle,
       indexInCategory,
-      otherVideos,
+      allVideosInCategory,
       isPlaying,
       volume,
       currentTime,
       showControls,
-      showPlayPauseButton,
     } = this.props;
 
     return (
@@ -67,38 +67,25 @@ export class VideoScreen extends React.Component {
           mp4Link={mp4Link}
           togglePlay={playPauseVideo}
           parentCategory={parentCategory}
+          parentCategoryTitle={parentCategoryTitle}
           indexInCategory={indexInCategory}
-          otherVideos={otherVideos}
+          allVideosInCategory={allVideosInCategory}
           isPlaying={isPlaying}
           volume={volume}
           currentTime={currentTime}
           showControls={showControls}
-          showPlayPauseButton={showPlayPauseButton}
         />
       </div>
     );
   }
 }
 
-VideoScreen.defaultProps = {
-  title: '',
-  id: null,
-  mp4Link: null,
-  thumbnailFull: null,
-  // captions: [{
-  //   uri: null,
-  // }],
-  parentCategory: '',
-  indexInCategory: 0,
-  otherVideos: [],
-};
-
 VideoScreen.propTypes = {
-  title: PropTypes.string,
-  id: PropTypes.number,
-  mp4Link: PropTypes.string,
-  thumbnailFull: PropTypes.string,
-  // captions: PropTypes.arrayOf(PropTypes.object),
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  mp4Link: PropTypes.string.isRequired,
+  thumbnailFull: PropTypes.string.isRequired,
+  // captions: PropTypes.arrayOf(PropTypes.shape({uri: PropTypes.string})).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -108,14 +95,14 @@ VideoScreen.propTypes = {
   getCaptionData: PropTypes.func.isRequired,
   setCurrentVideoID: PropTypes.func.isRequired,
   playPauseVideo: PropTypes.func.isRequired,
-  parentCategory: PropTypes.string,
-  indexInCategory: PropTypes.number,
-  otherVideos: PropTypes.arrayOf(PropTypes.object),
+  parentCategory: PropTypes.string.isRequired,
+  parentCategoryTitle: PropTypes.string.isRequired,
+  indexInCategory: PropTypes.number.isRequired,
+  allVideosInCategory: PropTypes.arrayOf(PropTypes.object).isRequired,
   isPlaying: PropTypes.bool.isRequired,
   volume: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,
-  showPlayPauseButton: PropTypes.bool.isRequired,
 };
 
 // Connect with store
@@ -124,32 +111,38 @@ const mapStateToProps = (state, ownProps) => {
   const allVideos = state.videos.videos;
   const videoID = parseInt(ownProps.match.params.id, 10);
   const videoData = allVideos.find(video => video.id === videoID);
-  const playerState = state.videoPlayer;
 
-  if (!videoData) {
-    return ownProps;
-  }
+  // Get anything related to the video player's state
+  const {
+    playerState,
+    interface: interfaceState,
+  } = state.videoPlayer;
 
   // Get the other videos in the category
-  const otherVideos = allVideos.filter(video => video.parentCategory === videoData.parentCategory);
-  const sortedOtherVideos = otherVideos.sort((a, b) => a - b);
+  let sortedAllVideosInCategory = [];
+
+  if (videoData) {
+    const allVideosInCategory = allVideos.filter(video =>
+      video.parentCategory === videoData.parentCategory);
+    sortedAllVideosInCategory = allVideosInCategory.sort((a, b) => a - b);
+  }
 
   return {
-    title: videoData.title,
     id: videoID,
-    description: videoData.description,
-    mp4Link: videoData.mp4Link,
-    thumbnailFull: videoData.thumbnailFull,
-    captions: videoData.captions,
-    duration: videoData.duration,
-    parentCategory: videoData.parentCategory,
-    indexInCategory: videoData.indexInCategory,
-    otherVideos: sortedOtherVideos,
+    title: videoData ? videoData.title : '',
+    description: videoData ? videoData.description : '',
+    mp4Link: videoData ? videoData.mp4Link : '',
+    thumbnailFull: videoData ? videoData.thumbnailFull : '',
+    captions: videoData ? videoData.captions : [],
+    duration: videoData ? videoData.duration : 0,
+    parentCategory: videoData ? videoData.parentCategory : '',
+    parentCategoryTitle: videoData ? videoData.parentCategoryTitle : '',
+    indexInCategory: videoData ? videoData.indexInCategory : 0,
+    allVideosInCategory: videoData ? sortedAllVideosInCategory : [],
     isPlaying: playerState.isPlaying,
     volume: playerState.volume,
     currentTime: playerState.currentTime,
-    showControls: playerState.interface.showControls,
-    showPlayPauseButton: playerState.interface.showPlayPauseButton,
+    showControls: interfaceState.showControls,
   };
 };
 

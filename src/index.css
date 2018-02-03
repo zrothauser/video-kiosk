@@ -2,6 +2,7 @@
   --color__white: #ffffff;
   --color__grey: #4d5a6a;
   --color__grey--darker: #2b3541;
+  --color__black: #000000;
 
   --color__background: var(--color__grey);
   --color__background--darker: var(--color__grey--darker);

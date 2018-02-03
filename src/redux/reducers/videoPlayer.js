@@ -2,15 +2,14 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-  videoPlayer: {
+  playerState: {
     isPlaying: false,
     volume: 65,
     currentTime: 0,
     videoID: null,
   },
   interface: {
-    showControls: false,
-    showPlayPauseButton: false,
+    showControls: true,
   },
 };
 
@@ -19,8 +18,8 @@ export default (state = initialState, action) => {
     case types.VIDEO_PLAYER_SET_VIDEO_ID: {
       return {
         ...state,
-        videoPlayer: {
-          ...state.videoPlayer,
+        playerState: {
+          ...state.playerState,
           videoID: action.id,
         },
       };
@@ -29,9 +28,9 @@ export default (state = initialState, action) => {
     case types.VIDEO_PLAYER_PLAY_PAUSE: {
       return {
         ...state,
-        videoPlayer: {
-          ...state.videoPlayer,
-          isPlaying: !state.videoPlayer.isPlaying,
+        playerState: {
+          ...state.playerState,
+          isPlaying: !state.playerState.isPlaying,
         },
       };
     }
