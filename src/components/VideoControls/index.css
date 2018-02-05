@@ -28,6 +28,7 @@
 .b-video-controls__upper {
   width: 100%;
   height: 11px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -130,133 +131,6 @@
   width: 2.5vw;
 }
 
-
-/* Custom Sliders */
-/*input[type=range] {
-  opacity: 0.01;
-  width: 100%;
-  height: 100%;
-  -webkit-appearance: none;
-  margin: 0px;
-  padding: 0px;
-  border: 0 none;
-  background: transparent;
-  color: transparent;
-  overflow: visible;
-  z-index: 101;
-}
-
-input[type=range]:focus {
-  outline: none;
-}
-
-input[type=range],
-::-moz-range-track,
-::-ms-track {
-  width: 100%;
-  height: 100%;
-  -moz-appearance: none;
-  margin: 0px;
-  padding: 0px;
-  border: 0 none;
-  background: transparent;
-  color: transparent;
-  overflow: visible;
-}
-
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: transparent;
-  border: transparent;
-}
-
-input[type=range]::-webkit-slider-thumb,
-::-moz-range-thumb,
-::-ms-thumb {
-  -webkit-appearance: none;
-  outline: none;
-  background-color: transparent;
-  width: 21px;
-  height: 21px;
-}
-
-input[type=range]::-ms-fill-lower {
-  background: transparent;
-  border: 0 none;
-}
-
-input[type=range]::-ms-fill-upper {
-  background: transparent;
-  border: 0 none;
-}
-
-input[type=range]::-ms-tooltip {
-  display: none;
-}
-
-.volume-container {
-  border: 0 none;
-  overflow: visible;
-  height: 21px;
-  width: 100px;
-  padding-left: 15px;
-  margin-right: 1.562vw;
-}
-
-.scrubber-container {
-  border: 0 none;
-  position: absolute;
-  overflow: visible;
-  height: 21px;
-  width: 100%;
-}
-
-.volume-slider,
-.scrubber-slider {
-  border: 0 none;
-  position: relative;
-  overflow: visible;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.slider {
-  position: absolute;
-  overflow: visible;
-  z-index: 100;
-}
-
-.slidertrack {
-  border-radius: 1px;
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  background-color: rgba(255, 255, 255, .5);
-}
-
-.slidertrack-played {
-  border-radius: 1px;
-  position: absolute;
-  height: 3px;
-  left: 0;
-  background-color: white;
-}
-
-.sliderthumb {
-  width: 21px;
-  height: 21px;
-  border-radius: 50%;
-  background-size: 21px 21px;
-  background-position: 0px 0px;
-  background-color: white;
-  position: absolute;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-  pointer-events: none;
-}*/
-
 /* Icons */
 .current-time {
   display: flex;
@@ -264,3 +138,13 @@ input[type=range]::-ms-tooltip {
   justify-content: flex-end;
   margin-top: -3vw;
 }
+
+
+/* .volume-container {
+  border: 0 none;
+  overflow: visible;
+  height: 21px;
+  width: 100px;
+  padding-left: 15px;
+  margin-right: 1.562vw;
+} */

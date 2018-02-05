@@ -23,9 +23,6 @@ export const FETCH_CAPTION_DATA_RECEIVED = 'api/caption/dataReceived';
 // Video Player actions
 export const VIDEO_PLAYER_SET_VIDEO_ID = 'interface/player/setVideoID';
 export const VIDEO_PLAYER_PLAY_PAUSE = 'interface/player/playPause';
-// export const VIDEO_PLAYER_SET_DURATION = 'interface/player/setDuration';
-// export const VIDEO_PLAYER_SET_PROGRESS = 'interface/player/setProgress';
-// export const VIDEO_PLAYER_SEEK = 'interface/player/seek';
-// export const VIDEO_PLAYER_INTERFACE_SHOW = 'interface/player/controlsVisibility';
-// export const VIDEO_PLAYER_INTERFACE_SET_SRC = 'interface/player/setSource';
-// export const VIDEO_PLAYER_INTERFACE_SET_TITLE = 'interface/player/setTitle';
+export const VIDEO_PLAYER_UPDATE_PROGRESS = 'interface/player/updateProgress';
+export const VIDEO_PLAYER_SEEK = 'interface/player/seek';
+export const VIDEO_PLAYER_TOGGLE_CONTROLS = 'interface/player/controlsVisibility';

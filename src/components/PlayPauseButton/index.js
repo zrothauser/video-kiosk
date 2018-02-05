@@ -39,16 +39,13 @@ class PlayPauseButton extends React.Component {
     return (
       <button
         className="b-play-pause-button"
-        onClick={togglePlay}
+        onClick={() => togglePlay(!isPlaying)}
       >
         {buttonContent}
       </button>
     );
   }
 }
-
-PlayPauseButton.defaultProps = {
-};
 
 PlayPauseButton.propTypes = {
   isPlaying: PropTypes.bool.isRequired,

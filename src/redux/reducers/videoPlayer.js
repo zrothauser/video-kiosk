@@ -6,6 +6,7 @@ const initialState = {
     isPlaying: false,
     volume: 65,
     currentTime: 0,
+    seek: null,
     videoID: null,
   },
   interface: {
@@ -30,7 +31,37 @@ export default (state = initialState, action) => {
         ...state,
         playerState: {
           ...state.playerState,
-          isPlaying: !state.playerState.isPlaying,
+          isPlaying: action.play,
+        },
+      };
+    }
+
+    case types.VIDEO_PLAYER_UPDATE_PROGRESS: {
+      return {
+        ...state,
+        playerState: {
+          ...state.playerState,
+          currentTime: action.time,
+        },
+      };
+    }
+
+    case types.VIDEO_PLAYER_SEEK: {
+      return {
+        ...state,
+        playerState: {
+          ...state.playerState,
+          seek: action.time,
+        },
+      };
+    }
+
+    case types.VIDEO_PLAYER_TOGGLE_CONTROLS: {
+      return {
+        ...state,
+        interface: {
+          ...state.interface,
+          showControls: !state.interface.showControls,
         },
       };
     }

@@ -27,18 +27,6 @@ export class VideoScreen extends React.Component {
     getCaptionData(id);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  handleSeek() {
-    // const { duration } = this.props;
-    // const clickedTime = (percent / 100) * duration;
-
-    // this.props.actions.seekProgress(clickedTime);
-
-    // eslint-disable-next-line no-console
-    console.log('seek');
-  }
-
-
   render() {
     const {
       title,
@@ -52,7 +40,9 @@ export class VideoScreen extends React.Component {
       isPlaying,
       volume,
       currentTime,
+      duration,
       showControls,
+      updateProgress,
     } = this.props;
 
     return (
@@ -73,7 +63,9 @@ export class VideoScreen extends React.Component {
           isPlaying={isPlaying}
           volume={volume}
           currentTime={currentTime}
+          duration={duration}
           showControls={showControls}
+          updateProgress={updateProgress}
         />
       </div>
     );
@@ -91,10 +83,6 @@ VideoScreen.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  getMP4Data: PropTypes.func.isRequired,
-  getCaptionData: PropTypes.func.isRequired,
-  setCurrentVideoID: PropTypes.func.isRequired,
-  playPauseVideo: PropTypes.func.isRequired,
   parentCategory: PropTypes.string.isRequired,
   parentCategoryTitle: PropTypes.string.isRequired,
   indexInCategory: PropTypes.number.isRequired,
@@ -102,7 +90,14 @@ VideoScreen.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   volume: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,
+  getMP4Data: PropTypes.func.isRequired,
+  getCaptionData: PropTypes.func.isRequired,
+  setCurrentVideoID: PropTypes.func.isRequired,
+  playPauseVideo: PropTypes.func.isRequired,
+  updateProgress: PropTypes.func.isRequired,
+  // toggleControls: PropTypes.func.isRequired,
 };
 
 // Connect with store
@@ -134,7 +129,6 @@ const mapStateToProps = (state, ownProps) => {
     mp4Link: videoData ? videoData.mp4Link : '',
     thumbnailFull: videoData ? videoData.thumbnailFull : '',
     captions: videoData ? videoData.captions : [],
-    duration: videoData ? videoData.duration : 0,
     parentCategory: videoData ? videoData.parentCategory : '',
     parentCategoryTitle: videoData ? videoData.parentCategoryTitle : '',
     indexInCategory: videoData ? videoData.indexInCategory : 0,
@@ -142,6 +136,7 @@ const mapStateToProps = (state, ownProps) => {
     isPlaying: playerState.isPlaying,
     volume: playerState.volume,
     currentTime: playerState.currentTime,
+    duration: videoData ? videoData.duration : 0,
     showControls: interfaceState.showControls,
   };
 };
@@ -151,7 +146,9 @@ function mapDispatchToProps(dispatch) {
     getMP4Data: id => dispatch(videoAPIActions.fetchMP4Data(id)),
     getCaptionData: id => dispatch(videoAPIActions.fetchCaptionData(id)),
     setCurrentVideoID: id => dispatch(videoPlayerActions.setVideoID(id)),
-    playPauseVideo: () => dispatch(videoPlayerActions.playPauseVideo()),
+    playPauseVideo: play => dispatch(videoPlayerActions.playPauseVideo(play)),
+    updateProgress: time => dispatch(videoPlayerActions.updateProgress(time)),
+    // toggleControls: () => dispatch(videoPlayerActions.toggleControls()),
   };
 }
 

@@ -14,7 +14,7 @@ const TopicsList = props => (
     <ul className="b-topics-list__list">
       {props.categories.map((category) => {
         // Build classes for the link, so we can mark the active one
-        let linkClasses = ['b-topics-list__link'];
+        const linkClasses = ['b-topics-list__link'];
 
         if (props.selectedCategorySlug === category.slug) {
           linkClasses.push('b-topics-list__link--selected');

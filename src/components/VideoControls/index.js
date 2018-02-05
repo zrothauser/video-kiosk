@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { AllHtmlEntities as Entities } from 'html-entities';
 
+// Components
+import Slider from '../Slider';
+
 // Icons
 import CCSVG from '../../resources/icons/cc.svg';
 import VolumeSVG from '../../resources/icons/volume.svg';
@@ -89,15 +92,23 @@ class VideoControls extends React.Component {
       title,
       parentCategory,
       parentCategoryTitle,
+      duration,
+      currentTime,
       hasCaptions,
       // volume,
       showVolumeControls,
+      handleSeek,
     } = this.props;
 
     return (
       <div className="b-video-controls">
         <div className="b-video-controls__upper">
-          {/* <Scrubber /> */}
+          <Slider
+            minimum={0}
+            maximum={duration}
+            value={currentTime}
+            handleSeek={handleSeek}
+          />
         </div>
 
         <div className="b-video-controls__lower">
@@ -164,11 +175,14 @@ VideoControls.propTypes = {
   title: PropTypes.string.isRequired,
   parentCategory: PropTypes.string.isRequired,
   parentCategoryTitle: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  currentTime: PropTypes.number.isRequired,
   allVideosInCategory: PropTypes.arrayOf(PropTypes.object).isRequired,
   indexInCategory: PropTypes.number.isRequired,
   hasCaptions: PropTypes.bool.isRequired,
   // volume: PropTypes.number.isRequired,
   showVolumeControls: PropTypes.bool.isRequired,
+  handleSeek: PropTypes.func.isRequired,
 };
 
 export default VideoControls;
