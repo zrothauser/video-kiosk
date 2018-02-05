@@ -95,9 +95,11 @@ class VideoControls extends React.Component {
       duration,
       currentTime,
       hasCaptions,
-      // volume,
-      showVolumeControls,
+      volume,
+      showVolumeControl,
       handleSeek,
+      handleVolumeChange,
+      toggleVolumeControl,
     } = this.props;
 
     return (
@@ -138,7 +140,7 @@ class VideoControls extends React.Component {
             <span className="b-video-controls__lower__right__buttons">
               <button
                 className="b-video-controls__volume-button"
-                onClick={() => console.log('volume control clicked')}
+                onClick={() => toggleVolumeControl()}
               >
                 <img
                   src={VolumeSVG}
@@ -147,8 +149,15 @@ class VideoControls extends React.Component {
                 />
               </button>
 
-              {showVolumeControls &&
-                {/** <VolumeSlider /> */}
+              {showVolumeControl &&
+                <div className="b-video-controls__volume-slider">
+                  <Slider
+                    minimum={0}
+                    maximum={100}
+                    value={volume}
+                    handleSeek={handleVolumeChange}
+                  />
+                </div>
               }
 
               {hasCaptions &&
@@ -180,9 +189,11 @@ VideoControls.propTypes = {
   allVideosInCategory: PropTypes.arrayOf(PropTypes.object).isRequired,
   indexInCategory: PropTypes.number.isRequired,
   hasCaptions: PropTypes.bool.isRequired,
-  // volume: PropTypes.number.isRequired,
-  showVolumeControls: PropTypes.bool.isRequired,
+  volume: PropTypes.number.isRequired,
+  showVolumeControl: PropTypes.bool.isRequired,
   handleSeek: PropTypes.func.isRequired,
+  handleVolumeChange: PropTypes.func.isRequired,
+  toggleVolumeControl: PropTypes.func.isRequired,
 };
 
 export default VideoControls;

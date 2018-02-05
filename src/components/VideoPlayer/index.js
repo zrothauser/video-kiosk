@@ -27,26 +27,23 @@ class VideoPlayer extends React.Component {
    * @param {Object} newProps New values for props.
    */
   componentWillReceiveProps(newProps) {
-    // If the isPlaying value didn't change, no need to do anything
-    if (this.props.isPlaying === newProps.isPlaying) {
-      return;
-    }
-
-    console.log('componentWillReceiveProps');
-
     // If we don't have a video rendered yet, don't do anything
     if (!this.videoElement) {
-      console.log('no video element');
       return;
     }
 
-    // Play/pause the video
-    if (newProps.isPlaying && this.videoElement.paused) {
-      console.log('start playing');
-      this.videoElement.play();
-    } else if (!this.videoElement.paused) {
-      console.log('pausing');
-      this.videoElement.pause();
+    // If we need to pause or play the video, do that now
+    if (this.props.isPlaying !== newProps.isPlaying) {
+      if (newProps.isPlaying && this.videoElement.paused) {
+        this.videoElement.play();
+      } else if (!this.videoElement.paused) {
+        this.videoElement.pause();
+      }
+    }
+
+    // Update the volume, if needed
+    if (this.props.volume !== newProps.volume) {
+      this.applyVideoVolume();
     }
   }
 
@@ -71,10 +68,8 @@ class VideoPlayer extends React.Component {
       return;
     }
 
-    const time = this.videoElement.currentTime;
-    // console.log(`Current progress: ${time}`);
-
-    updateProgress(time);
+    // Keep track of the current time in the store
+    updateProgress(this.videoElement.currentTime);
 
     // Call recursively as long as we're still playing
     if (isPlaying) {
@@ -94,10 +89,26 @@ class VideoPlayer extends React.Component {
   }
 
   /**
+   * Sets the 'volume' prop to the video element.
+   *
+   * This is necessary because there isn't an HTML
+   * attribute that can be set on the <video> element
+   * to control its volume, so we can't set this in a
+   * declarative way.
+   */
+  applyVideoVolume() {
+    // Skip if we don't have an element rendered yet
+    if (!this.videoElement) {
+      return;
+    }
+
+    this.videoElement.volume = (this.props.volume / 100);
+  }
+
+  /**
    * Cancels the animation frame.
    */
   clearAnimationFrame() {
-    console.log('clear animation frame');
     window.cancelAnimationFrame(this.animationFrame);
     this.animationFrame = null;
   }
@@ -106,6 +117,10 @@ class VideoPlayer extends React.Component {
    * Updates state and plays the video once it's ready.
    */
   handleLoad() {
+    // Sets the volume, because we can't do that declaratively
+    this.applyVideoVolume();
+
+    // And play the video
     this.props.togglePlay(true);
   }
 
@@ -113,7 +128,6 @@ class VideoPlayer extends React.Component {
    * Event handler for when the video begins playing.
    */
   handlePlay() {
-    console.log('handle play');
     this.setProgress();
   }
 
@@ -121,7 +135,6 @@ class VideoPlayer extends React.Component {
    * Event handler for when the video finishes playing.
    */
   handleOnEnd() {
-    console.log('handle end');
     this.clearAnimationFrame();
   }
 
@@ -140,6 +153,9 @@ class VideoPlayer extends React.Component {
       allVideosInCategory,
       togglePlay,
       showControls,
+      showVolumeControl,
+      handleVolumeChange,
+      toggleVolumeControl,
     } = this.props;
 
     return (
@@ -175,11 +191,13 @@ class VideoPlayer extends React.Component {
               indexInCategory={indexInCategory}
               allVideosInCategory={allVideosInCategory}
               hasCaptions
-              showVolumeControls={false}
+              showVolumeControl={showVolumeControl}
               volume={volume}
               currentTime={currentTime}
               duration={duration}
               handleSeek={time => this.seek(time)}
+              handleVolumeChange={handleVolumeChange}
+              toggleVolumeControl={toggleVolumeControl}
             />
           </div>
         }
@@ -203,6 +221,8 @@ VideoPlayer.propTypes = {
   volume: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,
   updateProgress: PropTypes.func.isRequired,
+  handleVolumeChange: PropTypes.func.isRequired,
+  toggleVolumeControl: PropTypes.func.isRequired,
 };
 
 export default VideoPlayer;

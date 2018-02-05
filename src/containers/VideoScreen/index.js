@@ -42,7 +42,10 @@ export class VideoScreen extends React.Component {
       currentTime,
       duration,
       showControls,
+      showVolumeControl,
       updateProgress,
+      handleVolumeChange,
+      toggleVolumeControl,
     } = this.props;
 
     return (
@@ -65,7 +68,10 @@ export class VideoScreen extends React.Component {
           currentTime={currentTime}
           duration={duration}
           showControls={showControls}
+          showVolumeControl={showVolumeControl}
           updateProgress={updateProgress}
+          handleVolumeChange={handleVolumeChange}
+          toggleVolumeControl={toggleVolumeControl}
         />
       </div>
     );
@@ -92,11 +98,14 @@ VideoScreen.propTypes = {
   currentTime: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,
+  showVolumeControl: PropTypes.bool.isRequired,
   getMP4Data: PropTypes.func.isRequired,
   getCaptionData: PropTypes.func.isRequired,
   setCurrentVideoID: PropTypes.func.isRequired,
   playPauseVideo: PropTypes.func.isRequired,
   updateProgress: PropTypes.func.isRequired,
+  handleVolumeChange: PropTypes.func.isRequired,
+  toggleVolumeControl: PropTypes.func.isRequired,
   // toggleControls: PropTypes.func.isRequired,
 };
 
@@ -138,6 +147,7 @@ const mapStateToProps = (state, ownProps) => {
     currentTime: playerState.currentTime,
     duration: videoData ? videoData.duration : 0,
     showControls: interfaceState.showControls,
+    showVolumeControl: interfaceState.showVolumeControl,
   };
 };
 
@@ -148,6 +158,8 @@ function mapDispatchToProps(dispatch) {
     setCurrentVideoID: id => dispatch(videoPlayerActions.setVideoID(id)),
     playPauseVideo: play => dispatch(videoPlayerActions.playPauseVideo(play)),
     updateProgress: time => dispatch(videoPlayerActions.updateProgress(time)),
+    handleVolumeChange: volume => dispatch(videoPlayerActions.setVolume(volume)),
+    toggleVolumeControl: () => dispatch(videoPlayerActions.toggleVolumeControl()),
     // toggleControls: () => dispatch(videoPlayerActions.toggleControls()),
   };
 }

@@ -24,5 +24,6 @@ export const FETCH_CAPTION_DATA_RECEIVED = 'api/caption/dataReceived';
 export const VIDEO_PLAYER_SET_VIDEO_ID = 'interface/player/setVideoID';
 export const VIDEO_PLAYER_PLAY_PAUSE = 'interface/player/playPause';
 export const VIDEO_PLAYER_UPDATE_PROGRESS = 'interface/player/updateProgress';
-export const VIDEO_PLAYER_SEEK = 'interface/player/seek';
 export const VIDEO_PLAYER_TOGGLE_CONTROLS = 'interface/player/controlsVisibility';
+export const VIDEO_PLAYER_SET_VOLUME = 'interface/player/setVolume';
+export const VIDEO_PLAYER_TOGGLE_VOLUME_CONTROL = 'interface/player/toggleVolumeControl';

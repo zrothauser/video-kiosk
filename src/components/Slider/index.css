@@ -36,6 +36,7 @@
   margin: 0;
   text-align: center;
   pointer-events: none;
+  transform: translateX(-50%);
 }
 
 .b-slider__input {

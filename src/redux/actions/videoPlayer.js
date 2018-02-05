@@ -21,15 +21,29 @@ export function updateProgress(time) {
   };
 }
 
-export function seekTime(time) {
-  return {
-    type: types.VIDEO_PLAYER_SEEK,
-    time,
-  };
-}
-
 export function toggleControls() {
   return {
     type: types.VIDEO_PLAYER_TOGGLE_CONTROLS,
+  };
+}
+
+/**
+ * Updates volume setting.
+ *
+ * @param {int} volume Volume on a scale of 0-100.
+ */
+export function setVolume(volume) {
+  return {
+    type: types.VIDEO_PLAYER_SET_VOLUME,
+    volume,
+  };
+}
+
+/**
+ * By default the volume control is hidden, this will toggle it.
+ */
+export function toggleVolumeControl() {
+  return {
+    type: types.VIDEO_PLAYER_TOGGLE_VOLUME_CONTROL,
   };
 }

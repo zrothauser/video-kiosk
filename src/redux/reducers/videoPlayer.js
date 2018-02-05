@@ -11,6 +11,7 @@ const initialState = {
   },
   interface: {
     showControls: true,
+    showVolumeControl: false,
   },
 };
 
@@ -46,22 +47,32 @@ export default (state = initialState, action) => {
       };
     }
 
-    case types.VIDEO_PLAYER_SEEK: {
-      return {
-        ...state,
-        playerState: {
-          ...state.playerState,
-          seek: action.time,
-        },
-      };
-    }
-
     case types.VIDEO_PLAYER_TOGGLE_CONTROLS: {
       return {
         ...state,
         interface: {
           ...state.interface,
           showControls: !state.interface.showControls,
+        },
+      };
+    }
+
+    case types.VIDEO_PLAYER_SET_VOLUME: {
+      return {
+        ...state,
+        playerState: {
+          ...state.playerState,
+          volume: action.volume,
+        },
+      };
+    }
+
+    case types.VIDEO_PLAYER_TOGGLE_VOLUME_CONTROL: {
+      return {
+        ...state,
+        interface: {
+          ...state.interface,
+          showVolumeControl: !state.interface.showVolumeControl,
         },
       };
     }

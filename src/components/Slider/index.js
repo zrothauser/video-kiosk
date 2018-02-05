@@ -99,6 +99,7 @@ class Slider extends React.Component {
           onMouseMove={event => this.onSeek(event)}
           onMouseDown={event => this.setMousedown(true, event)}
           onMouseUp={event => this.setMousedown(false, event)}
+          readOnly
         />
       </div>
     );
