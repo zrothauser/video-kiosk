@@ -1,3 +1,4 @@
+/* Defines some base color variables */
 :root {
   --color__white: #ffffff;
   --color__grey: #4d5a6a;
@@ -10,6 +11,7 @@
   --color__link: var(--color__white);
  }
 
+/* Base body styles */
 body {
   font-family: 'Gothic', sans-serif;
   background: var(--color__background);
@@ -20,15 +22,24 @@ body {
   font-size: 0.8333333333vw;
 }
 
+/* Nicer default for box-sizing */
 * {
   box-sizing: border-box;
 }
 
+/* Default link styling */
 a {
   color: var(--color__link);
   text-decoration: none;
 }
 
+/* Remove focus states - not great, but probably doesn't matter on a kiosk */
+a:focus,
+button:focus {
+  outline: none;
+}
+
+/* Helper class for hidden, accessibility text */
 .h-screen-reader {
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);
