@@ -41,8 +41,16 @@ class Slider extends React.Component {
     const progressBarWidth = progressBarClientRect.width;
     const percent = (mouseX / progressBarWidth);
 
-    const newValue = percent * (maximum - minimum);
-    // console.log('new Value: ', newValue);
+    let newValue = percent * (maximum - minimum);
+
+    // Rounding based on the cursor position could cause
+    // the value to go over or under the min/max, so don't
+    // let that happen
+    if (newValue > maximum) {
+      newValue = maximum;
+    } else if (newValue < minimum) {
+      newValue = minimum;
+    }
 
     handleSeek(newValue);
   }
