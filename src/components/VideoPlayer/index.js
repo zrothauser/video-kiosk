@@ -255,7 +255,7 @@ class VideoPlayer extends React.Component {
           </video>
         </div>
 
-        {true &&
+        {showControls &&
           <div className="b-video-player__controls-wrapper">
             <VideoControls
               title={title}
