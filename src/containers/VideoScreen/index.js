@@ -46,6 +46,7 @@ export class VideoScreen extends React.Component {
       updateProgress,
       handleVolumeChange,
       toggleVolumeControl,
+      toggleControls,
     } = this.props;
 
     return (
@@ -72,6 +73,7 @@ export class VideoScreen extends React.Component {
           updateProgress={updateProgress}
           handleVolumeChange={handleVolumeChange}
           toggleVolumeControl={toggleVolumeControl}
+          toggleControls={toggleControls}
         />
       </div>
     );
@@ -106,7 +108,7 @@ VideoScreen.propTypes = {
   updateProgress: PropTypes.func.isRequired,
   handleVolumeChange: PropTypes.func.isRequired,
   toggleVolumeControl: PropTypes.func.isRequired,
-  // toggleControls: PropTypes.func.isRequired,
+  toggleControls: PropTypes.func.isRequired,
 };
 
 // Connect with store
@@ -160,7 +162,7 @@ function mapDispatchToProps(dispatch) {
     updateProgress: time => dispatch(videoPlayerActions.updateProgress(time)),
     handleVolumeChange: volume => dispatch(videoPlayerActions.setVolume(volume)),
     toggleVolumeControl: () => dispatch(videoPlayerActions.toggleVolumeControl()),
-    // toggleControls: () => dispatch(videoPlayerActions.toggleControls()),
+    toggleControls: show => dispatch(videoPlayerActions.toggleControls(show)),
   };
 }
 

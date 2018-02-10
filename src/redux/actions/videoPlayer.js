@@ -21,9 +21,10 @@ export function updateProgress(time) {
   };
 }
 
-export function toggleControls() {
+export function toggleControls(show) {
   return {
     type: types.VIDEO_PLAYER_TOGGLE_CONTROLS,
+    show,
   };
 }
 

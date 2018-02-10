@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
         ...state,
         interface: {
           ...state.interface,
-          showControls: !state.interface.showControls,
+          showControls: action.show,
         },
       };
     }

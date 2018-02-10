@@ -19,6 +19,11 @@ class VideoPlayer extends React.Component {
     this.handlePlay = this.handlePlay.bind(this);
     this.handleOnEnd = this.handleOnEnd.bind(this);
     this.setProgress = this.setProgress.bind(this);
+    this.hideControls = this.hideControls.bind(this);
+    this.showControls = this.showControls.bind(this);
+
+    // Initial state
+    this.state = { timer: null };
   }
 
   /**
@@ -51,6 +56,7 @@ class VideoPlayer extends React.Component {
    * Clear the animation frame before unmounting.
    */
   componentWillUnmount() {
+    clearTimeout(this.state.timer);
     this.clearAnimationFrame();
   }
 
@@ -83,7 +89,6 @@ class VideoPlayer extends React.Component {
    * @param int time Time in seconds.
    */
   seek(time) {
-    console.log(`Seeking to time: ${time}`);
     this.videoElement.currentTime = time;
     this.setProgress();
   }
@@ -114,6 +119,36 @@ class VideoPlayer extends React.Component {
   }
 
   /**
+   * Hides the controls, controlled by the timer.
+   */
+  hideControls() {
+    this.props.toggleControls(false);
+  }
+
+  /**
+   * Shows the controls, controlled by the timer.
+   */
+  showControls() {
+    this.props.toggleControls(true);
+  }
+
+  /**
+   * Handles internal timer state, for showing/hiding controls.
+   */
+  resetTimer() {
+    clearTimeout(this.state.timer);
+    this.setState({ timer: setTimeout(this.hideControls, 5000) });
+  }
+
+  /**
+   * Shows controls and resets the timer when the mouse moves.
+   */
+  mouseMoveHandler() {
+    this.showControls();
+    this.resetTimer();
+  }
+
+  /**
    * Updates state and plays the video once it's ready.
    */
   handleLoad() {
@@ -122,6 +157,9 @@ class VideoPlayer extends React.Component {
 
     // And play the video
     this.props.togglePlay(true);
+
+    // Reset the controls timer
+    this.resetTimer();
   }
 
   /**
@@ -159,7 +197,11 @@ class VideoPlayer extends React.Component {
     } = this.props;
 
     return (
-      <div className="b-video-player">
+      <div
+        className="b-video-player"
+        onMouseMove={() => this.mouseMoveHandler()}
+        onTouchStart={() => this.mouseMoveHandler()}
+      >
         {showControls &&
           <PlayPauseButton
             isPlaying={isPlaying}
@@ -220,9 +262,11 @@ VideoPlayer.propTypes = {
   togglePlay: PropTypes.func.isRequired,
   volume: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,
+  showVolumeControl: PropTypes.bool.isRequired,
   updateProgress: PropTypes.func.isRequired,
   handleVolumeChange: PropTypes.func.isRequired,
   toggleVolumeControl: PropTypes.func.isRequired,
+  toggleControls: PropTypes.func.isRequired,
 };
 
 export default VideoPlayer;
