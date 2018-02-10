@@ -8,9 +8,6 @@ import ScrollLock from 'react-scrolllock';
 // Helpers
 import { convertSecondsToMinutesSeconds } from '../../utils/video';
 
-// Icons
-import DownIcon from '../../resources/icons/notch-down.svg';
-
 // Styles
 import './index.css';
 
@@ -42,8 +39,6 @@ class VideoListModal extends React.Component {
   render() {
     const {
       videos,
-      sortingBy,
-      sortVideoIndexList,
     } = this.props;
 
     return (
@@ -53,38 +48,10 @@ class VideoListModal extends React.Component {
             <thead className="b-video-index__head">
               <tr>
                 <td className="b-video-index__cell">
-                  <span
-                    onClick={() => sortVideoIndexList('title')}
-                    onKeyPress={() => sortVideoIndexList('title')}
-                    role="button"
-                    tabIndex="0"
-                    className="b-video-index__sorter"
-                  >
-                    TITLE
-                    {(sortingBy === 'title') &&
-                      <img
-                        src={DownIcon}
-                        alt="Sorting by Title"
-                        className="b-video-index__sort-icon"
-                      />}
-                  </span>
+                  TITLE
                 </td>
                 <td className="b-video-index__cell">
-                  <span
-                    onClick={() => sortVideoIndexList('topic')}
-                    onKeyPress={() => sortVideoIndexList('topic')}
-                    role="button"
-                    tabIndex="0"
-                    className="b-video-index__sorter"
-                  >
-                    TOPIC
-                    {(sortingBy === 'topic') &&
-                      <img
-                        src={DownIcon}
-                        alt="Sorting by Topic"
-                        className="b-video-index__sort-icon"
-                      />}
-                  </span>
+                  TOPIC
                 </td>
                 <td className="b-video-index__cell">
                   TIME
@@ -104,8 +71,6 @@ class VideoListModal extends React.Component {
 
 VideoListModal.propTypes = {
   videos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  sortingBy: PropTypes.string.isRequired,
-  sortVideoIndexList: PropTypes.func.isRequired,
   toggleVideoIndex: PropTypes.func.isRequired,
 };
 

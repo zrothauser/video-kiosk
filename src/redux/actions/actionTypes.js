@@ -3,7 +3,6 @@ export const FETCH_APP_DATA = 'api/app/fetchData';
 export const FETCH_APP_DATA_ERROR = 'api/app/errorReceived';
 export const FETCH_APP_DATA_RECEIVED = 'api/app/dataReceived';
 export const INTERFACE_TOGGLE_VIDEO_INDEX = 'interface/toggleVideoIndex';
-export const INTERFACE_VIDEO_INDEX_SORT = 'interface/videoIndexSort';
 
 // Vimeo API actions
 export const FETCH_VIMEO_DATA = 'api/vimeo/fetchData';

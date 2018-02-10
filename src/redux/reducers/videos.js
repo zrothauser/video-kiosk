@@ -7,25 +7,28 @@ import * as types from '../actions/actionTypes';
 // Helpers
 import { extractVimeoIDFromURL } from '../../utils/video';
 
-// Helper function to sort videos by title or category
-const sortVideos = (videos, sortKey = 'title') => {
-  let key = sortKey;
-
-  // Change "topic" to "parentCategory" for the actual data
-  if (sortKey === 'topic') {
-    key = 'parentCategory';
+// Helper function to sort videos by Topic/Category
+// and then alphabetically by title
+const sortVideos = videos => [...videos].sort((a, b) => {
+  // If categories/topics are different, sort by those
+  if (a.parentCategory < b.parentCategory) {
+    return -1;
+  } else if (a.parentCategory > b.parentCategory) {
+    return 1;
   }
 
-  return [...videos].sort((a, b) => {
-    if (a[key] < b[key]) {
-      return -1;
-    } else if (a[key] > b[key]) {
-      return 1;
-    }
+  // If we got this far, then categories/topics are
+  // the same, so compare titles
+  if (a.title < b.title) {
+    return -1;
+  } else if (a.title > b.title) {
+    return 1;
+  }
 
-    return 0;
-  });
-};
+  // Should never happen, but just in case... same
+  // category and same title
+  return 0;
+});
 
 // Initial state
 const initialState = {
@@ -166,7 +169,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(processedData, state.sortKey),
+        videos: sortVideos(processedData),
         isLoading: false,
         isErrored: false,
         error: null,
@@ -187,7 +190,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
@@ -206,7 +209,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
@@ -227,7 +230,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
@@ -246,7 +249,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
@@ -265,7 +268,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
@@ -287,7 +290,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
@@ -306,7 +309,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
@@ -325,12 +328,11 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 
     case types.FETCH_CAPTION_DATA_RECEIVED: {
-      console.log(`received caption data for video with ID: ${action.id}`, action.data);
       const updatedVideos = [
         ...videosWithoutUpdatedVideo,
         {
@@ -346,18 +348,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        videos: sortVideos(updatedVideos, state.sortKey),
-      };
-    }
-
-    case types.INTERFACE_VIDEO_INDEX_SORT: {
-      // Videos can be sorted by either category or title
-      const sortKey = (action.sortKey === 'topic') ? 'parentCategory' : 'title';
-
-      return {
-        ...state,
-        sortKey: action.sortKey,
-        videos: sortVideos(state.videos, sortKey),
+        videos: sortVideos(updatedVideos),
       };
     }
 

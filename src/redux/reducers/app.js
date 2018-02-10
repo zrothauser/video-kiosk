@@ -67,16 +67,6 @@ export default (state = initialState, action) => {
       };
     }
 
-    case types.INTERFACE_VIDEO_INDEX_SORT: {
-      return {
-        ...state,
-        interface: {
-          ...state.interface,
-          videoIndexSorting: action.sortKey,
-        },
-      };
-    }
-
     default:
       return state;
   }
