@@ -12,6 +12,7 @@ const initialState = {
   interface: {
     showControls: true,
     showVolumeControl: false,
+    showCaptions: false,
   },
 };
 
@@ -53,6 +54,16 @@ export default (state = initialState, action) => {
         interface: {
           ...state.interface,
           showControls: action.show,
+        },
+      };
+    }
+
+    case types.VIDEO_PLAYER_TOGGLE_CAPTIONS: {
+      return {
+        ...state,
+        interface: {
+          ...state.interface,
+          showCaptions: !state.interface.showCaptions,
         },
       };
     }

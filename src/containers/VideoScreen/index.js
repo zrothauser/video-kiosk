@@ -42,12 +42,14 @@ export class VideoScreen extends React.Component {
       volume,
       currentTime,
       duration,
+      showCaptions,
       showControls,
       showVolumeControl,
       updateProgress,
       handleVolumeChange,
       toggleVolumeControl,
       toggleControls,
+      toggleCaptions,
     } = this.props;
 
     return (
@@ -70,12 +72,14 @@ export class VideoScreen extends React.Component {
           volume={volume}
           currentTime={currentTime}
           duration={duration}
+          showCaptions={showCaptions}
           showControls={showControls}
           showVolumeControl={showVolumeControl}
           updateProgress={updateProgress}
           handleVolumeChange={handleVolumeChange}
           toggleVolumeControl={toggleVolumeControl}
           toggleControls={toggleControls}
+          toggleCaptions={toggleCaptions}
         />
       </div>
     );
@@ -87,7 +91,7 @@ VideoScreen.propTypes = {
   id: PropTypes.number.isRequired,
   mp4Link: PropTypes.string.isRequired,
   thumbnailFull: PropTypes.string.isRequired,
-  captions: PropTypes.arrayOf(PropTypes.shape({ uri: PropTypes.string })).isRequired,
+  captions: PropTypes.shape({ link: PropTypes.string }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -101,6 +105,7 @@ VideoScreen.propTypes = {
   volume: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
+  showCaptions: PropTypes.bool.isRequired,
   showControls: PropTypes.bool.isRequired,
   showVolumeControl: PropTypes.bool.isRequired,
   getMP4Data: PropTypes.func.isRequired,
@@ -111,6 +116,7 @@ VideoScreen.propTypes = {
   handleVolumeChange: PropTypes.func.isRequired,
   toggleVolumeControl: PropTypes.func.isRequired,
   toggleControls: PropTypes.func.isRequired,
+  toggleCaptions: PropTypes.func.isRequired,
 };
 
 // Connect with store
@@ -135,13 +141,24 @@ const mapStateToProps = (state, ownProps) => {
     sortedAllVideosInCategory = allVideosInCategory.sort((a, b) => a - b);
   }
 
+  // Sort out the captions - there may be multiple tracks, but only one is active
+  let captionTrack = {};
+
+  if (videoData && videoData.captions.length) {
+    const selectedVideoTrack = videoData.captions.filter(track =>
+      track.active && track.active === true && track.type && track.type === 'captions');
+
+    if (selectedVideoTrack.length) {
+      [captionTrack] = selectedVideoTrack;
+    }
+  }
+
   return {
     id: videoID,
     title: videoData ? videoData.title : '',
     description: videoData ? videoData.description : '',
     mp4Link: videoData ? videoData.mp4Link : '',
     thumbnailFull: videoData ? videoData.thumbnailFull : '',
-    captions: videoData ? videoData.captions : [],
     parentCategory: videoData ? videoData.parentCategory : '',
     parentCategoryTitle: videoData ? videoData.parentCategoryTitle : '',
     indexInCategory: videoData ? videoData.indexInCategory : 0,
@@ -150,6 +167,8 @@ const mapStateToProps = (state, ownProps) => {
     volume: playerState.volume,
     currentTime: playerState.currentTime,
     duration: videoData ? videoData.duration : 0,
+    captions: captionTrack,
+    showCaptions: interfaceState.showCaptions,
     showControls: interfaceState.showControls,
     showVolumeControl: interfaceState.showVolumeControl,
   };
@@ -165,6 +184,7 @@ function mapDispatchToProps(dispatch) {
     handleVolumeChange: volume => dispatch(videoPlayerActions.setVolume(volume)),
     toggleVolumeControl: () => dispatch(videoPlayerActions.toggleVolumeControl()),
     toggleControls: show => dispatch(videoPlayerActions.toggleControls(show)),
+    toggleCaptions: () => dispatch(videoPlayerActions.toggleCaptions()),
   };
 }
 

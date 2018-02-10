@@ -28,6 +28,12 @@ export function toggleControls(show) {
   };
 }
 
+export function toggleCaptions() {
+  return {
+    type: types.VIDEO_PLAYER_TOGGLE_CAPTIONS,
+  };
+}
+
 /**
  * Updates volume setting.
  *

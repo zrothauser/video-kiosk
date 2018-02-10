@@ -49,7 +49,6 @@ class VideoControls extends React.Component {
         {previousVideo &&
           <Link
             className="b-video-controls__pagination__button"
-            onClick={() => { console.log('clicked Previous Video button'); }}
             to={`/video/${previousVideo.id}`}
             rel="prev"
           >
@@ -74,7 +73,6 @@ class VideoControls extends React.Component {
           <Link
             className="b-video-controls__pagination__button"
             to={`/video/${nextVideo.id}`}
-            onClick={() => { console.log('clicked Next Video button'); }}
             rel="next"
           >
             <img
@@ -100,6 +98,7 @@ class VideoControls extends React.Component {
       handleSeek,
       handleVolumeChange,
       toggleVolumeControl,
+      toggleCaptions,
     } = this.props;
 
     return (
@@ -163,7 +162,7 @@ class VideoControls extends React.Component {
               {hasCaptions &&
                 <button
                   className="b-video-controls__cc-button"
-                  onClick={() => console.log('cc control clicked')}
+                  onClick={() => toggleCaptions()}
                 >
                   <img
                     src={CCSVG}
@@ -194,6 +193,7 @@ VideoControls.propTypes = {
   handleSeek: PropTypes.func.isRequired,
   handleVolumeChange: PropTypes.func.isRequired,
   toggleVolumeControl: PropTypes.func.isRequired,
+  toggleCaptions: PropTypes.func.isRequired,
 };
 
 export default VideoControls;

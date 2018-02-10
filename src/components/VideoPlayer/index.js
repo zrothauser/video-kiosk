@@ -31,19 +31,23 @@ class VideoPlayer extends React.Component {
   }
 
   /**
-   * Updates the video element's state if necessary.
-   *
-   * @param {Object} newProps New values for props.
+   * Show captions if needed.
    */
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(prevProps) {
+    const {
+      isPlaying,
+      volume,
+      showCaptions,
+    } = this.props;
+
     // If we don't have a video rendered yet, don't do anything
     if (!this.videoElement) {
       return;
     }
 
     // If we need to pause or play the video, do that now
-    if (this.props.isPlaying !== newProps.isPlaying) {
-      if (newProps.isPlaying && this.videoElement.paused) {
+    if (prevProps.isPlaying !== isPlaying) {
+      if (isPlaying && this.videoElement.paused) {
         this.videoElement.play();
       } else if (!this.videoElement.paused) {
         this.videoElement.pause();
@@ -51,8 +55,17 @@ class VideoPlayer extends React.Component {
     }
 
     // Update the volume, if needed
-    if (this.props.volume !== newProps.volume) {
+    if (prevProps.volume !== volume) {
       this.applyVideoVolume();
+    }
+
+    // If captions should be shown, and they exist, show them
+    if (this.videoElement.textTracks.length) {
+      if (showCaptions) {
+        this.videoElement.textTracks[0].mode = 'showing';
+      } else {
+        this.videoElement.textTracks[0].mode = 'hidden';
+      }
     }
   }
 
@@ -141,7 +154,7 @@ class VideoPlayer extends React.Component {
    */
   resetTimer() {
     clearTimeout(this.state.timer);
-    this.setState({ timer: setTimeout(this.hideControls, 5000) });
+    this.setState({ timer: setTimeout(this.hideControls, 3000) });
   }
 
   /**
@@ -199,11 +212,10 @@ class VideoPlayer extends React.Component {
       showVolumeControl,
       handleVolumeChange,
       toggleVolumeControl,
+      toggleCaptions,
     } = this.props;
 
-    const captionSource = (captions && captions.length && captions[0].link) ?
-      captions[0].link :
-      null;
+    const captionSource = captions.link ? captions.link : null;
 
     return (
       <div
@@ -248,7 +260,7 @@ class VideoPlayer extends React.Component {
               parentCategoryTitle={parentCategoryTitle}
               indexInCategory={indexInCategory}
               allVideosInCategory={allVideosInCategory}
-              hasCaptions={!!captions.length}
+              hasCaptions={!!captions.link}
               showVolumeControl={showVolumeControl}
               volume={volume}
               currentTime={currentTime}
@@ -256,6 +268,7 @@ class VideoPlayer extends React.Component {
               handleSeek={time => this.seek(time)}
               handleVolumeChange={handleVolumeChange}
               toggleVolumeControl={toggleVolumeControl}
+              toggleCaptions={toggleCaptions}
             />
           </div>
         }
@@ -268,7 +281,7 @@ VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   poster: PropTypes.string.isRequired,
   mp4Link: PropTypes.string.isRequired,
-  captions: PropTypes.arrayOf(PropTypes.shape({ uri: PropTypes.string })).isRequired,
+  captions: PropTypes.shape({ link: PropTypes.string }).isRequired,
   title: PropTypes.string.isRequired,
   parentCategory: PropTypes.string.isRequired,
   parentCategoryTitle: PropTypes.string.isRequired,
@@ -280,10 +293,12 @@ VideoPlayer.propTypes = {
   volume: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,
   showVolumeControl: PropTypes.bool.isRequired,
+  showCaptions: PropTypes.bool.isRequired,
   updateProgress: PropTypes.func.isRequired,
   handleVolumeChange: PropTypes.func.isRequired,
   toggleVolumeControl: PropTypes.func.isRequired,
   toggleControls: PropTypes.func.isRequired,
+  toggleCaptions: PropTypes.func.isRequired,
 };
 
 export default VideoPlayer;
