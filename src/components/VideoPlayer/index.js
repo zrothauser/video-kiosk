@@ -27,10 +27,7 @@ class VideoPlayer extends React.Component {
     this.showControls = this.showControls.bind(this);
 
     // Initial state
-    this.state = {
-      controlsTimer: null,
-      timeMonitor: null,
-    };
+    this.state = { controlsTimer: null };
   }
 
   /**
