@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AllHtmlEntities as Entities } from 'html-entities';
+import createDOMPurify from 'dompurify';
 
 // Helpers
 import { convertSecondsToMinutesSeconds } from '../../utils/video';
@@ -10,8 +11,9 @@ import { convertSecondsToMinutesSeconds } from '../../utils/video';
 // Styles
 import './index.css';
 
-// Set up helper object
+// Set up helper objects
 const entities = new Entities();
+const DOMPurify = createDOMPurify(window);
 
 const VideoThumbnail = (props) => {
   const {
@@ -41,7 +43,9 @@ const VideoThumbnail = (props) => {
           {description &&
             <span
               // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{ __html: description }}
+              dangerouslySetInnerHTML={
+                { __html: DOMPurify.sanitize(description) }
+              }
             />
           }
           {duration &&
