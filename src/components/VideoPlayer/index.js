@@ -1,3 +1,7 @@
+// Disable this a11y file, we'll have captions anyway but
+// not until they're loaded from the API
+/* eslint-disable jsx-a11y/media-has-caption */
+
 // Dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -181,6 +185,7 @@ class VideoPlayer extends React.Component {
       isPlaying,
       poster,
       mp4Link,
+      captions,
       volume,
       title,
       duration,
@@ -195,6 +200,10 @@ class VideoPlayer extends React.Component {
       handleVolumeChange,
       toggleVolumeControl,
     } = this.props;
+
+    const captionSource = (captions && captions.length && captions[0].link) ?
+      captions[0].link :
+      null;
 
     return (
       <div
@@ -219,8 +228,15 @@ class VideoPlayer extends React.Component {
             onCanPlay={this.handleLoad}
             onPlay={this.handlePlay}
             onEnded={this.handleOnEnd}
+            crossOrigin="anonymous"
           >
-            <track kind="captions" src="sampleSubtitles_en.vtt" srcLang="en" />
+            {captionSource &&
+              <track
+                kind="captions"
+                src={captionSource}
+                srcLang="en"
+              />
+            }
           </video>
         </div>
 
@@ -232,7 +248,7 @@ class VideoPlayer extends React.Component {
               parentCategoryTitle={parentCategoryTitle}
               indexInCategory={indexInCategory}
               allVideosInCategory={allVideosInCategory}
-              hasCaptions
+              hasCaptions={!!captions.length}
               showVolumeControl={showVolumeControl}
               volume={volume}
               currentTime={currentTime}
@@ -252,6 +268,7 @@ VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   poster: PropTypes.string.isRequired,
   mp4Link: PropTypes.string.isRequired,
+  captions: PropTypes.arrayOf(PropTypes.shape({ uri: PropTypes.string })).isRequired,
   title: PropTypes.string.isRequired,
   parentCategory: PropTypes.string.isRequired,
   parentCategoryTitle: PropTypes.string.isRequired,

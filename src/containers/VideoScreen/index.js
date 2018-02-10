@@ -31,6 +31,7 @@ export class VideoScreen extends React.Component {
     const {
       title,
       mp4Link,
+      captions,
       thumbnailFull,
       playPauseVideo,
       parentCategory,
@@ -59,6 +60,7 @@ export class VideoScreen extends React.Component {
           title={title}
           poster={thumbnailFull}
           mp4Link={mp4Link}
+          captions={captions}
           togglePlay={playPauseVideo}
           parentCategory={parentCategory}
           parentCategoryTitle={parentCategoryTitle}
@@ -85,7 +87,7 @@ VideoScreen.propTypes = {
   id: PropTypes.number.isRequired,
   mp4Link: PropTypes.string.isRequired,
   thumbnailFull: PropTypes.string.isRequired,
-  // captions: PropTypes.arrayOf(PropTypes.shape({uri: PropTypes.string})).isRequired,
+  captions: PropTypes.arrayOf(PropTypes.shape({ uri: PropTypes.string })).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,

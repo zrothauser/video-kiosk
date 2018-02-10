@@ -330,6 +330,7 @@ export default (state = initialState, action) => {
     }
 
     case types.FETCH_CAPTION_DATA_RECEIVED: {
+      console.log(`received caption data for video with ID: ${action.id}`, action.data);
       const updatedVideos = [
         ...videosWithoutUpdatedVideo,
         {
