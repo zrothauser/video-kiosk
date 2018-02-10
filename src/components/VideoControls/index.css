@@ -4,9 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100vw;
-  height: 5.555vh;
-  margin-bottom: 4.629vh;
-  padding: 0 2%;
+  padding: 0 2% 4.629vh;
   z-index: 3;
   font-size: 20px;
   font-weight: 700;
@@ -16,7 +14,7 @@
   display: block;
   content: '';
   width: 100vw;
-  height: 10.184vh;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -26,18 +24,22 @@
 
 /* Upper section */
 .b-video-controls__upper {
-  width: 100%;
-  height: 11px;
-  margin-bottom: 10px;
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.b-video-controls__time {
+  justify-self: flex-end;
+  margin-left: auto;
+  margin-bottom: 10px;
 }
 
 /* Lower section */
 .b-video-controls__lower {
   width: 100%;
-  height: 2.85vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -138,12 +140,4 @@
 .b-video-controls__cc-icon {
   height: 2.85vh;
   width: 2.5vw;
-}
-
-/* Icons */
-.current-time {
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  margin-top: -3vw;
 }

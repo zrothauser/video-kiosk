@@ -27,7 +27,10 @@ class VideoPlayer extends React.Component {
     this.showControls = this.showControls.bind(this);
 
     // Initial state
-    this.state = { timer: null };
+    this.state = {
+      controlsTimer: null,
+      timeMonitor: null,
+    };
   }
 
   /**
@@ -73,7 +76,7 @@ class VideoPlayer extends React.Component {
    * Clear the animation frame before unmounting.
    */
   componentWillUnmount() {
-    clearTimeout(this.state.timer);
+    clearTimeout(this.state.controlsTimer);
     this.clearAnimationFrame();
   }
 
@@ -153,8 +156,8 @@ class VideoPlayer extends React.Component {
    * Handles internal timer state, for showing/hiding controls.
    */
   resetTimer() {
-    clearTimeout(this.state.timer);
-    this.setState({ timer: setTimeout(this.hideControls, 3000) });
+    clearTimeout(this.state.controlsTimer);
+    this.setState({ controlsTimer: setTimeout(this.hideControls, 3000) });
   }
 
   /**
@@ -252,7 +255,7 @@ class VideoPlayer extends React.Component {
           </video>
         </div>
 
-        {showControls &&
+        {true &&
           <div className="b-video-player__controls-wrapper">
             <VideoControls
               title={title}

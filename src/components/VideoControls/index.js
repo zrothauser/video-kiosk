@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { AllHtmlEntities as Entities } from 'html-entities';
 
+// Helpers
+import { convertSecondsToMinutesSeconds } from '../../utils/video';
+
 // Components
 import Slider from '../Slider';
 
@@ -104,6 +107,10 @@ class VideoControls extends React.Component {
     return (
       <div className="b-video-controls">
         <div className="b-video-controls__upper">
+          <div className="b-video-controls__time">
+            {convertSecondsToMinutesSeconds(currentTime)}
+          </div>
+
           <Slider
             minimum={0}
             maximum={duration}
