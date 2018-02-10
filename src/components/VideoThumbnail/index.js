@@ -38,7 +38,12 @@ const VideoThumbnail = (props) => {
         </h3>
 
         <div className="b-video-thumbnail__description">
-          {description && description}
+          {description &&
+            <span
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+          }
           {duration &&
             <span className="b-video-thumbnail__time">
               &nbsp;{convertSecondsToMinutesSeconds(duration)}
