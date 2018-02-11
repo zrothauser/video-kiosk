@@ -223,12 +223,11 @@ class VideoPlayer extends React.Component {
         onMouseMove={() => this.mouseMoveHandler()}
         onTouchStart={() => this.mouseMoveHandler()}
       >
-        {showControls &&
-          <PlayPauseButton
-            isPlaying={isPlaying}
-            togglePlay={togglePlay}
-          />
-        }
+        <PlayPauseButton
+          isPlaying={isPlaying}
+          togglePlay={togglePlay}
+          visible={showControls}
+        />
 
         <div className="b-video-player__wrapper">
           <video
@@ -252,26 +251,25 @@ class VideoPlayer extends React.Component {
           </video>
         </div>
 
-        {showControls &&
-          <div className="b-video-player__controls-wrapper">
-            <VideoControls
-              title={title}
-              parentCategory={parentCategory}
-              parentCategoryTitle={parentCategoryTitle}
-              indexInCategory={indexInCategory}
-              allVideosInCategory={allVideosInCategory}
-              hasCaptions={!!captions.link}
-              showVolumeControl={showVolumeControl}
-              volume={volume}
-              currentTime={currentTime}
-              duration={duration}
-              handleSeek={time => this.seek(time)}
-              handleVolumeChange={handleVolumeChange}
-              toggleVolumeControl={toggleVolumeControl}
-              toggleCaptions={toggleCaptions}
-            />
-          </div>
-        }
+        <div className="b-video-player__controls-wrapper">
+          <VideoControls
+            title={title}
+            parentCategory={parentCategory}
+            parentCategoryTitle={parentCategoryTitle}
+            indexInCategory={indexInCategory}
+            allVideosInCategory={allVideosInCategory}
+            hasCaptions={!!captions.link}
+            showVolumeControl={showVolumeControl}
+            volume={volume}
+            currentTime={currentTime}
+            duration={duration}
+            handleSeek={time => this.seek(time)}
+            handleVolumeChange={handleVolumeChange}
+            toggleVolumeControl={toggleVolumeControl}
+            toggleCaptions={toggleCaptions}
+            visible={showControls}
+          />
+        </div>
       </div>
     );
   }

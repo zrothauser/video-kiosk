@@ -1,14 +1,23 @@
 // Dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import Transition from 'react-transition-group/Transition';
 
 // Styles/Resources
 import './index.css';
 import PlayButtonSVG from '../../resources/icons/play.svg';
 import PauseButtonSVG from '../../resources/icons/pause.svg';
 
-class PlayPauseButton extends React.Component {
+// Transition
+import * as transitions from '../transitions';
 
+const {
+  transitionDuration,
+  fadeDefaultStyle: defaultStyle,
+  fadeTransitionStyles: transitionStyles,
+} = transitions;
+
+class PlayPauseButton extends React.Component {
   static renderPlayButton() {
     return (
       <img src={PlayButtonSVG} alt="Play" />
@@ -25,6 +34,7 @@ class PlayPauseButton extends React.Component {
     const {
       isPlaying,
       togglePlay,
+      visible,
     } = this.props;
 
     // Build content
@@ -37,12 +47,23 @@ class PlayPauseButton extends React.Component {
     }
 
     return (
-      <button
-        className="b-play-pause-button"
-        onClick={() => togglePlay(!isPlaying)}
+      <Transition
+        in={visible}
+        timeout={transitionDuration}
       >
-        {buttonContent}
-      </button>
+        {state => (
+          <button
+            className="b-play-pause-button"
+            onClick={() => togglePlay(!isPlaying)}
+            style={{
+              ...defaultStyle,
+              ...transitionStyles[state],
+            }}
+          >
+            {buttonContent}
+          </button>
+        )}
+      </Transition>
     );
   }
 }
@@ -50,6 +71,7 @@ class PlayPauseButton extends React.Component {
 PlayPauseButton.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   togglePlay: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
 };
 
 export default PlayPauseButton;

@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { AllHtmlEntities as Entities } from 'html-entities';
+import Transition from 'react-transition-group/Transition';
 
 // Helpers
 import { convertSecondsToMinutesSeconds } from '../../utils/video';
@@ -19,6 +20,15 @@ import UpSVG from '../../resources/icons/notch-up.svg';
 
 // Styles
 import './index.css';
+
+// Transitions
+import * as transitions from '../transitions';
+
+const {
+  transitionDuration,
+  fadeSlideDownDefaultStyle: defaultStyle,
+  fadeSlideDownStyles: transitionStyles,
+} = transitions;
 
 // Set up helper object
 const entities = new Entities();
@@ -102,86 +112,100 @@ class VideoControls extends React.Component {
       handleVolumeChange,
       toggleVolumeControl,
       toggleCaptions,
+      visible,
     } = this.props;
 
     return (
-      <div className="b-video-controls">
-        <div className="b-video-controls__upper">
-          <div className="b-video-controls__time">
-            {convertSecondsToMinutesSeconds(currentTime)}
-          </div>
+      <Transition
+        in={visible}
+        timeout={transitionDuration}
+      >
+        {state => (
+          <div
+            className="b-video-controls"
+            style={{
+              ...defaultStyle,
+              ...transitionStyles[state],
+            }}
+          >
+            <div className="b-video-controls__upper">
+              <div className="b-video-controls__time">
+                {convertSecondsToMinutesSeconds(currentTime)}
+              </div>
 
-          <Slider
-            minimum={0}
-            maximum={duration}
-            value={currentTime}
-            handleSeek={handleSeek}
-          />
-        </div>
-
-        <div className="b-video-controls__lower">
-          {this.renderPaginationControls()}
-
-          <span className="b-video-controls__title">
-            <span className="b-video-controls__title__category">
-              {parentCategoryTitle}:
-            </span>
-            {entities.decode(title)}
-          </span>
-
-
-          <span className="b-video-controls__lower__right">
-            <Link
-              className="b-video-controls__topic-link"
-              to={`/category/${parentCategory}`}
-            >
-              <img
-                src={UpSVG}
-                alt="Closed Captions Button"
-                className="b-video-controls__topic-icon"
+              <Slider
+                minimum={0}
+                maximum={duration}
+                value={currentTime}
+                handleSeek={handleSeek}
               />
-              BACK TO TOPIC
-            </Link>
+            </div>
 
-            <span className="b-video-controls__lower__right__buttons">
-              <button
-                className="b-video-controls__volume-button"
-                onClick={() => toggleVolumeControl()}
-              >
-                <img
-                  src={VolumeSVG}
-                  alt="Volume Controls"
-                  className="b-video-controls__volume-icon"
-                />
-              </button>
+            <div className="b-video-controls__lower">
+              {this.renderPaginationControls()}
 
-              {showVolumeControl &&
-                <div className="b-video-controls__volume-slider">
-                  <Slider
-                    minimum={0}
-                    maximum={100}
-                    value={volume}
-                    handleSeek={handleVolumeChange}
-                  />
-                </div>
-              }
+              <span className="b-video-controls__title">
+                <span className="b-video-controls__title__category">
+                  {parentCategoryTitle}:
+                </span>
+                {entities.decode(title)}
+              </span>
 
-              {hasCaptions &&
-                <button
-                  className="b-video-controls__cc-button"
-                  onClick={() => toggleCaptions()}
+
+              <span className="b-video-controls__lower__right">
+                <Link
+                  className="b-video-controls__topic-link"
+                  to={`/category/${parentCategory}`}
                 >
                   <img
-                    src={CCSVG}
+                    src={UpSVG}
                     alt="Closed Captions Button"
-                    className="b-video-controls__cc-icon"
+                    className="b-video-controls__topic-icon"
                   />
-                </button>
-              }
-            </span>
-          </span>
-        </div>
-      </div>
+                  BACK TO TOPIC
+                </Link>
+
+                <span className="b-video-controls__lower__right__buttons">
+                  <button
+                    className="b-video-controls__volume-button"
+                    onClick={() => toggleVolumeControl()}
+                  >
+                    <img
+                      src={VolumeSVG}
+                      alt="Volume Controls"
+                      className="b-video-controls__volume-icon"
+                    />
+                  </button>
+
+                  {showVolumeControl &&
+                    <div className="b-video-controls__volume-slider">
+                      <Slider
+                        minimum={0}
+                        maximum={100}
+                        value={volume}
+                        handleSeek={handleVolumeChange}
+                      />
+                    </div>
+                  }
+
+                  {hasCaptions &&
+                    <button
+                      className="b-video-controls__cc-button"
+                      onClick={() => toggleCaptions()}
+                    >
+                      <img
+                        src={CCSVG}
+                        alt="Closed Captions Button"
+                        className="b-video-controls__cc-icon"
+                      />
+                    </button>
+                  }
+                </span>
+              </span>
+            </div>
+          </div>
+        )}
+      </Transition>
     );
   }
 }
@@ -201,6 +225,7 @@ VideoControls.propTypes = {
   handleVolumeChange: PropTypes.func.isRequired,
   toggleVolumeControl: PropTypes.func.isRequired,
   toggleCaptions: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
 };
 
 export default VideoControls;
