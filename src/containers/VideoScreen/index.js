@@ -133,13 +133,13 @@ const mapStateToProps = (state, ownProps) => {
   } = state.videoPlayer;
 
   // Get the other videos in the category
-  let sortedAllVideosInCategory = [];
+  const allVideosInCategory = allVideos.filter(video =>
+    video.parentCategory === videoData.parentCategory);
 
-  if (videoData) {
-    const allVideosInCategory = allVideos.filter(video =>
-      video.parentCategory === videoData.parentCategory);
-    sortedAllVideosInCategory = allVideosInCategory.sort((a, b) => a - b);
-  }
+  // Find the index of this video
+  const indexInCategory = allVideosInCategory.length ?
+    allVideosInCategory.findIndex(video => video.id === videoID) :
+    0;
 
   // Sort out the captions - there may be multiple tracks, but only one is active
   let captionTrack = {};
@@ -161,8 +161,8 @@ const mapStateToProps = (state, ownProps) => {
     thumbnailFull: videoData ? videoData.thumbnailFull : '',
     parentCategory: videoData ? videoData.parentCategory : '',
     parentCategoryTitle: videoData ? videoData.parentCategoryTitle : '',
-    indexInCategory: videoData ? videoData.indexInCategory : 0,
-    allVideosInCategory: videoData ? sortedAllVideosInCategory : [],
+    indexInCategory,
+    allVideosInCategory: videoData ? allVideosInCategory : [],
     isPlaying: playerState.isPlaying,
     volume: playerState.volume,
     currentTime: playerState.currentTime,

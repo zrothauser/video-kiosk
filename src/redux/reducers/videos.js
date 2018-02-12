@@ -44,7 +44,6 @@ const VIDEO_OBJECT_STRUCTURE = {
   id: 0,
   parentCategory: '',
   parentCategoryTitle: '',
-  indexInCategory: 0,
   title: '',
   description: '',
   vimeoURL: '',
@@ -127,7 +126,6 @@ export default (state = initialState, action) => {
             vimeoURL: video.vimeoid,
             parentCategory: video.parentCategory,
             parentCategoryTitle: video.parentCategoryTitle,
-            indexInCategory: video.indexInCategory,
           };
         } else {
           processedData.push({
@@ -138,7 +136,6 @@ export default (state = initialState, action) => {
             vimeoURL: video.vimeoid,
             parentCategory: video.parentCategory,
             parentCategoryTitle: video.parentCategoryTitle,
-            indexInCategory: video.indexInCategory,
           });
         }
       };
@@ -148,13 +145,12 @@ export default (state = initialState, action) => {
         const categorySlug = slugify(category.category.title, { lower: true });
         const categoryTitle = category.category.title;
 
-        category.category.videos.forEach((video, index) => {
+        category.category.videos.forEach((video) => {
           const videoData = video.video;
 
           // Add additional data that's not in the actual video object from the API
           videoData.parentCategory = categorySlug;
           videoData.parentCategoryTitle = categoryTitle;
-          videoData.indexInCategory = index;
 
           // Add the video to our collection, if needed
           maybeAddVideo(videoData);
