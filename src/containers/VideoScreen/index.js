@@ -27,6 +27,30 @@ export class VideoScreen extends React.Component {
     getCaptionData(id);
   }
 
+  /**
+   * If the video ID changed, load the new data.
+   */
+  componentDidUpdate(prevProps) {
+    const {
+      id,
+      getMP4Data,
+      getCaptionData,
+      setCurrentVideoID,
+    } = this.props;
+
+    // Don't do anything if the ID didn't change
+    if (prevProps.id === id) {
+      return;
+    }
+
+    // Keep track of the current video
+    setCurrentVideoID(id);
+
+    // Load additional data
+    getMP4Data(id);
+    getCaptionData(id);
+  }
+
   render() {
     const {
       title,
