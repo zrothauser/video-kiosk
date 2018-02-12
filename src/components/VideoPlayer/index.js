@@ -38,6 +38,7 @@ class VideoPlayer extends React.Component {
       isPlaying,
       volume,
       showCaptions,
+      mp4Link,
     } = this.props;
 
     // If we don't have a video rendered yet, don't do anything
@@ -46,10 +47,10 @@ class VideoPlayer extends React.Component {
     }
 
     // If we need to pause or play the video, do that now
-    if (prevProps.isPlaying !== isPlaying) {
+    if (mp4Link) {
       if (isPlaying && this.videoElement.paused) {
         this.videoElement.play();
-      } else if (!this.videoElement.paused) {
+      } else if (!isPlaying && !this.videoElement.paused) {
         this.videoElement.pause();
       }
     }
@@ -196,7 +197,6 @@ class VideoPlayer extends React.Component {
   render() {
     const {
       isPlaying,
-      poster,
       mp4Link,
       captions,
       volume,
@@ -220,8 +220,7 @@ class VideoPlayer extends React.Component {
     return (
       <div
         className="b-video-player"
-        // onMouseMove={() => this.mouseMoveHandler()}
-        // onTouchStart={() => this.mouseMoveHandler()}
+        onMouseMove={() => this.mouseMoveHandler()}
         onTouchStart={() => this.mouseMoveHandler()}
         onClick={() => this.mouseMoveHandler()}
       >
@@ -236,7 +235,6 @@ class VideoPlayer extends React.Component {
             ref={(videoElement) => { this.videoElement = videoElement; }}
             className="b-video-player__video"
             autoPlay={false}
-            // poster={poster}
             src={mp4Link}
             onCanPlay={this.handleLoad}
             onPlay={this.handlePlay}
@@ -279,7 +277,6 @@ class VideoPlayer extends React.Component {
 
 VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  poster: PropTypes.string.isRequired,
   mp4Link: PropTypes.string.isRequired,
   captions: PropTypes.shape({ link: PropTypes.string }).isRequired,
   title: PropTypes.string.isRequired,

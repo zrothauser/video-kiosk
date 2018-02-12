@@ -12,36 +12,37 @@ import * as videoPlayerActions from '../../redux/actions/videoPlayer';
 
 export class VideoScreen extends React.Component {
   componentDidMount() {
-    const {
-      getMP4Data,
-      getCaptionData,
-      setCurrentVideoID,
-    } = this.props;
-    const id = parseInt(this.props.match.params.id, 10);
+    if (!this.props.id) {
+      return;
+    }
 
-    // Keep track of the current video
-    setCurrentVideoID(id);
-
-    // Load additional data
-    getMP4Data(id);
-    getCaptionData(id);
+    this.loadVideoData();
   }
 
   /**
    * If the video ID changed, load the new data.
    */
   componentDidUpdate(prevProps) {
+    // Don't do anything if the ID didn't change
+    if (prevProps.id === this.props.id) {
+      return;
+    }
+
+    this.loadVideoData();
+  }
+
+  /**
+   * Called either when this screen is mounted
+   * or when the current video is changed, to load the
+   * API data for the selected video.
+   */
+  loadVideoData() {
     const {
       id,
       getMP4Data,
       getCaptionData,
       setCurrentVideoID,
     } = this.props;
-
-    // Don't do anything if the ID didn't change
-    if (prevProps.id === id) {
-      return;
-    }
 
     // Keep track of the current video
     setCurrentVideoID(id);
@@ -56,7 +57,6 @@ export class VideoScreen extends React.Component {
       title,
       mp4Link,
       captions,
-      thumbnailFull,
       playPauseVideo,
       parentCategory,
       parentCategoryTitle,
@@ -84,7 +84,6 @@ export class VideoScreen extends React.Component {
 
         <VideoPlayer
           title={title}
-          poster={thumbnailFull}
           mp4Link={mp4Link}
           captions={captions}
           togglePlay={playPauseVideo}
@@ -114,13 +113,7 @@ VideoScreen.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   mp4Link: PropTypes.string.isRequired,
-  thumbnailFull: PropTypes.string.isRequired,
   captions: PropTypes.shape({ link: PropTypes.string }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
   parentCategory: PropTypes.string.isRequired,
   parentCategoryTitle: PropTypes.string.isRequired,
   indexInCategory: PropTypes.number.isRequired,
@@ -182,7 +175,6 @@ const mapStateToProps = (state, ownProps) => {
     title: videoData ? videoData.title : '',
     description: videoData ? videoData.description : '',
     mp4Link: videoData ? videoData.mp4Link : '',
-    thumbnailFull: videoData ? videoData.thumbnailFull : '',
     parentCategory: videoData ? videoData.parentCategory : '',
     parentCategoryTitle: videoData ? videoData.parentCategoryTitle : '',
     indexInCategory,
