@@ -54,7 +54,7 @@ CategoryScreen.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   const { categories } = state.categories;
   const pageSlug = ownProps.match.params.slug;
-  const videosData = state.videos.videos;
+  const allVideos = state.videos.videos;
   const categoryData = categories.find(category => category.slug === pageSlug);
   const allCategories = categories.filter(category => category.visibility === 'visible');
 
@@ -65,7 +65,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     selectedCategorySlug: pageSlug,
     title: categoryData.title,
-    videos: categoryData.videos.map(videoID => videosData.find(video => video.id === videoID)),
+    videos: allVideos.filter(video => video.parentCategory === categoryData.slug),
     allCategories,
   };
 };
