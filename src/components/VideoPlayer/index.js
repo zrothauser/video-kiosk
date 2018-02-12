@@ -38,6 +38,7 @@ class VideoPlayer extends React.Component {
       isPlaying,
       volume,
       showCaptions,
+      mp4Link,
     } = this.props;
 
     // If we don't have a video rendered yet, don't do anything
@@ -46,10 +47,10 @@ class VideoPlayer extends React.Component {
     }
 
     // If we need to pause or play the video, do that now
-    if (prevProps.isPlaying !== isPlaying) {
+    if (mp4Link) {
       if (isPlaying && this.videoElement.paused) {
         this.videoElement.play();
-      } else if (!this.videoElement.paused) {
+      } else if (!isPlaying && !this.videoElement.paused) {
         this.videoElement.pause();
       }
     }
@@ -219,8 +220,7 @@ class VideoPlayer extends React.Component {
     return (
       <div
         className="b-video-player"
-        // onMouseMove={() => this.mouseMoveHandler()}
-        // onTouchStart={() => this.mouseMoveHandler()}
+        onMouseMove={() => this.mouseMoveHandler()}
         onTouchStart={() => this.mouseMoveHandler()}
         onClick={() => this.mouseMoveHandler()}
       >

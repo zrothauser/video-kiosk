@@ -12,36 +12,37 @@ import * as videoPlayerActions from '../../redux/actions/videoPlayer';
 
 export class VideoScreen extends React.Component {
   componentDidMount() {
-    const {
-      getMP4Data,
-      getCaptionData,
-      setCurrentVideoID,
-    } = this.props;
-    const id = parseInt(this.props.match.params.id, 10);
+    if (!this.props.id) {
+      return;
+    }
 
-    // Keep track of the current video
-    setCurrentVideoID(id);
-
-    // Load additional data
-    getMP4Data(id);
-    getCaptionData(id);
+    this.loadVideoData();
   }
 
   /**
    * If the video ID changed, load the new data.
    */
   componentDidUpdate(prevProps) {
+    // Don't do anything if the ID didn't change
+    if (prevProps.id === this.props.id) {
+      return;
+    }
+
+    this.loadVideoData();
+  }
+
+  /**
+   * Called either when this screen is mounted
+   * or when the current video is changed, to load the
+   * API data for the selected video.
+   */
+  loadVideoData() {
     const {
       id,
       getMP4Data,
       getCaptionData,
       setCurrentVideoID,
     } = this.props;
-
-    // Don't do anything if the ID didn't change
-    if (prevProps.id === id) {
-      return;
-    }
 
     // Keep track of the current video
     setCurrentVideoID(id);
@@ -113,11 +114,6 @@ VideoScreen.propTypes = {
   id: PropTypes.number.isRequired,
   mp4Link: PropTypes.string.isRequired,
   captions: PropTypes.shape({ link: PropTypes.string }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
   parentCategory: PropTypes.string.isRequired,
   parentCategoryTitle: PropTypes.string.isRequired,
   indexInCategory: PropTypes.number.isRequired,
