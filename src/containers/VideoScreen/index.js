@@ -56,7 +56,6 @@ export class VideoScreen extends React.Component {
       title,
       mp4Link,
       captions,
-      thumbnailFull,
       playPauseVideo,
       parentCategory,
       parentCategoryTitle,
@@ -84,7 +83,6 @@ export class VideoScreen extends React.Component {
 
         <VideoPlayer
           title={title}
-          poster={thumbnailFull}
           mp4Link={mp4Link}
           captions={captions}
           togglePlay={playPauseVideo}
@@ -114,7 +112,6 @@ VideoScreen.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   mp4Link: PropTypes.string.isRequired,
-  thumbnailFull: PropTypes.string.isRequired,
   captions: PropTypes.shape({ link: PropTypes.string }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -182,7 +179,6 @@ const mapStateToProps = (state, ownProps) => {
     title: videoData ? videoData.title : '',
     description: videoData ? videoData.description : '',
     mp4Link: videoData ? videoData.mp4Link : '',
-    thumbnailFull: videoData ? videoData.thumbnailFull : '',
     parentCategory: videoData ? videoData.parentCategory : '',
     parentCategoryTitle: videoData ? videoData.parentCategoryTitle : '',
     indexInCategory,

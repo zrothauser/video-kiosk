@@ -196,7 +196,6 @@ class VideoPlayer extends React.Component {
   render() {
     const {
       isPlaying,
-      poster,
       mp4Link,
       captions,
       volume,
@@ -236,7 +235,6 @@ class VideoPlayer extends React.Component {
             ref={(videoElement) => { this.videoElement = videoElement; }}
             className="b-video-player__video"
             autoPlay={false}
-            // poster={poster}
             src={mp4Link}
             onCanPlay={this.handleLoad}
             onPlay={this.handlePlay}
@@ -279,7 +277,6 @@ class VideoPlayer extends React.Component {
 
 VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  poster: PropTypes.string.isRequired,
   mp4Link: PropTypes.string.isRequired,
   captions: PropTypes.shape({ link: PropTypes.string }).isRequired,
   title: PropTypes.string.isRequired,
