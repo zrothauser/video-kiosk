@@ -25,9 +25,12 @@ import './index.css';
 import * as transitions from '../transitions';
 
 const {
+  shortTransitionDuration,
   transitionDuration,
-  fadeSlideDownDefaultStyle: defaultStyle,
-  fadeSlideDownStyles: transitionStyles,
+  fadeSlideDownDefaultStyle,
+  fadeSlideDownStyles,
+  fadeDefaultStyle,
+  fadeTransitionStyles,
 } = transitions;
 
 // Set up helper object
@@ -124,8 +127,8 @@ class VideoControls extends React.Component {
           <div
             className="b-video-controls"
             style={{
-              ...defaultStyle,
-              ...transitionStyles[state],
+              ...fadeSlideDownDefaultStyle,
+              ...fadeSlideDownStyles[state],
             }}
           >
             <div className="b-video-controls__upper">
@@ -166,6 +169,28 @@ class VideoControls extends React.Component {
                 </Link>
 
                 <span className="b-video-controls__lower__right__buttons">
+                  <Transition
+                    in={showVolumeControl}
+                    timeout={shortTransitionDuration}
+                  >
+                    {controlState => (
+                      <div
+                        className="b-video-controls__volume-slider"
+                        style={{
+                          ...fadeDefaultStyle,
+                          ...fadeTransitionStyles[controlState],
+                        }}
+                      >
+                        <Slider
+                          minimum={0}
+                          maximum={100}
+                          value={volume}
+                          handleSeek={handleVolumeChange}
+                        />
+                      </div>
+                    )}
+                  </Transition>
+
                   <button
                     className="b-video-controls__volume-button"
                     onClick={() => toggleVolumeControl()}
@@ -176,17 +201,6 @@ class VideoControls extends React.Component {
                       className="b-video-controls__volume-icon"
                     />
                   </button>
-
-                  {showVolumeControl &&
-                    <div className="b-video-controls__volume-slider">
-                      <Slider
-                        minimum={0}
-                        maximum={100}
-                        value={volume}
-                        handleSeek={handleVolumeChange}
-                      />
-                    </div>
-                  }
 
                   {hasCaptions &&
                     <button

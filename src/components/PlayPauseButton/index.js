@@ -12,9 +12,9 @@ import PauseButtonSVG from '../../resources/icons/pause.svg';
 import * as transitions from '../transitions';
 
 const {
-  transitionDuration,
-  fadeDefaultStyle: defaultStyle,
-  fadeTransitionStyles: transitionStyles,
+  layerADuration: transitionDuration,
+  layerADefaultStyle: defaultStyle,
+  layerAStyles: transitionStyles,
 } = transitions;
 
 class PlayPauseButton extends React.Component {
