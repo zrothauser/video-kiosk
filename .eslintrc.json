@@ -14,6 +14,8 @@
         "aspects": [ "noHref", "invalidHref", "preferButton" ]
       }
     ],
+    "jsx-a11y/no-static-element-interactions": false,
+    "jsx-a11y/click-events-have-key-events": false,
     "import/no-named-as-default": false
   }
 }
