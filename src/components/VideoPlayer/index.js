@@ -220,8 +220,10 @@ class VideoPlayer extends React.Component {
     return (
       <div
         className="b-video-player"
-        onMouseMove={() => this.mouseMoveHandler()}
+        // onMouseMove={() => this.mouseMoveHandler()}
+        // onTouchStart={() => this.mouseMoveHandler()}
         onTouchStart={() => this.mouseMoveHandler()}
+        onClick={() => this.mouseMoveHandler()}
       >
         <PlayPauseButton
           isPlaying={isPlaying}
@@ -234,7 +236,7 @@ class VideoPlayer extends React.Component {
             ref={(videoElement) => { this.videoElement = videoElement; }}
             className="b-video-player__video"
             autoPlay={false}
-            poster={poster}
+            // poster={poster}
             src={mp4Link}
             onCanPlay={this.handleLoad}
             onPlay={this.handlePlay}
