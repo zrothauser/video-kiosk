@@ -23,7 +23,10 @@ import './index.css';
 
 export const App = props => (
   <div className="b-app">
-    <Header toggleVideoIndex={props.toggleVideoIndex} />
+    <Header
+      toggleVideoIndex={props.toggleVideoIndex}
+      visible={props.showHeader}
+    />
 
     <main className="b-main">
       <Route render={({ location }) => (
@@ -53,13 +56,21 @@ export const App = props => (
 App.propTypes = {
   isVideoIndexOpen: PropTypes.bool.isRequired,
   toggleVideoIndex: PropTypes.func.isRequired,
+  showHeader: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const interfaceState = state.app.interface;
+  const videoPlayerInterface = state.videoPlayer.interface;
+
+  // If we're on the video player page and controls
+  // are hidden, the header bar should be hidden as well.
+  // But not if the Video Index is open.
+  const showHeader = videoPlayerInterface.showControls || interfaceState.isVideoIndexOpen;
 
   return {
     isVideoIndexOpen: interfaceState.isVideoIndexOpen,
+    showHeader,
   };
 };
 
