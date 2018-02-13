@@ -215,6 +215,21 @@ class VideoControls extends React.Component {
                 </span>
               </span>
             </div>
+
+            <Transition
+              in={visible}
+              timeout={durations.medium}
+            >
+              {scrimState => (
+                <span
+                  className="b-video-controls__scrim"
+                  style={{
+                    ...layerEStyles.default,
+                    ...layerEStyles[scrimState],
+                  }}
+                />
+              )}
+            </Transition>
           </div>
         )}
       </Transition>
