@@ -58,3 +58,24 @@ button:focus {
   width: 1px;
   word-wrap: normal !important;
 }
+
+/* Fade helper classes */
+.fade-fast-leave {
+  opacity: 1;
+}
+.fade-fast-leave.fade-fast-leave-active {
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
+}
+
+.fade-fast-enter {
+  opacity: 0;
+}
+.fade-fast-enter.fade-fast-enter-active {
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.fade-fast-height {
+  transition: width .5s ease-in-out;
+}
