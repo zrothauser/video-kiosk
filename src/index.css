@@ -22,6 +22,11 @@ body {
   font-size: 0.8333333333vw;
 }
 
+/* Helper to make the background black on the body on the video pages */
+.h-dark-background {
+  background: var(--color__black);
+}
+
 /* Nicer default for box-sizing */
 * {
   box-sizing: border-box;

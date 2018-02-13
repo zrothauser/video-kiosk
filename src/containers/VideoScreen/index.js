@@ -11,12 +11,20 @@ import * as videoAPIActions from '../../redux/actions/video';
 import * as videoPlayerActions from '../../redux/actions/videoPlayer';
 
 export class VideoScreen extends React.Component {
+  /**
+   * Load the video data, and set the body background color.
+   *
+   * This is an anti-pattern in React, but needs to be used for
+   * the effect where you scroll up/down and the body's background
+   * color is shown.
+   */
   componentDidMount() {
-    if (!this.props.id) {
-      return;
-    }
+    document.querySelector('body').classList.add('h-dark-background');
 
-    this.loadVideoData();
+    // Load the video data, if the ID is available yet
+    if (this.props.id) {
+      this.loadVideoData();
+    }
   }
 
   /**
@@ -30,6 +38,15 @@ export class VideoScreen extends React.Component {
 
     this.loadVideoData();
   }
+
+  /**
+   * Removes the body class when unmounting, see componentDidMount()
+   * comment for why this is being used.
+   */
+  componentWillUnmount() {
+    document.querySelector('body').classList.remove('h-dark-background');
+  }
+
 
   /**
    * Called either when this screen is mounted
@@ -77,34 +94,28 @@ export class VideoScreen extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <h1 className="h-screen-reader">
-          {title}
-        </h1>
-
-        <VideoPlayer
-          title={title}
-          mp4Link={mp4Link}
-          captions={captions}
-          togglePlay={playPauseVideo}
-          parentCategory={parentCategory}
-          parentCategoryTitle={parentCategoryTitle}
-          indexInCategory={indexInCategory}
-          allVideosInCategory={allVideosInCategory}
-          isPlaying={isPlaying}
-          volume={volume}
-          currentTime={currentTime}
-          duration={duration}
-          showCaptions={showCaptions}
-          showControls={showControls}
-          showVolumeControl={showVolumeControl}
-          updateProgress={updateProgress}
-          handleVolumeChange={handleVolumeChange}
-          toggleVolumeControl={toggleVolumeControl}
-          toggleControls={toggleControls}
-          toggleCaptions={toggleCaptions}
-        />
-      </div>
+      <VideoPlayer
+        title={title}
+        mp4Link={mp4Link}
+        captions={captions}
+        togglePlay={playPauseVideo}
+        parentCategory={parentCategory}
+        parentCategoryTitle={parentCategoryTitle}
+        indexInCategory={indexInCategory}
+        allVideosInCategory={allVideosInCategory}
+        isPlaying={isPlaying}
+        volume={volume}
+        currentTime={currentTime}
+        duration={duration}
+        showCaptions={showCaptions}
+        showControls={showControls}
+        showVolumeControl={showVolumeControl}
+        updateProgress={updateProgress}
+        handleVolumeChange={handleVolumeChange}
+        toggleVolumeControl={toggleVolumeControl}
+        toggleControls={toggleControls}
+        toggleCaptions={toggleCaptions}
+      />
     );
   }
 }

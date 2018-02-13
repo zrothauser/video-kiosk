@@ -1,4 +1,6 @@
-.b-category-screen {}
+.b-category-screen {
+  overflow: hidden;
+}
 
 .b-category-screen__main {
   width: 73.4375%;
