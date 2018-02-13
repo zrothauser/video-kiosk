@@ -26,14 +26,17 @@ const VideoThumbnail = (props) => {
 
   return (
     <div className="b-video-thumbnail">
+
       <Link to={`/video/${id}`}>
-        {thumbnail &&
-          <img
-            src={thumbnail}
-            className="b-video-thumbnail__image"
-            alt={title}
-          />
-        }
+          <div className="b-video-thumbnail__wrap">
+        	{thumbnail &&
+				<img
+		            src={thumbnail}
+		            className="b-video-thumbnail__image"
+		            alt={title}
+		          />
+        	}
+		</div>
 
         <h3 className="b-video-thumbnail__title">
           {entities.decode(title)}

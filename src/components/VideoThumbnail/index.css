@@ -1,14 +1,19 @@
 .b-video-thumbnail {
   display: block;
   width: 33.333%;
-  flex: 0 0 33.333%;
-  position: relative;
   padding-left: 1.5951041667vw;
-  padding-bottom: 1.5951041667vw;
+  padding-bottom: 2vw;
+}
+
+.b-video-thumbnail__wrap {
+	height: 13.1640625vw;
+	width: 100%;
+	overflow: hidden;
 }
 
 .b-video-thumbnail__image {
-  width: 100%;
+	width: 100%;
+	height: 13.1640625vw;
 }
 
 .b-video-thumbnail__title {
