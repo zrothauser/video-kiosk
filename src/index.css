@@ -19,8 +19,9 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  max-height: 100vh;
   font-size: 0.8333333333vw;
-  overflow-y: scroll; /* prevent jumps when the scrollbar is added */
+  overflow: hidden;
 }
 
 /* Helper to make the background black on the body on the video pages */

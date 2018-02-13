@@ -7,6 +7,14 @@
   width: 73.4375%;
   flex: 0 0 73.4375%;
   padding-top: 5.2083333333vw;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  background: transparent;
 }
 
 .b-category-screen__sidebar {
