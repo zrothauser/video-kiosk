@@ -12,9 +12,8 @@ import PauseButtonSVG from '../../resources/icons/pause.svg';
 import * as transitions from '../transitions';
 
 const {
-  layerADuration: transitionDuration,
-  layerADefaultStyle: defaultStyle,
-  layerAStyles: transitionStyles,
+  durations,
+  layerAStyles,
 } = transitions;
 
 class PlayPauseButton extends React.Component {
@@ -49,15 +48,15 @@ class PlayPauseButton extends React.Component {
     return (
       <Transition
         in={visible}
-        timeout={transitionDuration}
+        timeout={durations.medium}
       >
         {state => (
           <button
             className="b-play-pause-button"
             onClick={() => togglePlay(!isPlaying)}
             style={{
-              ...defaultStyle,
-              ...transitionStyles[state],
+              ...layerAStyles.default,
+              ...layerAStyles[state],
             }}
           >
             {buttonContent}

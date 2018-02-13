@@ -1,56 +1,30 @@
-// Durations
-export const shortTransitionDuration = 125; // in milliseconds
-export const transitionDuration = 250; // in milliseconds
-
-// Shorter fade
-export const fadeDefaultStyle = {
-  transition: `opacity ${transitionDuration}ms ease-in-out`,
-  opacity: 0,
+// Misc durations (in milliseconds)
+export const durations = {
+  shortest: 125,
+  short: 250,
+  medium: 660,
+  long: 1000,
 };
 
-export const fadeTransitionStyles = {
+// Misc transitions
+export const shortFadeStyles = {
+  default: {
+    transition: `opacity ${durations.shortest}ms ease-in-out`,
+    opacity: 0,
+  },
   entering: { opacity: 0 },
   entered: { opacity: 1 },
   exiting: { opacity: 1 },
   exited: { opacity: 0 },
 };
 
-// Fade and Slide Down
-export const fadeSlideDownDefaultStyle = {
-  transition: `opacity ${transitionDuration}ms ease-in-out, transform ${transitionDuration}ms ease-in-out`,
-  opacity: 0,
-};
-
-export const fadeSlideDownStyles = {
-  entering: { opacity: 0, transform: 'translateY(100%)' },
-  entered: { opacity: 1, transform: 'translateY(0)' },
-  exiting: { opacity: 1, transform: 'translateY(0)' },
-  exited: { opacity: 0, transform: 'translateY(100%)' },
-};
-
-// Fade and Slide Up
-export const fadeSlideUpDefaultStyle = {
-  transition: `opacity ${transitionDuration}ms ease-in-out, transform ${transitionDuration}ms ease-in-out`,
-  opacity: 0,
-};
-
-export const fadeSlideUpStyles = {
-  entering: { opacity: 0, transform: 'translateY(-100%)' },
-  entered: { opacity: 1, transform: 'translateY(0)' },
-  exiting: { opacity: 1, transform: 'translateY(0)' },
-  exited: { opacity: 0, transform: 'translateY(-100%)' },
-};
-
 // Layer A
 // Used for the Play/Pause button
-export const layerADuration = 660; // in milliseconds
-
-export const layerADefaultStyle = {
-  transition: `opacity ${transitionDuration}ms ease-in-out`,
-  opacity: 0,
-};
-
 export const layerAStyles = {
+  default: {
+    transition: `opacity ${durations.medium}ms ease-in-out`,
+    opacity: 0,
+  },
   entering: { opacity: 0 },
   entered: { opacity: 1 },
   exiting: { opacity: 1 },
@@ -59,16 +33,126 @@ export const layerAStyles = {
 
 // Layer B
 // Used for Top Bar / Index
-export const layerBDuration = 660; // in milliseconds
-
-export const layerBDefaultStyle = {
-  transition: `opacity ${transitionDuration}ms ease-in-out, transform ${transitionDuration}ms ease-in-out`,
-  opacity: 0,
+export const layerBStyles = {
+  default: {
+    transition: `opacity ${durations.medium}ms ease-in-out, transform ${durations.medium}ms ease-in-out`,
+    opacity: 0,
+  },
+  entering: {
+    opacity: 0,
+    transform: 'translateY(-100%)',
+  },
+  entered: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exiting: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exited: {
+    opacity: 0,
+    transform: 'translateY(-100%)',
+  },
 };
 
-export const layerBStyles = {
-  entering: { opacity: 0, transform: 'translateY(-20px)' },
-  entered: { opacity: 1, transform: 'translateY(0)' },
-  exiting: { opacity: 1, transform: 'translateY(0)' },
-  exited: { opacity: 0, transform: 'translateY(-20px)' },
+// Layer C
+// Used for Controls
+export const layerCStyles = {
+  default: {
+    transition: `opacity ${durations.long}ms ease-in-out, transform ${durations.long}ms ease-in-out`,
+    opacity: 0,
+  },
+  entering: {
+    opacity: 0,
+    transform: 'translateY(100%)',
+  },
+  entered: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exiting: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exited: {
+    opacity: 0,
+    transform: 'translateY(100%)',
+  },
+};
+
+// Layer D
+// Used for Type
+export const layerDStyles = {
+  default: {
+    transition: `opacity ${durations.long}ms ease-in-out, transform ${durations.long}ms ease-in-out`,
+    opacity: 0,
+  },
+  entering: {
+    opacity: 0,
+    transform: 'translateY(40px)',
+  },
+  entered: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exiting: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exited: {
+    opacity: 0,
+    transform: 'translateY(40px)',
+  },
+};
+
+// Layer E
+// Used for Scrim (gradient under Controls)
+export const layerEStyles = {
+  default: {
+    transition: `opacity ${durations.long}ms ease-in-out`,
+    opacity: 0,
+  },
+  entering: { opacity: 0 },
+  entered: { opacity: 1 },
+  exiting: { opacity: 1 },
+  exited: { opacity: 0 },
+};
+
+// Layer F
+// Used for Thumbnails
+export const layerFStyles = {
+  default: {
+    transition: `opacity ${durations.long}ms ease-in-out, transform ${durations.long}ms ease-in-out`,
+    opacity: 0,
+  },
+  entering: {
+    opacity: 0,
+    transform: 'translateY(50px)',
+  },
+  entered: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exiting: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  exited: {
+    opacity: 0,
+    transform: 'translateY(50px)',
+  },
+};
+
+// Layer G
+// Used for Background Video
+export const layerGStyles = {
+  default: {
+    transition: `opacity ${durations.medium}ms ease-in-out`,
+    opacity: 0,
+  },
+  entering: { opacity: 0 },
+  entered: { opacity: 1 },
+  exiting: { opacity: 1 },
+  exited: { opacity: 0 },
 };

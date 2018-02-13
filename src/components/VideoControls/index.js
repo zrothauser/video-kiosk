@@ -25,12 +25,10 @@ import './index.css';
 import * as transitions from '../transitions';
 
 const {
-  shortTransitionDuration,
-  transitionDuration,
-  fadeSlideDownDefaultStyle,
-  fadeSlideDownStyles,
-  fadeDefaultStyle,
-  fadeTransitionStyles,
+  durations,
+  shortFadeStyles,
+  layerCStyles,
+  layerEStyles,
 } = transitions;
 
 // Set up helper object
@@ -121,14 +119,14 @@ class VideoControls extends React.Component {
     return (
       <Transition
         in={visible}
-        timeout={transitionDuration}
+        timeout={durations.long}
       >
         {state => (
           <div
             className="b-video-controls"
             style={{
-              ...fadeSlideDownDefaultStyle,
-              ...fadeSlideDownStyles[state],
+              ...layerCStyles.default,
+              ...layerCStyles[state],
             }}
           >
             <div className="b-video-controls__upper">
@@ -171,14 +169,14 @@ class VideoControls extends React.Component {
                 <span className="b-video-controls__lower__right__buttons">
                   <Transition
                     in={showVolumeControl}
-                    timeout={shortTransitionDuration}
+                    timeout={durations.shortest}
                   >
                     {controlState => (
                       <div
                         className="b-video-controls__volume-slider"
                         style={{
-                          ...fadeDefaultStyle,
-                          ...fadeTransitionStyles[controlState],
+                          ...shortFadeStyles.default,
+                          ...shortFadeStyles[controlState],
                         }}
                       >
                         <Slider
