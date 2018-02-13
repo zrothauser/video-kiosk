@@ -4,7 +4,7 @@
   width: 100vw;
   top: 0;
   left: 0;
-  background: black;
+  background: #222120;
   display: flex;
   justify-content: center;
   z-index: 20;
@@ -17,12 +17,14 @@
 }
 
 .b-video-index__table {
+	border-collapse: collapse;
   width: 100%;
   font-weight: 700;
 }
 
 .b-video-index__cell {
-  border-bottom: 1px solid rgb(46, 50, 57);
+  border-bottom: 1px solid #696a6d;
+	padding-top: 4px;
 }
 
 .b-video-index__cell:last-child {
@@ -37,6 +39,8 @@
   font-size: 14px;
   letter-spacing: .16em;
 }
+
+.b-video-index__head td { padding-bottom: 9px; }
 
 .b-video-index__body {
   font-size: 20px;
