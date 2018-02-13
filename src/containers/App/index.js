@@ -22,7 +22,7 @@ import { toggleVideoIndex } from '../../redux/actions/app';
 import './index.css';
 
 export const App = props => (
-  <div>
+  <div className="b-app">
     <Header toggleVideoIndex={props.toggleVideoIndex} />
 
     <main className="b-main">

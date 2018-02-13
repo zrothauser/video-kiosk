@@ -20,6 +20,7 @@ body {
   padding: 0;
   height: 100vh;
   font-size: 0.8333333333vw;
+  overflow-y: scroll; /* prevent jumps when the scrollbar is added */
 }
 
 /* Helper to make the background black on the body on the video pages */

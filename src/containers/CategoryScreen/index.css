@@ -1,15 +1,16 @@
 .b-category-screen {
-  overflow: hidden;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .b-category-screen__main {
   width: 73.4375%;
-  float: left;
+  flex: 0 0 73.4375%;
   padding-top: 5.2083333333vw;
 }
 
 .b-category-screen__sidebar {
   width: 25%;
-  float: right;
+  flex: 0 0 25%;
   padding-left: 1.5951041667vw;
 }
