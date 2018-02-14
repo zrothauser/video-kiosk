@@ -16,7 +16,7 @@ import VideoIndex from '../VideoIndex';
 import Header from '../../components/Header';
 
 // Actions
-import { toggleVideoIndex } from '../../redux/actions/app';
+import { toggleVideoIndex, closeVideoIndex } from '../../redux/actions/app';
 
 // Styles
 import './index.css';
@@ -25,6 +25,7 @@ export const App = props => (
   <div className="b-app">
     <Header
       toggleVideoIndex={props.toggleVideoIndex}
+      closeVideoIndex={props.closeVideoIndex}
       visible={props.showHeader}
     />
 
@@ -56,6 +57,7 @@ export const App = props => (
 App.propTypes = {
   isVideoIndexOpen: PropTypes.bool.isRequired,
   toggleVideoIndex: PropTypes.func.isRequired,
+  closeVideoIndex: PropTypes.func.isRequired,
   showHeader: PropTypes.bool.isRequired,
 };
 
@@ -75,6 +77,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleVideoIndex }, dispatch));
+  bindActionCreators({ toggleVideoIndex, closeVideoIndex }, dispatch));
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

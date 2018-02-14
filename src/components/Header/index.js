@@ -19,7 +19,6 @@ const Header = props => (
   <Transition
     in={props.visible}
     timeout={durations.long}
-    appear
   >
     {state => (
       <header
@@ -33,6 +32,7 @@ const Header = props => (
           <Link
             to="/"
             className="b-header__link"
+            onClick={() => props.closeVideoIndex()}
           >
             Clyfford Still Museum Media Channel
           </Link>
@@ -53,6 +53,7 @@ const Header = props => (
 
 Header.propTypes = {
   toggleVideoIndex: PropTypes.func.isRequired,
+  closeVideoIndex: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
 };
 

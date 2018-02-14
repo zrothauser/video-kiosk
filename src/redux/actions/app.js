@@ -12,3 +12,9 @@ export function toggleVideoIndex() {
     type: types.INTERFACE_TOGGLE_VIDEO_INDEX,
   };
 }
+
+export function closeVideoIndex() {
+  return {
+    type: types.INTERFACE_CLOSE_VIDEO_INDEX,
+  };
+}

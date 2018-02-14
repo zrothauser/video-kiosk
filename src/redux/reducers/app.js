@@ -67,6 +67,16 @@ export default (state = initialState, action) => {
       };
     }
 
+    case types.INTERFACE_CLOSE_VIDEO_INDEX: {
+      return {
+        ...state,
+        interface: {
+          ...state.interface,
+          isVideoIndexOpen: false,
+        },
+      };
+    }
+
     default:
       return state;
   }

@@ -74,8 +74,12 @@ class VideoPlayer extends React.Component {
    * Clear the animation frame before unmounting.
    */
   componentWillUnmount() {
+    // Stop keeping track of the time
     clearTimeout(this.state.controlsTimer);
     this.clearAnimationFrame();
+
+    // Update the state of the video player
+    this.props.togglePlay(false);
   }
 
   /**
@@ -129,7 +133,7 @@ class VideoPlayer extends React.Component {
   }
 
   /**
-   * Cancels the animation frame.
+   * Cancels the animation frame - stops keeping track of the current time.
    */
   clearAnimationFrame() {
     window.cancelAnimationFrame(this.animationFrame);
