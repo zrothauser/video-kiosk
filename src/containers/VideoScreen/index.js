@@ -79,8 +79,6 @@ export class VideoScreen extends React.Component {
       parentCategory,
     } = this.props;
 
-    console.log('navigating to topic');
-
     history.push(`/category/${parentCategory}`);
   }
 
