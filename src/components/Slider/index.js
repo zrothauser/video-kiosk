@@ -23,12 +23,14 @@ class Slider extends React.Component {
    *
    * @param {Event} event Could be a mouseover, mousedown, or change event.
    */
-  onSeek(event) {
+  scrub(event) {
     const {
       handleSeek,
       minimum,
       maximum,
     } = this.props;
+
+    console.log('handle seek');
 
     // A mousemove could trigger this function, so check if we're
     // actually clicking or scrubbing
@@ -36,12 +38,14 @@ class Slider extends React.Component {
       return;
     }
 
-    const progressBarClientRect = this.rangeSlider.getBoundingClientRect();
+    const progressBarClientRect = this.trackElement.getBoundingClientRect();
     const mouseX = event.pageX - progressBarClientRect.left;
     const progressBarWidth = progressBarClientRect.width;
     const percent = (mouseX / progressBarWidth);
 
     let newValue = percent * (maximum - minimum);
+
+    console.log('seeking to: ', newValue);
 
     // Rounding based on the cursor position could cause
     // the value to go over or under the min/max, so don't
@@ -58,12 +62,22 @@ class Slider extends React.Component {
   /**
    * Lets us track if the mouse is down or up, so that we can scrub the slider.
    *
-   * @param {bool} isMousedown True if mousedown, false if mouseup.
    * @param {Event} event      Could be a mouseover, mousedown, or change event.
    */
-  setMousedown(isMousedown, event) {
-    this.setState({ isMousedown });
-    this.onSeek(event);
+  handleMouseDown() {
+    console.log('handleMouseDown');
+    this.setState({ isMousedown: true });
+  }
+
+  /**
+   * Lets us track if the mouse is down or up, so that we can scrub the slider.
+   *
+   * @param {Event} event      Could be a mouseover, mousedown, or change event.
+   */
+  handleMouseUp(event) {
+    console.log('handleMouseUp');
+    this.setState({ isMousedown: false });
+    this.scrub(event);
   }
 
   render() {
@@ -77,7 +91,13 @@ class Slider extends React.Component {
 
     return (
       <div className="b-slider">
-        <div className="b-slider__track" />
+        <div
+          className="b-slider__track"
+          ref={(trackElement) => { this.trackElement = trackElement; }}
+          onMouseDown={event => this.handleMouseDown(event)}
+          onMouseUp={event => this.handleMouseUp(event)}
+          onMouseMove={event => this.scrub(event)}
+        />
 
         <div
           className="b-slider__progress"
@@ -86,28 +106,15 @@ class Slider extends React.Component {
 
         <div
           className="b-slider__thumb"
-          onClick={event => this.onSeek(event, true)}
-          onKeyPress={event => this.onSeek(event, true)}
+          onMouseDown={event => this.handleMouseDown(event)}
+          onMouseUp={event => this.handleMouseUp(event)}
+          onMouseMove={event => this.scrub(event)}
           style={{ left: `${valuePercent}%` }}
           role="slider"
           aria-valuemax={maximum}
           aria-valuemin={minimum}
           aria-valuenow={value}
           tabIndex="0"
-        />
-
-        <input
-          ref={(rangeSlider) => { this.rangeSlider = rangeSlider; }}
-          className="b-slider__input"
-          type="range"
-          min="0"
-          max={`${maximum}`}
-          step="1"
-          value={value}
-          onMouseMove={event => this.onSeek(event)}
-          onMouseDown={event => this.setMousedown(true, event)}
-          onMouseUp={event => this.setMousedown(false, event)}
-          readOnly
         />
       </div>
     );
