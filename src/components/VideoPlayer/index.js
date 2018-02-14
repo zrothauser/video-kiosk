@@ -195,7 +195,11 @@ class VideoPlayer extends React.Component {
    * Event handler for when the video finishes playing.
    */
   handleOnEnd() {
+    // Stop the timer
     this.clearAnimationFrame();
+
+    // And go back to the Topic screen
+    this.props.navigateToTopic();
   }
 
   render() {
@@ -300,6 +304,7 @@ VideoPlayer.propTypes = {
   toggleVolumeControl: PropTypes.func.isRequired,
   toggleControls: PropTypes.func.isRequired,
   toggleCaptions: PropTypes.func.isRequired,
+  navigateToTopic: PropTypes.func.isRequired,
 };
 
 export default VideoPlayer;

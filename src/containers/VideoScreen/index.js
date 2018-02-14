@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 // Components
 import VideoPlayer from '../../components/VideoPlayer';
@@ -47,7 +48,6 @@ export class VideoScreen extends React.Component {
     document.querySelector('body').classList.remove('h-dark-background');
   }
 
-
   /**
    * Called either when this screen is mounted
    * or when the current video is changed, to load the
@@ -67,6 +67,21 @@ export class VideoScreen extends React.Component {
     // Load additional data
     getMP4Data(id);
     getCaptionData(id);
+  }
+
+  /**
+   * Navigates away from the playing video to
+   * the video's topic page.
+   */
+  navigateToTopic() {
+    const {
+      history,
+      parentCategory,
+    } = this.props;
+
+    console.log('navigating to topic');
+
+    history.push(`/category/${parentCategory}`);
   }
 
   render() {
@@ -115,12 +130,14 @@ export class VideoScreen extends React.Component {
         toggleVolumeControl={toggleVolumeControl}
         toggleControls={toggleControls}
         toggleCaptions={toggleCaptions}
+        navigateToTopic={() => this.navigateToTopic()}
       />
     );
   }
 }
 
 VideoScreen.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   title: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   mp4Link: PropTypes.string.isRequired,
@@ -215,7 +232,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(VideoScreen);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VideoScreen));
