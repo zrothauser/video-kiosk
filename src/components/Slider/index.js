@@ -15,37 +15,66 @@ import './index.css';
 class Slider extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isMousedown: false };
+
+    // Binding
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+
+    // Initial state
+    this.state = {
+      currentValue: props.value,
+    };
   }
 
   /**
-   * Jump to a time based on the click or scrubbing on the progress bar.
+   * Lets us track if the mouse is down or up, so that we can scrub the slider.
    *
-   * @param {Event} event Could be a mouseover, mousedown, or change event.
+   * @param {Event} event Mousedown event.
    */
-  scrub(event) {
+  handleMouseDown(event) {
+    // Pass to handleDrag(), so that we can go
+    // ahead and update the position
+    this.handleDrag(event);
+
+    // Watch for the mouse move, until the dragging is done
+    document.addEventListener('mousemove', this.handleDrag);
+    document.addEventListener('touchmove', this.handleDrag);
+    document.addEventListener('mouseup', this.handleMouseUp);
+    document.addEventListener('touchend', this.handleMouseUp);
+  }
+
+  /**
+   * Update state based on where we're dragging.
+   */
+  handleDrag(event) {
     const {
-      handleSeek,
       minimum,
       maximum,
     } = this.props;
 
-    console.log('handle seek');
-
-    // A mousemove could trigger this function, so check if we're
-    // actually clicking or scrubbing
-    if (!this.state.isMousedown) {
+    if (!this.trackElement) {
       return;
     }
 
+    // Get the progress bar dimensions, and then find
+    // where it starts and its width
     const progressBarClientRect = this.trackElement.getBoundingClientRect();
-    const mouseX = event.pageX - progressBarClientRect.left;
+    const progressBarStart = progressBarClientRect.left;
     const progressBarWidth = progressBarClientRect.width;
-    const percent = (mouseX / progressBarWidth);
 
+    // Find the cursor/touch point position: we get different data from
+    // touch events than from mouse events
+    const mouseX = (event.changedTouches && event.changedTouches.length) ?
+      event.changedTouches[0].pageX :
+      event.pageX;
+
+    // Calculate distance from the beginning, and get a percent of the total
+    // width from that. Then convert to a value based on the minimum and maxium
+    // possible values.
+    const distanceFromBeginning = mouseX - progressBarStart;
+    const percent = (distanceFromBeginning / progressBarWidth);
     let newValue = percent * (maximum - minimum);
-
-    console.log('seeking to: ', newValue);
 
     // Rounding based on the cursor position could cause
     // the value to go over or under the min/max, so don't
@@ -56,7 +85,7 @@ class Slider extends React.Component {
       newValue = minimum;
     }
 
-    handleSeek(newValue);
+    this.setState({ currentValue: newValue });
   }
 
   /**
@@ -64,30 +93,30 @@ class Slider extends React.Component {
    *
    * @param {Event} event      Could be a mouseover, mousedown, or change event.
    */
-  handleMouseDown() {
-    console.log('handleMouseDown');
-    this.setState({ isMousedown: true });
-  }
+  handleMouseUp() {
+    const { handleSeek } = this.props;
+    const { currentValue } = this.state;
 
-  /**
-   * Lets us track if the mouse is down or up, so that we can scrub the slider.
-   *
-   * @param {Event} event      Could be a mouseover, mousedown, or change event.
-   */
-  handleMouseUp(event) {
-    console.log('handleMouseUp');
-    this.setState({ isMousedown: false });
-    this.scrub(event);
+    // Remove event handlers
+    document.removeEventListener('mousemove', this.handleDrag);
+    document.removeEventListener('touchmove', this.handleDrag);
+    document.removeEventListener('mouseup', this.handleMouseUp);
+    document.removeEventListener('touchend', this.handleMouseUp);
+
+    // Call the handleSeek prop, this will probably actually
+    // do something with the data now that it's done being set
+    handleSeek(currentValue);
   }
 
   render() {
     const {
       minimum,
       maximum,
-      value,
     } = this.props;
 
-    const valuePercent = ((value - minimum) / (maximum - minimum)) * 100;
+    const { currentValue } = this.state;
+
+    const valuePercent = ((currentValue - minimum) / (maximum - minimum)) * 100;
 
     return (
       <div className="b-slider">
@@ -95,25 +124,22 @@ class Slider extends React.Component {
           className="b-slider__track"
           ref={(trackElement) => { this.trackElement = trackElement; }}
           onMouseDown={event => this.handleMouseDown(event)}
-          onMouseUp={event => this.handleMouseUp(event)}
-          onMouseMove={event => this.scrub(event)}
+          onTouchStart={event => this.handleMouseDown(event)}
         />
 
         <div
           className="b-slider__progress"
           style={{ width: `${valuePercent}%` }}
+          onMouseDown={event => this.handleMouseDown(event)}
         />
 
         <div
           className="b-slider__thumb"
-          onMouseDown={event => this.handleMouseDown(event)}
-          onMouseUp={event => this.handleMouseUp(event)}
-          onMouseMove={event => this.scrub(event)}
           style={{ left: `${valuePercent}%` }}
           role="slider"
           aria-valuemax={maximum}
           aria-valuemin={minimum}
-          aria-valuenow={value}
+          aria-valuenow={currentValue}
           tabIndex="0"
         />
       </div>

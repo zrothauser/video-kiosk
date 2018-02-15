@@ -8,6 +8,7 @@
   z-index: 3;
   font-size: 20px;
   font-weight: 700;
+  user-select: none;
 }
 
 /* Background gradient */

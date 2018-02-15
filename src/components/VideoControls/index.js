@@ -118,7 +118,7 @@ class VideoControls extends React.Component {
 
     return (
       <Transition
-        in={visible}
+        in={true}
         timeout={durations.long}
         appear
       >
