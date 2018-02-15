@@ -29,10 +29,18 @@ class PlayPauseButton extends React.Component {
     );
   }
 
-  render() {
+  clickHandler() {
     const {
       isPlaying,
       togglePlay,
+    } = this.props;
+
+    togglePlay(!isPlaying);
+  }
+
+  render() {
+    const {
+      isPlaying,
       visible,
     } = this.props;
 
@@ -54,7 +62,7 @@ class PlayPauseButton extends React.Component {
         {state => (
           <button
             className="b-play-pause-button"
-            onClick={() => togglePlay(!isPlaying)}
+            onClick={() => this.clickHandler()}
             style={{
               ...layerAStyles.default,
               ...layerAStyles[state],

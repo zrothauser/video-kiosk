@@ -26,6 +26,7 @@ class VideoPlayer extends React.Component {
     this.setProgress = this.setProgress.bind(this);
     this.hideControls = this.hideControls.bind(this);
     this.showControls = this.showControls.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
 
     // Initial state
     this.state = {
@@ -184,17 +185,17 @@ class VideoPlayer extends React.Component {
   }
 
   /**
-   * Shows controls and resets the timer when the mouse moves.
+   * Shows/hides the controls when the mouse is clicked
    */
-  mouseMoveHandler() {
-    // Return if the video isn't playing, this
-    // doesn't matter when it's paused
-    if (!this.props.isPlaying) {
-      return;
+  clickHandler() {
+    // If we're showing controls and the video is playing, hide
+    // the controls. If it's paused or the controls are hidden,
+    // show them
+    if (this.props.showControls && this.props.isPlaying) {
+      this.hideControls();
+    } else {
+      this.showControls();
     }
-
-    this.showControls();
-    this.resetControlsTimer();
   }
 
   /**
@@ -267,9 +268,6 @@ class VideoPlayer extends React.Component {
     return (
       <div
         className="b-video-player"
-        onMouseMove={() => this.mouseMoveHandler()}
-        onTouchStart={() => this.mouseMoveHandler()}
-        onClick={() => this.mouseMoveHandler()}
       >
         <PlayPauseButton
           isPlaying={isPlaying}
@@ -288,6 +286,7 @@ class VideoPlayer extends React.Component {
             onPause={this.handlePause}
             onEnded={this.handleOnEnd}
             crossOrigin="anonymous"
+            onClick={this.clickHandler}
           >
             {captionSource &&
               <track
