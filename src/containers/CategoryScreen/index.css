@@ -1,6 +1,7 @@
 .b-category-screen {
   display: flex;
   flex-flow: row nowrap;
+  height: 100%;
 }
 
 .b-category-screen__main {

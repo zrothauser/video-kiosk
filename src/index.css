@@ -24,6 +24,11 @@ body {
   overflow: hidden;
 }
 
+/* Container element, not actually part of the app */
+#root {
+  height: 100%;
+}
+
 /* Nicer default for box-sizing */
 * {
   box-sizing: border-box;

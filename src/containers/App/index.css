@@ -1,9 +1,22 @@
 .b-app {
   width: 100%;
   max-width: 100%;
+  height: 100%;
 }
 
 .b-main {
   padding: 2.6041666667vw 0 0 0;
+  height: 100%;
+}
+
+/**
+ * These are really ugly, but necessary to set the height on the
+ * wrappers that ReactCSSTransitionReplace adds around the different
+ * containers. With this, we can set the height to 100%, so that
+ * child elements on individual screens can also be 100%.
+ */
+.b-main > div,
+.b-main > div > span,
+.b-main > div > span > div {
   height: 100%;
 }
