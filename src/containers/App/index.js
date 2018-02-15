@@ -64,11 +64,15 @@ App.propTypes = {
 const mapStateToProps = (state) => {
   const interfaceState = state.app.interface;
   const videoPlayerInterface = state.videoPlayer.interface;
+  const { location } = state.routing;
 
   // If we're on the video player page and controls
   // are hidden, the header bar should be hidden as well.
   // But not if the Video Index is open.
-  const showHeader = videoPlayerInterface.showControls || interfaceState.isVideoIndexOpen;
+  const isVideoPlayerOpen = location.pathname && location.pathname.includes('/video/');
+  const showHeader = isVideoPlayerOpen ?
+    videoPlayerInterface.showControls || interfaceState.isVideoIndexOpen :
+    true;
 
   return {
     isVideoIndexOpen: interfaceState.isVideoIndexOpen,

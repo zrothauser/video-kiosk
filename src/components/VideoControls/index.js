@@ -153,7 +153,6 @@ class VideoControls extends React.Component {
                 {entities.decode(title)}
               </span>
 
-
               <span className="b-video-controls__lower__right">
                 <Link
                   className="b-video-controls__topic-link"
