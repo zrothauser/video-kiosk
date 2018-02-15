@@ -25,10 +25,22 @@ export const layerAStyles = {
     transition: `opacity ${durations.medium}ms ease-in-out`,
     opacity: 0,
   },
-  entering: { opacity: 0 },
-  entered: { opacity: 1 },
-  exiting: { opacity: 1 },
-  exited: { opacity: 0 },
+  entering: {
+    opacity: 0,
+    zIndex: -1,
+  },
+  entered: {
+    opacity: 1,
+    zIndex: 1,
+  },
+  exiting: {
+    opacity: 1,
+    zIndex: 1,
+  },
+  exited: {
+    opacity: 0,
+    zIndex: -1,
+  },
 };
 
 // Layer B
@@ -40,19 +52,15 @@ export const layerBStyles = {
   },
   entering: {
     opacity: 0,
-    transform: 'translateY(-100%)',
   },
   entered: {
     opacity: 1,
-    transform: 'translateY(0)',
   },
   exiting: {
     opacity: 1,
-    transform: 'translateY(0)',
   },
   exited: {
     opacity: 0,
-    transform: 'translateY(-100%)',
   },
 };
 
@@ -60,24 +68,20 @@ export const layerBStyles = {
 // Used for Controls
 export const layerCStyles = {
   default: {
-    transition: `opacity ${durations.long}ms ease-in-out, transform ${durations.long}ms ease-in-out`,
+    transition: `opacity ${durations.long}ms ease-in, transform ${durations.long}ms ease-in`,
     opacity: 0,
   },
   entering: {
     opacity: 0,
-    transform: 'translateY(100%)',
   },
   entered: {
     opacity: 1,
-    transform: 'translateY(0)',
   },
   exiting: {
     opacity: 1,
-    transform: 'translateY(0)',
   },
   exited: {
     opacity: 0,
-    transform: 'translateY(100%)',
   },
 };
 
@@ -104,19 +108,6 @@ export const layerDStyles = {
     opacity: 0,
     transform: 'translateY(40px)',
   },
-};
-
-// Layer E
-// Used for Scrim (gradient under Controls)
-export const layerEStyles = {
-  default: {
-    transition: `opacity ${durations.long}ms ease-in-out`,
-    opacity: 0,
-  },
-  entering: { opacity: 0 },
-  entered: { opacity: 1 },
-  exiting: { opacity: 1 },
-  exited: { opacity: 0 },
 };
 
 // Layer F

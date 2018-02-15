@@ -49,8 +49,6 @@ class PlayPauseButton extends React.Component {
       <Transition
         in={visible}
         timeout={durations.medium}
-        mountOnEnter
-        unmountOnExit
         appear
       >
         {state => (

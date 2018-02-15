@@ -28,7 +28,6 @@ const {
   durations,
   shortFadeStyles,
   layerCStyles,
-  layerEStyles,
 } = transitions;
 
 // Set up helper object
@@ -119,7 +118,7 @@ class VideoControls extends React.Component {
     return (
       <Transition
         in={visible}
-        timeout={durations.long}
+        timeout={durations.medium}
         appear
       >
         {state => (
@@ -216,20 +215,7 @@ class VideoControls extends React.Component {
               </span>
             </div>
 
-            <Transition
-              in={visible}
-              timeout={durations.medium}
-            >
-              {scrimState => (
-                <span
-                  className="b-video-controls__scrim"
-                  style={{
-                    ...layerEStyles.default,
-                    ...layerEStyles[scrimState],
-                  }}
-                />
-              )}
-            </Transition>
+            <span className="b-video-controls__scrim" />
           </div>
         )}
       </Transition>

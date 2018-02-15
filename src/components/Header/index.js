@@ -18,7 +18,7 @@ const {
 const Header = props => (
   <Transition
     in={props.visible}
-    timeout={durations.long}
+    timeout={durations.medium}
   >
     {state => (
       <header

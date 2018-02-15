@@ -26,7 +26,7 @@ body {
 
 /* Helper to make the background black on the body on the video pages */
 .h-dark-background {
-  background: var(--color__black);
+  /* background: var(--color__black); */
 }
 
 /* Nicer default for box-sizing */
