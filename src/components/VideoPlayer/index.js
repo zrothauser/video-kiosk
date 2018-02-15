@@ -21,13 +21,17 @@ class VideoPlayer extends React.Component {
     this.seek = this.seek.bind(this);
     this.handleLoad = this.handleLoad.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
+    this.handlePause = this.handlePause.bind(this);
     this.handleOnEnd = this.handleOnEnd.bind(this);
     this.setProgress = this.setProgress.bind(this);
     this.hideControls = this.hideControls.bind(this);
     this.showControls = this.showControls.bind(this);
 
     // Initial state
-    this.state = { controlsTimer: null };
+    this.state = {
+      controlsTimer: null,
+      progressTrackerAnimationFrame: null,
+    };
   }
 
   /**
@@ -74,9 +78,11 @@ class VideoPlayer extends React.Component {
    * Clear the animation frame before unmounting.
    */
   componentWillUnmount() {
+    // Stop the timer that shows/hides controls
+    this.cancelControlsTimer();
+
     // Stop keeping track of the time
-    clearTimeout(this.state.controlsTimer);
-    this.clearAnimationFrame();
+    this.cancelProgressTracker();
 
     // Update the state of the video player
     this.props.togglePlay(false);
@@ -101,7 +107,9 @@ class VideoPlayer extends React.Component {
 
     // Call recursively as long as we're still playing
     if (isPlaying) {
-      this.animationFrame = window.requestAnimationFrame(this.setProgress);
+      this.setState({
+        progressTrackerAnimationFrame: window.requestAnimationFrame(this.setProgress),
+      });
     }
   }
 
@@ -135,9 +143,9 @@ class VideoPlayer extends React.Component {
   /**
    * Cancels the animation frame - stops keeping track of the current time.
    */
-  clearAnimationFrame() {
-    window.cancelAnimationFrame(this.animationFrame);
-    this.animationFrame = null;
+  cancelProgressTracker() {
+    window.cancelAnimationFrame(this.state.progressTrackerAnimationFrame);
+    this.setState({ progressTrackerAnimationFrame: null });
   }
 
   /**
@@ -157,17 +165,36 @@ class VideoPlayer extends React.Component {
   /**
    * Handles internal timer state, for showing/hiding controls.
    */
-  resetTimer() {
+  resetControlsTimer() {
     clearTimeout(this.state.controlsTimer);
     this.setState({ controlsTimer: setTimeout(this.hideControls, 3000) });
+  }
+
+  /**
+   * Cancels the timer that shows/hides the controls,
+   * either called when unmounting the Player or when the video
+   * is paused
+   */
+  cancelControlsTimer() {
+    // Stop keeping track of the time
+    clearTimeout(this.state.controlsTimer);
+
+    // Remove the timer from state
+    this.setState({ controlsTimer: null });
   }
 
   /**
    * Shows controls and resets the timer when the mouse moves.
    */
   mouseMoveHandler() {
+    // Return if the video isn't playing, this
+    // doesn't matter when it's paused
+    if (!this.props.isPlaying) {
+      return;
+    }
+
     this.showControls();
-    this.resetTimer();
+    this.resetControlsTimer();
   }
 
   /**
@@ -181,14 +208,26 @@ class VideoPlayer extends React.Component {
     this.props.togglePlay(true);
 
     // Reset the controls timer
-    this.resetTimer();
+    this.resetControlsTimer();
   }
 
   /**
    * Event handler for when the video begins playing.
    */
   handlePlay() {
+    // Keep track of progress
     this.setProgress();
+
+    // Start the timer for toggling the controls
+    this.resetControlsTimer();
+  }
+
+  /**
+   * Event handler for when the video begins playing.
+   */
+  handlePause() {
+    // Cancel the timer that shows/hides controls
+    this.cancelControlsTimer();
   }
 
   /**
@@ -196,7 +235,7 @@ class VideoPlayer extends React.Component {
    */
   handleOnEnd() {
     // Stop the timer
-    this.clearAnimationFrame();
+    this.cancelProgressTracker();
 
     // And go back to the Topic screen
     this.props.navigateToTopic();
@@ -246,6 +285,7 @@ class VideoPlayer extends React.Component {
             src={mp4Link}
             onCanPlay={this.handleLoad}
             onPlay={this.handlePlay}
+            onPause={this.handlePause}
             onEnded={this.handleOnEnd}
             crossOrigin="anonymous"
           >
