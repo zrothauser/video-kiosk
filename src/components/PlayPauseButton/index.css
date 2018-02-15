@@ -15,3 +15,7 @@
 .b-play-pause-button:active {
   outline: 0;
 }
+
+.b-play-pause-button img:focus {
+  outline: 0;
+}
