@@ -13,15 +13,9 @@ import * as videoPlayerActions from '../../redux/actions/videoPlayer';
 
 export class VideoScreen extends React.Component {
   /**
-   * Load the video data, and set the body background color.
-   *
-   * This is an anti-pattern in React, but needs to be used for
-   * the effect where you scroll up/down and the body's background
-   * color is shown.
+   * Load the video data.
    */
   componentDidMount() {
-    document.querySelector('body').classList.add('h-dark-background');
-
     // Load the video data, if the ID is available yet
     if (this.props.id) {
       this.loadVideoData();
@@ -38,14 +32,6 @@ export class VideoScreen extends React.Component {
     }
 
     this.loadVideoData();
-  }
-
-  /**
-   * Removes the body class when unmounting, see componentDidMount()
-   * comment for why this is being used.
-   */
-  componentWillUnmount() {
-    document.querySelector('body').classList.remove('h-dark-background');
   }
 
   /**
