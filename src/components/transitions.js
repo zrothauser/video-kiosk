@@ -23,6 +23,7 @@ export const shortFadeStyles = {
 export const layerAStyles = {
   default: {
     transition: `opacity ${durations.medium}ms ease-in-out`,
+    transitionDelay: `z-index ${durations.medium}ms`,
     opacity: 0,
   },
   entering: {
@@ -68,7 +69,7 @@ export const layerBStyles = {
 // Used for Controls
 export const layerCStyles = {
   default: {
-    transition: `opacity ${durations.long}ms ease-in, transform ${durations.long}ms ease-in`,
+    transition: `opacity ${durations.long}ms ease-in-out, transform ${durations.long}ms ease-in-out`,
     opacity: 0,
   },
   entering: {
