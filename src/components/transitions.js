@@ -48,7 +48,7 @@ export const layerAStyles = {
 // Used for Top Bar / Index
 export const layerBStyles = {
   default: {
-    transition: `opacity ${durations.medium}ms ease-in-out, transform ${durations.medium}ms ease-in-out`,
+    transition: `opacity ${durations.medium}ms ease-in-out`,
     opacity: 0,
   },
   entering: {
@@ -58,9 +58,11 @@ export const layerBStyles = {
     opacity: 1,
   },
   exiting: {
+    transition: `opacity ${durations.medium}ms ease-in-out`,
     opacity: 1,
   },
   exited: {
+    transition: `opacity ${durations.medium}ms ease-in-out`,
     opacity: 0,
   },
 };

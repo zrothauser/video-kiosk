@@ -48,9 +48,7 @@ export const App = props => (
       />
     </main>
 
-    {props.isVideoIndexOpen &&
-      <VideoIndex />
-    }
+    <VideoIndex visible={props.isVideoIndexOpen} />
   </div>
 );
 

@@ -14,12 +14,14 @@ export const VideoIndex = props => (
   <VideoListModal
     videos={props.videos}
     toggleVideoIndex={props.toggleVideoIndex}
+    visible={props.visible}
   />
 );
 
 VideoIndex.propTypes = {
   videos: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleVideoIndex: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {

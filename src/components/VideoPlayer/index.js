@@ -161,6 +161,8 @@ class VideoPlayer extends React.Component {
    */
   showControls() {
     this.props.toggleControls(true);
+
+    this.resetControlsTimer();
   }
 
   /**
@@ -168,7 +170,7 @@ class VideoPlayer extends React.Component {
    */
   resetControlsTimer() {
     clearTimeout(this.state.controlsTimer);
-    this.setState({ controlsTimer: setTimeout(this.hideControls, 3000) });
+    this.setState({ controlsTimer: setTimeout(this.hideControls, 4000) });
   }
 
   /**
