@@ -57,7 +57,7 @@ class VideoListModal extends React.Component {
         timeout={durations.medium}
         appear
         mountOnEnter
-
+        unmountOnExit
       >
         {state => (
           <div

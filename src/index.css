@@ -26,7 +26,7 @@ body {
 
 /* Container element, not actually part of the app */
 #root {
-  height: 100%;
+  height: 100vh;
 }
 
 /* Nicer default for box-sizing */
