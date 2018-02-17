@@ -1,3 +1,10 @@
+.b-video-player {
+  display: block;
+  height: 100vh;
+  position: relative;
+  top: -2.6041666667vw; /* height of the header */
+}
+
 .b-video-player__wrapper {
   position: absolute;
   top: 0;
