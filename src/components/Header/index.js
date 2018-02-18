@@ -12,7 +12,7 @@ import './index.css';
 
 const {
   durations,
-  layerBStyles,
+  mediumFadeStyles,
 } = transitions;
 
 const Header = props => (
@@ -24,8 +24,8 @@ const Header = props => (
       <header
         className="b-header"
         style={{
-          ...layerBStyles.default,
-          ...layerBStyles[state],
+          ...mediumFadeStyles.default,
+          ...mediumFadeStyles[state],
         }}
       >
         <h1 className="b-header__title">

@@ -27,7 +27,7 @@ import * as transitions from '../transitions';
 const {
   durations,
   shortFadeStyles,
-  layerCStyles,
+  longFadeStyles,
 } = transitions;
 
 // Set up helper object
@@ -125,8 +125,8 @@ class VideoControls extends React.Component {
           <div
             className="b-video-controls"
             style={{
-              ...layerCStyles.default,
-              ...layerCStyles[state],
+              ...longFadeStyles.default,
+              ...longFadeStyles[state],
             }}
           >
             <div className="b-video-controls__upper">

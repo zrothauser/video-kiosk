@@ -17,7 +17,7 @@ import * as transitions from '../transitions';
 
 const {
   durations,
-  layerBStyles,
+  mediumFadeStyles,
 } = transitions;
 
 // Set up helper object
@@ -63,8 +63,8 @@ class VideoListModal extends React.Component {
           <div
             className="b-video-index"
             style={{
-              ...layerBStyles.default,
-              ...layerBStyles[state],
+              ...mediumFadeStyles.default,
+              ...mediumFadeStyles[state],
             }}
           >
             <div className="b-video-index__container">

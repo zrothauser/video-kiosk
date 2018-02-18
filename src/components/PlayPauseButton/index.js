@@ -13,7 +13,7 @@ import * as transitions from '../transitions';
 
 const {
   durations,
-  layerAStyles,
+  mediumFadeStyles,
 } = transitions;
 
 class PlayPauseButton extends React.Component {
@@ -58,14 +58,16 @@ class PlayPauseButton extends React.Component {
         in={visible}
         timeout={durations.medium}
         appear
+        mountOnEnter
+        unmountOnExit
       >
         {state => (
           <button
             className="b-play-pause-button"
             onClick={() => this.clickHandler()}
             style={{
-              ...layerAStyles.default,
-              ...layerAStyles[state],
+              ...mediumFadeStyles.default,
+              ...mediumFadeStyles[state],
             }}
           >
             {buttonContent}
