@@ -9,6 +9,8 @@
   top: calc(50% - 3.9270052084vw);
   left: calc(50% - 3.9270052084vw);
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .b-play-pause-button:focus,
