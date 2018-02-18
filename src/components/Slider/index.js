@@ -28,6 +28,18 @@ class Slider extends React.Component {
   }
 
   /**
+   * If the video time has changed, reset our internal state.
+   */
+  componentWillReceiveProps(nextProps) {
+    // Return if nothing changed
+    if (nextProps.value === this.state.currentValue) {
+      return;
+    }
+
+    this.setState({ currentValue: nextProps.value });
+  }
+
+  /**
    * Lets us track if the mouse is down or up, so that we can scrub the slider.
    *
    * @param {Event} event Mousedown event.
