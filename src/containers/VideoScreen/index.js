@@ -175,7 +175,7 @@ const mapStateToProps = (state, ownProps) => {
 
   if (videoData && videoData.captions.length) {
     const selectedVideoTrack = videoData.captions.filter(track =>
-      track.active && track.active === true && track.type && track.type === 'captions');
+      track.active && track.active === true);
 
     if (selectedVideoTrack.length) {
       [captionTrack] = selectedVideoTrack;
