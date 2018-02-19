@@ -42,7 +42,24 @@
 
 /* Lower section */
 .b-video-controls__lower {
+  display: flex;
+  flex-flow: row nowrap;
   width: 100%;
+}
+
+.b-video-controls__pagination {
+  display: block;
+  flex-shrink: 0;
+}
+
+.b-video-controls__title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: auto;
+  height: 1.5em;
+  white-space: nowrap;
+  padding-right: 1em;
 }
 
 .b-video-controls__title__category {
@@ -52,6 +69,11 @@
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-weight: 700;
+}
+
+.b-video-controls__lower__right {
+  display: block;
+  flex-shrink: 0;
 }
 
 /** Pagination */
@@ -108,6 +130,7 @@ float: right;
   letter-spacing: .5em;
   cursor: pointer;
   margin-left: 5.46vw;
+  padding-top: 0.4166666667vw;
   align-items: center;
   justify-content: space-between;
 }
