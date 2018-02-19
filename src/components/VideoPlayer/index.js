@@ -53,14 +53,9 @@ class VideoPlayer extends React.Component {
 
     // If we need to pause or play the video, do that now
     if (mp4Link) {
-      if (mp4Link !== prevProps.mp4Link) {
-        console.log(`didUpdate mp4Link ${mp4Link}`)
-      }
       if (isPlaying && this.videoElement.paused) {
-        console.log('playing');
         this.videoElement.play();
       } else if (!isPlaying && !this.videoElement.paused) {
-        console.log('pausing');
         this.videoElement.pause();
       }
     }
