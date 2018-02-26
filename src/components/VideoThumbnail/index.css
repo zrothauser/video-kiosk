@@ -9,11 +9,26 @@
 	height: 13.1640625vw;
 	width: 100%;
 	overflow: hidden;
+	position: relative;
 }
 
 .b-video-thumbnail__image {
 	width: 100%;
 	height: 13.1640625vw;
+}
+
+.b-video-thumbnail__time {
+  font-family: 'Gothic', sans-serif;
+  background-color: rgba(25,33,44,.66);
+  color: #fff;
+  letter-spacing: .1em;
+  font-weight: 700;
+  display: inline-block;
+  position: absolute;
+  bottom: .5em;
+  right: .5em;
+  z-index: 1;
+  padding: .5em .6em .25em .6em;
 }
 
 .b-video-thumbnail__title {
@@ -28,13 +43,6 @@
   font-family: 'Schoolbook', sans-serif;
   font-size: 0.8333333333vw;
   line-height: 1.125;
-}
-
-.b-video-thumbnail__time {
-  font-family: 'Gothic', sans-serif;
-  color: #19212c;
-  letter-spacing: .1em;
-  font-weight: 700;
 }
 
 .thumbnails-scrim {
