@@ -24,6 +24,7 @@ class Slider extends React.Component {
     // Initial state
     this.state = {
       currentValue: props.value,
+      isMouseDown: false,
     };
   }
 
@@ -36,6 +37,11 @@ class Slider extends React.Component {
       return;
     }
 
+    // Don't update the value if we're dragging
+    if (this.state.isMouseDown) {
+      return;
+    }
+
     this.setState({ currentValue: nextProps.value });
   }
 
@@ -45,6 +51,10 @@ class Slider extends React.Component {
    * @param {Event} event Mousedown event.
    */
   handleMouseDown(event) {
+    console.log('handleMouseDown');
+
+    this.setState({ isMouseDown: true });
+
     // Pass to handleDrag(), so that we can go
     // ahead and update the position
     this.handleDrag(event);
@@ -64,6 +74,8 @@ class Slider extends React.Component {
       minimum,
       maximum,
     } = this.props;
+
+    console.log('handleDrag');
 
     if (!this.trackElement) {
       return;
@@ -97,6 +109,8 @@ class Slider extends React.Component {
       newValue = minimum;
     }
 
+    console.log('newValue: ' + newValue);
+
     this.setState({ currentValue: newValue });
   }
 
@@ -109,6 +123,8 @@ class Slider extends React.Component {
     const { handleSeek } = this.props;
     const { currentValue } = this.state;
 
+    this.setState({ isMouseDown: false });
+
     // Remove event handlers
     document.removeEventListener('mousemove', this.handleDrag);
     document.removeEventListener('touchmove', this.handleDrag);
@@ -117,6 +133,7 @@ class Slider extends React.Component {
 
     // Call the handleSeek prop, this will probably actually
     // do something with the data now that it's done being set
+    console.log('about to handleSeek: ' + currentValue);
     handleSeek(currentValue);
   }
 
@@ -137,13 +154,12 @@ class Slider extends React.Component {
           ref={(trackElement) => { this.trackElement = trackElement; }}
           onMouseDown={event => this.handleMouseDown(event)}
           onTouchStart={event => this.handleMouseDown(event)}
-        />
-
-        <div
-          className="b-slider__progress"
-          style={{ width: `${valuePercent}%` }}
-          onMouseDown={event => this.handleMouseDown(event)}
-        />
+        >
+          <div
+            className="b-slider__progress"
+            style={{ width: `${valuePercent}%` }}
+          />
+        </div>
 
         <div
           className="b-slider__thumb"

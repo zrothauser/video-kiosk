@@ -9,8 +9,21 @@
 }
 
 .b-slider__track {
+  height: 40px;
+  width: 100%;
+}
+
+.b-slider__track:before {
+  /*
+  The actual styling is on the track's psuedoelement, so that
+  the click target can be larger than the actual track
+  */
+  display: block;
+  content: '';
   border-radius: 5px;
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   height: 5px;
   width: 100%;
   background-color: rgba(255, 255, 255, .5);
@@ -23,7 +36,9 @@
   border-radius: 5px;
   position: absolute;
   height: 5px;
+  top: 50%;
   left: 0;
+  transform: translateY(-50%);
   background-color: white;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
