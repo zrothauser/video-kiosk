@@ -2,7 +2,7 @@
 export const durations = {
   shortest: 125,
   short: 250,
-  medium: 660,
+  medium: 400,
   long: 1000,
 };
 
