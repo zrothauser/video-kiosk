@@ -51,8 +51,6 @@ class Slider extends React.Component {
    * @param {Event} event Mousedown event.
    */
   handleMouseDown(event) {
-    console.log('handleMouseDown');
-
     this.setState({ isMouseDown: true });
 
     // Pass to handleDrag(), so that we can go
@@ -74,8 +72,6 @@ class Slider extends React.Component {
       minimum,
       maximum,
     } = this.props;
-
-    console.log('handleDrag');
 
     if (!this.trackElement) {
       return;
@@ -109,8 +105,6 @@ class Slider extends React.Component {
       newValue = minimum;
     }
 
-    console.log('newValue: ' + newValue);
-
     this.setState({ currentValue: newValue });
   }
 
@@ -133,7 +127,6 @@ class Slider extends React.Component {
 
     // Call the handleSeek prop, this will probably actually
     // do something with the data now that it's done being set
-    console.log('about to handleSeek: ' + currentValue);
     handleSeek(currentValue);
   }
 
