@@ -36,6 +36,12 @@ const VideoThumbnail = (props) => {
 		            alt={title}
 		          />
         	}
+
+	           <div className="b-video-thumbnail__time">
+	             {convertSecondsToMinutesSeconds(duration)}
+	           </div>
+
+
 		</div>
 
         <h3 className="b-video-thumbnail__title">
@@ -50,11 +56,6 @@ const VideoThumbnail = (props) => {
                 { __html: DOMPurify.sanitize(description) }
               }
             />
-          }
-          {duration &&
-            <span className="b-video-thumbnail__time">
-              &nbsp;{convertSecondsToMinutesSeconds(duration)}
-            </span>
           }
         </div>
       </Link>
