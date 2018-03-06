@@ -11,6 +11,7 @@
   max-height: 100vh;
   overflow-y: scroll;
   cursor: grab;
+  user-select: none;
 }
 
 ::-webkit-scrollbar {
