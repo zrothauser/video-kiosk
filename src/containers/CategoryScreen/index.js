@@ -14,27 +14,34 @@ import TopicsList from '../../components/TopicsList';
 // Styles
 import './index.css';
 
-export const CategoryScreen = (props) => {
-  const {
-    selectedCategorySlug,
-    videos,
-    allCategories,
-  } = props;
+class CategoryScreen extends React.Component {
+  componentDidUpdate() {
+    // Need to reset dragscroll, in case we need it on this screen
+    dragscroll.reset();
+  }
 
-  return (
-    <div className="b-category-screen">
-      <div className="b-category-screen__main dragscroll">
-        <VideoGrid videos={videos} />
+  render() {
+    const {
+      selectedCategorySlug,
+      videos,
+      allCategories,
+    } = this.props;
+
+    return (
+      <div className="b-category-screen">
+        <div className="b-category-screen__main dragscroll">
+          <VideoGrid videos={videos} />
+        </div>
+        <div className="b-category-screen__sidebar">
+          <TopicsList
+            categories={allCategories}
+            selectedCategorySlug={selectedCategorySlug}
+          />
+        </div>
       </div>
-      <div className="b-category-screen__sidebar">
-        <TopicsList
-          categories={allCategories}
-          selectedCategorySlug={selectedCategorySlug}
-        />
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 CategoryScreen.defaultProps = {
   selectedCategorySlug: '',
