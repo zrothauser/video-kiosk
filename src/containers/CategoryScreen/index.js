@@ -3,6 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+// We just need to include this - it's a vanilla JS library
+// used in the component
+import dragscroll from 'dragscroll'; // eslint-disable-line no-unused-vars
+
 // Components
 import VideoGrid from '../../components/VideoGrid';
 import TopicsList from '../../components/TopicsList';
@@ -19,7 +23,7 @@ export const CategoryScreen = (props) => {
 
   return (
     <div className="b-category-screen">
-      <div className="b-category-screen__main">
+      <div className="b-category-screen__main dragscroll">
         <VideoGrid videos={videos} />
       </div>
       <div className="b-category-screen__sidebar">
