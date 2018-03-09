@@ -15,6 +15,12 @@ import TopicsList from '../../components/TopicsList';
 import './index.css';
 
 class CategoryScreen extends React.Component {
+  componentDidMount() {
+    // Need to reset dragscroll, it may have run before render()
+    // happened
+    dragscroll.reset();
+  }
+
   componentDidUpdate() {
     // Need to reset dragscroll, in case we need it on this screen
     dragscroll.reset();
