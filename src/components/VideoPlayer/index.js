@@ -26,7 +26,9 @@ class VideoPlayer extends React.Component {
     this.setProgress = this.setProgress.bind(this);
     this.hideControls = this.hideControls.bind(this);
     this.showControls = this.showControls.bind(this);
-    this.clickHandler = this.clickHandler.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleVideoClick = this.handleVideoClick.bind(this);
 
     // Initial state
     this.state = {
@@ -159,15 +161,19 @@ class VideoPlayer extends React.Component {
   showControls() {
     this.props.toggleControls(true);
 
-    this.resetControlsTimer();
+    if (this.props.isPlaying) {
+      this.startOrResetControlsTimer();
+    }
   }
 
   /**
    * Handles internal timer state, for showing/hiding controls.
    */
-  resetControlsTimer() {
+  startOrResetControlsTimer() {
     clearTimeout(this.state.controlsTimer);
-    this.setState({ controlsTimer: setTimeout(this.hideControls, 4000) });
+    this.setState({
+      controlsTimer: setTimeout(this.hideControls, 4000),
+    });
   }
 
   /**
@@ -184,13 +190,40 @@ class VideoPlayer extends React.Component {
   }
 
   /**
-   * Shows/hides the controls when the mouse is clicked
+   * Keep track of mousedown State
    */
-  clickHandler() {
-    // If we're showing controls and the video is playing, hide
-    // the controls. If it's paused or the controls are hidden,
-    // show them
-    if (this.props.showControls && this.props.isPlaying) {
+  handleMouseDown() {
+    // If the video isn't, the controls timer isn't active, and
+    // we don't need to do anything
+    if (this.props.isPlaying) {
+      this.cancelControlsTimer();
+    }
+  }
+
+  /**
+   * Shows/hides the controls when the mouse is clicked. This happens
+   * on MouseUp instead of Click, so that the controls don't show/hide
+   * as the user drags/scrubs.
+   */
+  handleMouseUp() {
+    if (this.props.isPlaying) {
+      this.startOrResetControlsTimer();
+    }
+  }
+
+  /**
+   * Handles clicks to the actual video element.
+   *
+   * Clicking on the video itself will directly toggle
+   * the video controls.
+   */
+  handleVideoClick() {
+    // If the video is paused, the controls will already be showing
+    if (!this.props.isPlaying) {
+      return;
+    }
+
+    if (this.props.showControls) {
       this.hideControls();
     } else {
       this.showControls();
@@ -206,9 +239,6 @@ class VideoPlayer extends React.Component {
 
     // And play the video
     this.props.togglePlay(true);
-
-    // Reset the controls timer
-    this.resetControlsTimer();
   }
 
   /**
@@ -219,7 +249,7 @@ class VideoPlayer extends React.Component {
     this.setProgress();
 
     // Start the timer for toggling the controls
-    this.resetControlsTimer();
+    this.startOrResetControlsTimer();
   }
 
   /**
@@ -284,8 +314,8 @@ class VideoPlayer extends React.Component {
             onPlay={this.handlePlay}
             onPause={this.handlePause}
             onEnded={this.handleOnEnd}
+            onClick={this.handleVideoClick}
             crossOrigin="anonymous"
-            onClick={this.clickHandler}
           >
             {captionSource &&
               <track
@@ -297,7 +327,11 @@ class VideoPlayer extends React.Component {
           </video>
         </div>
 
-        <div className="b-video-player__controls-wrapper">
+        <div
+          className="b-video-player__controls-wrapper"
+          onMouseDown={this.handleMouseDown}
+          onMouseUp={this.handleMouseUp}
+        >
           <VideoControls
             title={title}
             parentCategory={parentCategory}
