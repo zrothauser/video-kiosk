@@ -27,6 +27,7 @@
   "redux": "^3.7.2",
   "redux-thunk": "^2.2.0",
   "slugify": "^1.2.9",
+  "source-map-explorer": "^1.5.0",
   "superagent": "^3.8.2"
  },
  "scripts": {
@@ -35,7 +36,8 @@
   "test": "react-scripts test --env=jsdom",
   "eject": "react-scripts eject",
   "lint": "eslint .",
-  "lintfix": "eslint . --fix"
+  "lintfix": "eslint . --fix",
+  "analyze": "source-map-explorer build/static/js/main.*"
  },
  "devDependencies": {
   "eslint": "^4.15.0",
