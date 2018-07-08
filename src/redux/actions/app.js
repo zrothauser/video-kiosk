@@ -1,9 +1,10 @@
 import * as types from './actionTypes';
 
 // Actions
-export function fetchAppData() {
+export function fetchAppData(setName) {
   return {
     type: types.FETCH_APP_DATA,
+    setName,
   };
 }
 

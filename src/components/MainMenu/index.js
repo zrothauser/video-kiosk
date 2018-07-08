@@ -7,7 +7,10 @@ import PropTypes from 'prop-types';
 import './index.css';
 
 const MainMenu = (props) => {
-  const { categories } = props;
+  const {
+    categories,
+    setSlug,
+  } = props;
 
   return (
     <div className="b-main-menu">
@@ -15,13 +18,13 @@ const MainMenu = (props) => {
         Main Menu
       </span>
       <ul className="b-main-menu__list">
-        {categories.map((category, index) => (
+        {categories.map(category => (
           <li
             className="b-main-menu__item"
-            key={`${index}-${category.slug}`}
+            key={category.slug}
           >
             <Link
-              to={`/category/${category.slug}`}
+              to={`/${setSlug}/${category.slug}`}
               className="b-main-menu__link"
             >
               {category.title}
@@ -30,12 +33,12 @@ const MainMenu = (props) => {
         ))}
       </ul>
     </div>
-  )
+  );
 };
 
 MainMenu.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setSlug: PropTypes.string.isRequired,
 };
 
 export default MainMenu;

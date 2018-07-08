@@ -6,7 +6,6 @@ import { ConnectedRouter } from 'react-router-redux';
 
 // Redux
 import store, { history } from './redux/configureStore';
-import { fetchAppData } from './redux/actions/app';
 
 // Containers
 import App from './containers/App';
@@ -29,9 +28,6 @@ render(
   </Provider>,
   target,
 );
-
-// Load data
-store.dispatch(fetchAppData());
 
 // Set up service worker
 // registerServiceWorker();

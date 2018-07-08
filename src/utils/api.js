@@ -6,7 +6,6 @@ import * as types from '../redux/actions/actionTypes';
 
 // API URLs
 const API_BASE_URL = 'http://video.clyffordstillmuseum.org/wp-v2/wp-json/wp/v2/set';
-const DEFAULT_SET_URL = `${API_BASE_URL}/?slug=default&_embed=1`;
 
 /**
  * Middleware to retrieve base API data.
@@ -18,8 +17,10 @@ export const apiData = store => next => (action) => {
 
   switch (action.type) {
     case types.FETCH_APP_DATA: {
+      const endpointURL = `${API_BASE_URL}/?slug=${action.setName}&_embed=1`;
+
       request
-        .get(DEFAULT_SET_URL)
+        .get(endpointURL)
         .end((error, res) => {
           if (error) {
             return next({

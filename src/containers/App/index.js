@@ -16,53 +16,77 @@ import VideoIndex from '../VideoIndex';
 import Header from '../../components/Header';
 
 // Actions
-import { toggleVideoIndex, closeVideoIndex } from '../../redux/actions/app';
+import { fetchAppData, toggleVideoIndex, closeVideoIndex } from '../../redux/actions/app';
 
 // Styles
 import './index.css';
 
-export const App = props => (
-  <div className="b-app">
-    <Header
-      toggleVideoIndex={props.toggleVideoIndex}
-      closeVideoIndex={props.closeVideoIndex}
-      visible={props.showHeader}
-    />
+class App extends React.Component {
+  componentDidMount() {
+    this.props.fetchAppData(this.props.setSlug);
+  }
 
-    <main className="b-main">
-      <Route render={({ location }) => (
-        <ReactCSSTransitionReplace
-          transitionName="fade-fast"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-        >
-          <div key={location.pathname}>
-            <Switch location={location}>
-              <Route exact path="/" component={HomeScreen} />
-              <Route path="/category/:categorySlug/:id" component={VideoScreen} />
-              <Route path="/category/:categorySlug" component={CategoryScreen} />
-            </Switch>
-          </div>
-        </ReactCSSTransitionReplace>
-      )}
-      />
-    </main>
+  render() {
+    const {
+      showHeader,
+      isVideoIndexOpen,
+      setSlug,
+    } = this.props;
 
-    <VideoIndex visible={props.isVideoIndexOpen} />
-  </div>
-);
+    return (
+      <div className="b-app">
+        <Header
+          toggleVideoIndex={this.props.toggleVideoIndex}
+          closeVideoIndex={this.props.closeVideoIndex}
+          visible={showHeader}
+        />
+
+        <main className="b-main">
+          <Route render={({ location }) => (
+            <ReactCSSTransitionReplace
+              transitionName="fade-fast"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}
+            >
+              <div key={location.pathname}>
+                <Switch location={location}>
+                  <Route exact path="/" render={() => <HomeScreen setSlug={setSlug} />} />
+                  <Route exact path="/:set" render={() => <HomeScreen setSlug={setSlug} />} />
+
+                  <Route path="/:set/:categorySlug/:id" component={VideoScreen} />
+                  <Route path="/:set/:categorySlug" component={CategoryScreen} />
+                </Switch>
+              </div>
+            </ReactCSSTransitionReplace>
+          )}
+          />
+        </main>
+
+        <VideoIndex visible={isVideoIndexOpen} />
+      </div>
+    );
+  }
+}
+
+App.defaultProps = {
+  setSlug: 'media-channel',
+};
 
 App.propTypes = {
+  fetchAppData: PropTypes.func.isRequired,
   isVideoIndexOpen: PropTypes.bool.isRequired,
   toggleVideoIndex: PropTypes.func.isRequired,
   closeVideoIndex: PropTypes.func.isRequired,
   showHeader: PropTypes.bool.isRequired,
+  setSlug: PropTypes.string,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const interfaceState = state.app.interface;
   const videoPlayerInterface = state.videoPlayer.interface;
   const { location } = state.routing;
+
+  const setSlug = ownProps.location.pathname.replace(/\//g, '') || ownProps.setSlug;
 
   // If we're on the video player page and controls
   // are hidden, the header bar should be hidden as well.
@@ -75,10 +99,11 @@ const mapStateToProps = (state) => {
   return {
     isVideoIndexOpen: interfaceState.isVideoIndexOpen,
     showHeader,
+    setSlug,
   };
 };
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleVideoIndex, closeVideoIndex }, dispatch));
+  bindActionCreators({ fetchAppData, toggleVideoIndex, closeVideoIndex }, dispatch));
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
