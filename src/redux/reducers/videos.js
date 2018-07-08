@@ -1,34 +1,5 @@
-// Dependencies
-import slugify from 'slugify';
-
 // Action types
 import * as types from '../actions/actionTypes';
-
-// Helpers
-import { extractVimeoIDFromURL } from '../../utils/video';
-
-// Helper function to sort videos by Topic/Category
-// and then alphabetically by title
-const sortVideos = videos => [...videos].sort((a, b) => {
-  // If categories/topics are different, sort by those
-  if (a.parentCategory < b.parentCategory) {
-    return -1;
-  } else if (a.parentCategory > b.parentCategory) {
-    return 1;
-  }
-
-  // If we got this far, then categories/topics are
-  // the same, so compare titles
-  if (a.title < b.title) {
-    return -1;
-  } else if (a.title > b.title) {
-    return 1;
-  }
-
-  // Should never happen, but just in case... same
-  // category and same title
-  return 0;
-});
 
 // Initial state
 const initialState = {
@@ -39,50 +10,8 @@ const initialState = {
   sortKey: 'title',
 };
 
-// Lets us keep the struct of an individual video consistent
-const VIDEO_OBJECT_STRUCTURE = {
-  id: 0,
-  parentCategory: '',
-  parentCategoryTitle: '',
-  title: '',
-  description: '',
-  vimeoURL: '',
-  isLoading: false,
-  isErrored: false,
-  error: null,
-  thumbnailLarge: '',
-  duration: 0,
-  mp4Link: '',
-  thumbnailFull: '',
-  hasCaptions: false,
-  isCaptionLoading: false,
-  isCaptionErrored: false,
-  captionError: null,
-  captions: [{
-    uri: null,
-    active: false,
-    type: 'captions',
-    language: 'en-US',
-    link: null,
-    link_expires_time: null,
-    hls_link: null,
-    hls_link_expires_time: null,
-    name: null,
-  }],
-};
-
 // And the actual reducer
 export default (state = initialState, action) => {
-  // These get used in many of the action types, if we're getting
-  // data for an individual video
-  let videoBeingFetched = {};
-  let videosWithoutUpdatedVideo = [];
-
-  if (action.id) {
-    videoBeingFetched = state.videos.find(video => video.id === action.id);
-    videosWithoutUpdatedVideo = [...state.videos.filter(video => video.id !== action.id)];
-  }
-
   switch (action.type) {
     case types.FETCH_APP_DATA:
       return {
@@ -99,252 +28,21 @@ export default (state = initialState, action) => {
       };
 
     case types.FETCH_APP_DATA_RECEIVED: {
-      // Flatten the data, the API has some redundancy and things
-      // are nested too deeply
-      const rawData = action.data[0].set;
-      const processedData = [...state.videos];
+      if (!action.data.length) {
+        // TODO handle a 404 error
+        return {
+          ...state,
+        };
+      }
 
-      // Go through each category's videos, add them to our collection
-      // if they don't already exist, or update any missing data if they
-      // do exist
-      const maybeAddVideo = (video) => {
-        const videoID = extractVimeoIDFromURL(video.vimeoid);
-
-        // Return if something was wrong with the URL or ID
-        if (!videoID) {
-          return;
-        }
-
-        const existingVideoIndex = processedData.findIndex(oldVideo => oldVideo.id === videoID);
-
-        if (existingVideoIndex !== -1) {
-          processedData[existingVideoIndex] = {
-            ...processedData[existingVideoIndex],
-            id: videoID,
-            title: video.title,
-            description: video.description,
-            vimeoURL: video.vimeoid,
-            parentCategory: video.parentCategory,
-            parentCategoryTitle: video.parentCategoryTitle,
-          };
-        } else {
-          processedData.push({
-            ...VIDEO_OBJECT_STRUCTURE,
-            id: videoID,
-            title: video.title,
-            description: video.description,
-            vimeoURL: video.vimeoid,
-            parentCategory: video.parentCategory,
-            parentCategoryTitle: video.parentCategoryTitle,
-          });
-        }
-      };
-
-      rawData.categories.forEach((category) => {
-        // Keep track of each video's category slug
-        const categorySlug = slugify(category.category.title, { lower: true });
-        const categoryTitle = category.category.title;
-
-        category.category.videos.forEach((video) => {
-          const videoData = video.video;
-
-          // Add additional data that's not in the actual video object from the API
-          videoData.parentCategory = categorySlug;
-          videoData.parentCategoryTitle = categoryTitle;
-
-          // Add the video to our collection, if needed
-          maybeAddVideo(videoData);
-        });
-      });
-
-      // And also the main background video
-      const backgroundVideo = rawData.backgroundvideo;
-      maybeAddVideo({
-        vimeoURL: backgroundVideo,
-      });
+      const rawData = action.data[0];
 
       return {
         ...state,
-        videos: sortVideos(processedData),
+        videos: rawData._embedded.videos, // eslint-disable-line no-underscore-dangle
         isLoading: false,
         isErrored: false,
         error: null,
-      };
-    }
-
-    case types.FETCH_VIMEO_DATA: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isLoading: true,
-          isErrored: false,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_VIMEO_DATA_ERROR: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isLoading: false,
-          isErrored: true,
-          error: action.error,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_VIMEO_DATA_RECEIVED: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isLoading: false,
-          isErrored: false,
-          error: null,
-          thumbnailLarge: action.data[0].thumbnail_large,
-          duration: action.data[0].duration,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_MP4_DATA: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isLoading: true,
-          isErrored: false,
-          error: null,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_MP4_DATA_ERROR: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isLoading: false,
-          isErrored: true,
-          error: action.error,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_MP4_DATA_RECEIVED: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isLoading: false,
-          isErrored: false,
-          error: null,
-          mp4Link: action.data.HD.link,
-          thumbnailFull: action.data.thumb.link,
-          hasCaptions: Object.prototype.hasOwnProperty.call(action.data, 'captions'),
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_CAPTION_DATA: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isCaptionLoading: true,
-          isCaptionErrored: false,
-          captionError: null,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_CAPTION_DATA_ERROR: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isCaptionLoading: false,
-          isCaptionErrored: true,
-          captionError: action.error,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
-      };
-    }
-
-    case types.FETCH_CAPTION_DATA_RECEIVED: {
-      const updatedVideos = [
-        ...videosWithoutUpdatedVideo,
-        {
-          ...VIDEO_OBJECT_STRUCTURE,
-          ...videoBeingFetched,
-          id: action.id,
-          isCaptionLoading: false,
-          isCaptionErrored: false,
-          captionError: null,
-          captions: action.data,
-        },
-      ];
-
-      return {
-        ...state,
-        videos: sortVideos(updatedVideos),
       };
     }
 

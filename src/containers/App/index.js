@@ -39,8 +39,8 @@ export const App = props => (
           <div key={location.pathname}>
             <Switch location={location}>
               <Route exact path="/" component={HomeScreen} />
-              <Route path="/category/:slug" component={CategoryScreen} />
-              <Route path="/video/:id" component={VideoScreen} />
+              <Route path="/category/:categorySlug/:id" component={VideoScreen} />
+              <Route path="/category/:categorySlug" component={CategoryScreen} />
             </Switch>
           </div>
         </ReactCSSTransitionReplace>

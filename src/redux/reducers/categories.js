@@ -4,39 +4,11 @@ import slugify from 'slugify';
 // Action types
 import * as types from '../actions/actionTypes';
 
-// Utilities
-import { extractVideoIDsFromCategoryData } from '../../utils/video';
-
 const initialState = {
   categories: [
     {
       slug: null,
       title: '',
-      visibility: 'visible',
-      videos: [],
-    },
-    {
-      slug: null,
-      title: '',
-      visibility: 'visible',
-      videos: [],
-    },
-    {
-      slug: null,
-      title: '',
-      visibility: 'visible',
-      videos: [],
-    },
-    {
-      slug: null,
-      title: '',
-      visibility: 'visible',
-      videos: [],
-    },
-    {
-      slug: null,
-      title: '',
-      visibility: 'visible',
       videos: [],
     },
   ],
@@ -62,20 +34,20 @@ export default (state = initialState, action) => {
       };
 
     case types.FETCH_APP_DATA_RECEIVED: {
-      // Flatten the data, the API has some redundancy and things
-      // are nested too deeply
-      const rawCategoryData = action.data[0].set.categories;
-      const processedData = rawCategoryData.map((category) => {
-        const categoryData = category.category;
-        const videoIDs = extractVideoIDsFromCategoryData(categoryData);
-
+      if (!action.data.length) {
+        // TODO handle a 404 error
         return {
-          slug: slugify(categoryData.title, { lower: true }),
-          title: categoryData.title,
-          visibility: categoryData.visibility,
-          videos: videoIDs,
+          ...state,
         };
-      });
+      }
+
+      const rawCategoryData = action.data[0].categories;
+
+      const processedData = rawCategoryData.map(category => ({
+        slug: slugify(category.category_name, { lower: true }),
+        title: category.category_name,
+        videos: category.videos,
+      }));
 
       return {
         ...state,

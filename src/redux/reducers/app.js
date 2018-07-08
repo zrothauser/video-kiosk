@@ -1,9 +1,6 @@
 // Action types
 import * as types from '../actions/actionTypes';
 
-// Helpers
-import { extractVimeoIDFromURL } from '../../utils/video';
-
 const initialState = {
   data: {
     title: null,
@@ -41,8 +38,15 @@ export default (state = initialState, action) => {
       };
 
     case types.FETCH_APP_DATA_RECEIVED: {
-      const rawAppData = action.data[0].set;
-      const backgroundVideoID = extractVimeoIDFromURL(rawAppData.backgroundvideo);
+      if (!action.data.length) {
+        // TODO handle a 404 error
+        return {
+          ...state,
+        };
+      }
+
+      const rawAppData = action.data[0];
+      const backgroundVideoID = rawAppData.background_video.id;
 
       return {
         ...state,

@@ -365,7 +365,7 @@ VideoPlayer.propTypes = {
   duration: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
   indexInCategory: PropTypes.number.isRequired,
-  allVideosInCategory: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allVideosInCategory: PropTypes.arrayOf(PropTypes.string).isRequired,
   togglePlay: PropTypes.func.isRequired,
   volume: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,

@@ -138,13 +138,8 @@ const mapStateToProps = (state) => {
     app,
   } = state;
 
-  const { categories } = categoriesData;
-
-  // Only include visible categories
-  const visibleCategories = categories.filter(category => category.visibility === 'visible');
-
   return {
-    categories: visibleCategories,
+    categories: categoriesData.categories,
     isLoading: categoriesData.isLoading,
     isErrored: categoriesData.isErrored,
     error: categoriesData.error,

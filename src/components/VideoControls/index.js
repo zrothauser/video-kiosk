@@ -45,6 +45,7 @@ class VideoControls extends React.Component {
     const {
       allVideosInCategory: allVideos,
       indexInCategory: index,
+      parentCategory,
     } = this.props;
 
     // Don't render anything if there aren't any other videos
@@ -54,7 +55,6 @@ class VideoControls extends React.Component {
 
     // Find the previous and next videos, if they exist
     const previousVideo = (index !== 0) ? allVideos[index - 1] : null;
-
     const nextVideo = (index + 1 < allVideos.length) ? allVideos[index + 1] : null;
 
     return (
@@ -62,7 +62,7 @@ class VideoControls extends React.Component {
         {previousVideo &&
           <Link
             className="b-video-controls__pagination__button"
-            to={`/video/${previousVideo.id}`}
+            to={`/category/${parentCategory}/${previousVideo}`}
             rel="prev"
           >
             <img
@@ -85,7 +85,7 @@ class VideoControls extends React.Component {
         {nextVideo &&
           <Link
             className="b-video-controls__pagination__button"
-            to={`/video/${nextVideo.id}`}
+            to={`/category/${parentCategory}/${nextVideo}`}
             rel="next"
           >
             <img
@@ -229,7 +229,7 @@ VideoControls.propTypes = {
   parentCategoryTitle: PropTypes.string.isRequired,
   duration: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
-  allVideosInCategory: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allVideosInCategory: PropTypes.arrayOf(PropTypes.string).isRequired,
   indexInCategory: PropTypes.number.isRequired,
   hasCaptions: PropTypes.bool.isRequired,
   volume: PropTypes.number.isRequired,

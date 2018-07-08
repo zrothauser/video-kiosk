@@ -22,27 +22,26 @@ const VideoThumbnail = (props) => {
     description,
     thumbnail,
     duration,
+    categorySlug,
   } = props;
 
   return (
     <div className="b-video-thumbnail">
 
-      <Link to={`/video/${id}`}>
-          <div className="b-video-thumbnail__wrap">
-        	{thumbnail &&
-				<img
-		            src={thumbnail}
-		            className="b-video-thumbnail__image"
-		            alt={title}
-		          />
-        	}
+      <Link to={`/category/${categorySlug}/${id}`}>
+        <div className="b-video-thumbnail__wrap">
+          {thumbnail &&
+            <img
+              src={thumbnail}
+              className="b-video-thumbnail__image"
+              alt={title}
+            />
+          }
 
-	           <div className="b-video-thumbnail__time">
-	             {convertSecondsToMinutesSeconds(duration)}
-	           </div>
-
-
-		</div>
+          <div className="b-video-thumbnail__time">
+            {convertSecondsToMinutesSeconds(duration)}
+          </div>
+        </div>
 
         <h3 className="b-video-thumbnail__title">
           {entities.decode(title)}
@@ -68,6 +67,7 @@ VideoThumbnail.defaultProps = {
   description: '',
   thumbnail: null,
   duration: null,
+  categorySlug: '',
 };
 
 VideoThumbnail.propTypes = {
@@ -76,6 +76,7 @@ VideoThumbnail.propTypes = {
   description: PropTypes.string,
   thumbnail: PropTypes.string,
   duration: PropTypes.number,
+  categorySlug: PropTypes.string.isRequired,
 };
 
 export default VideoThumbnail;

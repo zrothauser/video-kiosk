@@ -8,7 +8,6 @@ import { withRouter } from 'react-router-dom';
 import VideoPlayer from '../../components/VideoPlayer';
 
 // Action types
-import * as videoAPIActions from '../../redux/actions/video';
 import * as videoPlayerActions from '../../redux/actions/videoPlayer';
 
 export class VideoScreen extends React.Component {
@@ -42,17 +41,11 @@ export class VideoScreen extends React.Component {
   loadVideoData() {
     const {
       id,
-      getMP4Data,
-      getCaptionData,
       setCurrentVideoID,
     } = this.props;
 
     // Keep track of the current video
     setCurrentVideoID(id);
-
-    // Load additional data
-    getMP4Data(id);
-    getCaptionData(id);
   }
 
   /**
@@ -129,7 +122,7 @@ VideoScreen.propTypes = {
   parentCategory: PropTypes.string.isRequired,
   parentCategoryTitle: PropTypes.string.isRequired,
   indexInCategory: PropTypes.number.isRequired,
-  allVideosInCategory: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allVideosInCategory: PropTypes.arrayOf(PropTypes.string).isRequired,
   isPlaying: PropTypes.bool.isRequired,
   volume: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
@@ -137,8 +130,6 @@ VideoScreen.propTypes = {
   showCaptions: PropTypes.bool.isRequired,
   showControls: PropTypes.bool.isRequired,
   showVolumeControl: PropTypes.bool.isRequired,
-  getMP4Data: PropTypes.func.isRequired,
-  getCaptionData: PropTypes.func.isRequired,
   setCurrentVideoID: PropTypes.func.isRequired,
   playPauseVideo: PropTypes.func.isRequired,
   updateProgress: PropTypes.func.isRequired,
@@ -153,7 +144,7 @@ const mapStateToProps = (state, ownProps) => {
   // Get data for this video, if it exists
   const allVideos = state.videos.videos;
   const videoID = parseInt(ownProps.match.params.id, 10);
-  const videoData = allVideos.find(video => video.id === videoID);
+  const videoData = allVideos.find(video => video.id === videoID) || {};
 
   // Get anything related to the video player's state
   const {
@@ -162,18 +153,20 @@ const mapStateToProps = (state, ownProps) => {
   } = state.videoPlayer;
 
   // Get the other videos in the category
-  const allVideosInCategory = allVideos.filter(video =>
-    video.parentCategory === videoData.parentCategory);
+  const allCategories = state.categories.categories;
+  const { categorySlug } = ownProps.match.params;
+  const categoryData = allCategories.find(category => categorySlug === category.slug) || {};
+  const allVideosInCategory = categoryData.videos || [];
 
   // Find the index of this video
   const indexInCategory = allVideosInCategory.length ?
-    allVideosInCategory.findIndex(video => video.id === videoID) :
+    allVideosInCategory.findIndex(id => videoID === parseInt(id, 10)) :
     0;
 
   // Sort out the captions - there may be multiple tracks, but only one is active
   let captionTrack = {};
 
-  if (videoData && videoData.captions.length) {
+  if (videoData && videoData.captions && videoData.captions.length) {
     const selectedVideoTrack = videoData.captions.filter(track =>
       track.active && track.active === true);
 
@@ -184,17 +177,17 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     id: videoID,
-    title: videoData ? videoData.title : '',
-    description: videoData ? videoData.description : '',
-    mp4Link: videoData ? videoData.mp4Link : '',
-    parentCategory: videoData ? videoData.parentCategory : '',
-    parentCategoryTitle: videoData ? videoData.parentCategoryTitle : '',
+    title: (videoData.title && videoData.title.rendered) ? videoData.title.rendered : '',
+    description: videoData.description || '',
+    mp4Link: videoData.hd_mp4_url || '',
+    parentCategory: categoryData.slug || '',
+    parentCategoryTitle: categoryData.title || '',
     indexInCategory,
-    allVideosInCategory: videoData ? allVideosInCategory : [],
+    allVideosInCategory: allVideosInCategory || [],
     isPlaying: playerState.isPlaying,
     volume: playerState.volume,
     currentTime: playerState.currentTime,
-    duration: videoData ? videoData.duration : 0,
+    duration: videoData.duration || 0,
     captions: captionTrack,
     showCaptions: interfaceState.showCaptions,
     showControls: interfaceState.showControls,
@@ -204,8 +197,6 @@ const mapStateToProps = (state, ownProps) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMP4Data: id => dispatch(videoAPIActions.fetchMP4Data(id)),
-    getCaptionData: id => dispatch(videoAPIActions.fetchCaptionData(id)),
     setCurrentVideoID: id => dispatch(videoPlayerActions.setVideoID(id)),
     playPauseVideo: play => dispatch(videoPlayerActions.playPauseVideo(play)),
     updateProgress: time => dispatch(videoPlayerActions.updateProgress(time)),

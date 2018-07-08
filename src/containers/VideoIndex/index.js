@@ -25,10 +25,29 @@ VideoIndex.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { videos } = state;
+  const {
+    videos,
+    categories,
+  } = state;
+
+  const allVideos = [];
+
+  categories.categories.forEach((category) => {
+    category.videos.forEach((videoID) => {
+      const videoData = videos.videos.find(video => video.id === parseInt(videoID, 10));
+
+      allVideos.push({
+        id: videoData.id,
+        title: videoData.title.rendered,
+        parentCategorySlug: category.slug,
+        parentCategoryTitle: category.title,
+        duration: videoData.duration,
+      });
+    });
+  });
 
   return {
-    videos: videos.videos,
+    videos: allVideos,
   };
 };
 

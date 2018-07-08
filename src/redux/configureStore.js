@@ -8,9 +8,9 @@ import createHistory from 'history/createBrowserHistory';
 import rootReducer from './reducers';
 
 // Our API middleware
-import { apiData, vimeoData, mp4APIData, captionAPIData } from '../utils/api';
+import { apiData } from '../utils/api';
 
-export const history = createHistory({ basename: '/kiosk' });
+export const history = createHistory({ basename: '/kiosk-v2' });
 
 const initialState = {};
 const enhancers = [];
@@ -18,9 +18,6 @@ const middleware = [
   thunk,
   routerMiddleware(history),
   apiData,
-  vimeoData,
-  mp4APIData,
-  captionAPIData,
 ];
 
 if (process.env.NODE_ENV === 'development') {

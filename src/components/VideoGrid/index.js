@@ -13,9 +13,10 @@ const VideoGrid = props => (
     {props.videos.map(video => (
       <VideoThumbnail
         id={video.id}
-        title={video.title}
+        title={video.title.rendered}
+        categorySlug={props.categorySlug}
         description={video.description}
-        thumbnail={video.thumbnailLarge}
+        thumbnail={video.thumbnail_url}
         duration={video.duration}
         key={video.id}
       />
@@ -24,6 +25,7 @@ const VideoGrid = props => (
 );
 
 VideoGrid.propTypes = {
+  categorySlug: PropTypes.string.isRequired,
   videos: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

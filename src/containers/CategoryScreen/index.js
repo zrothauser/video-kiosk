@@ -36,7 +36,10 @@ class CategoryScreen extends React.Component {
     return (
       <div className="b-category-screen">
         <div className="b-category-screen__main dragscroll">
-          <VideoGrid videos={videos} />
+          <VideoGrid
+            categorySlug={selectedCategorySlug}
+            videos={videos}
+          />
         </div>
         <div className="b-category-screen__sidebar">
           <TopicsList
@@ -63,20 +66,22 @@ CategoryScreen.propTypes = {
 
 // Connect with store
 const mapStateToProps = (state, ownProps) => {
-  const { categories } = state.categories;
-  const pageSlug = ownProps.match.params.slug;
-  const allVideos = state.videos.videos;
-  const categoryData = categories.find(category => category.slug === pageSlug);
-  const allCategories = categories.filter(category => category.visibility === 'visible');
+  // We need to look everything up by the page slug
+  const pageSlug = ownProps.match.params.categorySlug;
 
-  if (!categoryData) {
-    return ownProps;
-  }
+  // First we need to get all the categories and all videos
+  const { categories } = state.categories;
+  const allVideos = state.videos.videos;
+
+  // Then pull out the videos for the selected category
+  const categoryData = categories.find(category => category.slug === pageSlug) || {};
+  const categoryVideos = categoryData.videos || [];
+  const videos = categoryVideos.map(id => allVideos.find(video => parseInt(id, 10) === video.id));
 
   return {
     selectedCategorySlug: pageSlug,
-    videos: allVideos.filter(video => video.parentCategory === categoryData.slug),
-    allCategories,
+    videos,
+    allCategories: categories,
   };
 };
 

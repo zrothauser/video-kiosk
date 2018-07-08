@@ -29,7 +29,7 @@ class VideoListModal extends React.Component {
       <tr className="b-video-index__row" key={video.id}>
         <td className="b-video-index__cell">
           <Link
-            to={`/video/${video.id}`}
+            to={`/category/${video.parentCategorySlug}/${video.id}`}
             onClick={() => this.props.toggleVideoIndex()}
           >
             {entities.decode(video.title)}
