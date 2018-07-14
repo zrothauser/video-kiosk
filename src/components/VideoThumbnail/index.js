@@ -67,7 +67,6 @@ VideoThumbnail.defaultProps = {
   description: '',
   thumbnail: null,
   duration: null,
-  categorySlug: '',
 };
 
 VideoThumbnail.propTypes = {

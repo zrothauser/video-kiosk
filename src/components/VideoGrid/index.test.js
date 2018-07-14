@@ -6,7 +6,7 @@ describe('components', () => {
   describe('VideoGrid', () => {
     it('renders without crashing', () => {
       const mockProps = {
-        videos: []
+        videos: [],
       };
 
       shallow(<VideoGrid {...mockProps} />);

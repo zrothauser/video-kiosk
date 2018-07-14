@@ -17,6 +17,15 @@ const {
 } = transitions;
 
 class PlayPauseButton extends React.Component {
+  clickHandler() {
+    const {
+      isPlaying,
+      togglePlay,
+    } = this.props;
+
+    togglePlay(!isPlaying);
+  }
+
   static renderPlayButton() {
     return (
       <img src={PlayButtonSVG} alt="Play" />
@@ -27,15 +36,6 @@ class PlayPauseButton extends React.Component {
     return (
       <img src={PauseButtonSVG} alt="Pause" />
     );
-  }
-
-  clickHandler() {
-    const {
-      isPlaying,
-      togglePlay,
-    } = this.props;
-
-    togglePlay(!isPlaying);
   }
 
   render() {
