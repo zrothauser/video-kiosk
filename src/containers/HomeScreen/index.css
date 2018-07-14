@@ -7,8 +7,25 @@
 }
 
 .b-homescreen__wrapper {
-  height: 100%;
+  height: 100vh;
   position: relative;
+}
+
+.b-homescreen__background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 177.777778vh;
+  height: 100vh;
+}
+
+@media (min-aspect-ratio: 48/27) {
+  .b-homescreen__background-video {
+    width: 100vw;
+    height: 56.25vw;
+  }
 }
 
 .b-homescreen__error {
