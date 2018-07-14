@@ -10,9 +10,6 @@ import store, { history } from './redux/configureStore';
 // Containers
 import App from './containers/App';
 
-// Service worker
-// import registerServiceWorker from './registerServiceWorker';
-
 // Base styles
 import './resources/fonts/fonts.css';
 import './index.css';
@@ -28,6 +25,3 @@ render(
   </Provider>,
   target,
 );
-
-// Set up service worker
-// registerServiceWorker();
