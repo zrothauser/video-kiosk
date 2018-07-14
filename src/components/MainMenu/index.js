@@ -18,7 +18,7 @@ const MainMenu = (props) => {
         Main Menu
       </span>
       <ul className="b-main-menu__list">
-        {categories.map(category => (
+        {categories.map((category, index) => (
           <li
             className="b-main-menu__item"
             key={category.slug}
@@ -26,6 +26,10 @@ const MainMenu = (props) => {
             <Link
               to={`/${setSlug}/${category.slug}`}
               className="b-main-menu__link"
+              style={{
+                animation: `pulse ${categories.length * 3}s infinite`,
+                animationDelay: `${index * 3}s`,
+              }}
             >
               {category.title}
             </Link>

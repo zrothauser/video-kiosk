@@ -1,3 +1,11 @@
+@keyframes pulse {
+	0% { opacity: 0.5; }
+	6% { opacity: 1; }
+	20% { opacity: 1; }
+	26% { opacity: 0.5; }
+	100% { opacity: 0.5; }
+}
+
 .b-main-menu {
   height: 100%;
 }
@@ -37,19 +45,6 @@
   padding-left: 1.5951041667vw;
 }
 
-.b-main-menu__item .b-main-menu__link { animation: pulse 15s infinite; opacity: 0.5; }
-
-.b-main-menu__item:nth-child(1) .b-main-menu__link { animation-delay: 0s }
-.b-main-menu__item:nth-child(2) .b-main-menu__link { animation-delay: 3s }
-.b-main-menu__item:nth-child(3) .b-main-menu__link { animation-delay: 6s }
-.b-main-menu__item:nth-child(4) .b-main-menu__link { animation-delay: 9s }
-.b-main-menu__item:nth-child(5) .b-main-menu__link { animation-delay: 12s }
-
-
-@keyframes pulse {
-	0% { opacity: 0.5; }
-	6% { opacity: 1; }
-	20% { opacity: 1; }
-	26% { opacity: 0.5; }
-	100% { opacity: 0.5; }
+.b-main-menu__item .b-main-menu__link {
+  opacity: 0.5;
 }

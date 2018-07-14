@@ -139,7 +139,7 @@ HomeScreen.propTypes = {
   fetchAppData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const {
     categories: categoriesData,
     app,
