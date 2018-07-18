@@ -10,7 +10,7 @@ import rootReducer from './reducers';
 // Our API middleware
 import { apiData } from '../utils/api';
 
-export const history = createHistory({ basename: '/kiosk' });
+export const history = createHistory({ basename: '/kiosk-dev' });
 
 const initialState = {};
 const enhancers = [];
