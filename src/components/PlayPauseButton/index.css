@@ -5,7 +5,7 @@
   width: 7.8540104167vw;
   height: 7.8540104167vw;
   position: absolute;
-  z-index: 10;
+  z-index: 3;
   top: calc(50% - 3.9270052084vw);
   left: calc(50% - 3.9270052084vw);
   cursor: pointer;

@@ -3,12 +3,13 @@
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: .1em;
-  height: calc(100vh - 2.6041666667vw);
+  height: 100%;
 }
 
 .b-homescreen__wrapper {
-  height: 100vh;
   position: relative;
+  height: 100%;
+  z-index: 1;
 }
 
 .b-homescreen__background-video {

@@ -1,14 +1,15 @@
 .b-category-screen {
   display: flex;
   flex-flow: row nowrap;
+  width: 100vw;
   height: 100%;
 }
 
 .b-category-screen__main {
-  width: 73.4375%;
-  flex: 0 0 73.4375%;
+  width: 73.4375vw;
+  flex: 0 0 73.4375vw;
   padding-top: 5.2083333333vw;
-  max-height: 100vh;
+  max-height: 100%;
   overflow-y: scroll;
   user-select: none;
 }
@@ -20,7 +21,7 @@
 }
 
 .b-category-screen__sidebar {
-  width: 25%;
-  flex: 0 0 25%;
+  width: 25vw;
+  flex: 0 0 25vw;
   padding-left: 1.5951041667vw;
 }

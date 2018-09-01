@@ -7,7 +7,7 @@
   background: #222120;
   display: flex;
   justify-content: center;
-  z-index: 20;
+  z-index: 3;
   overflow-y: scroll;
 }
 

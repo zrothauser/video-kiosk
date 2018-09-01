@@ -5,8 +5,8 @@
 }
 
 .b-main {
-  padding: 2.6041666667vw 0 0 0;
-  height: 100%;
+  width: 100vw;
+  height: calc(100vh - 2.6041666667vw);
 }
 
 /**
@@ -20,4 +20,5 @@
 .b-main > div > span > div {
   display: block;
   height: 100%;
+  width: 100vw;
 }
