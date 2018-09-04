@@ -34,7 +34,6 @@ class App extends React.Component {
     const {
       showHeader,
       isVideoIndexOpen,
-      setSlug,
     } = this.props;
 
     return (
@@ -54,8 +53,8 @@ class App extends React.Component {
             >
               <div key={location.pathname}>
                 <Switch location={location}>
-                  <Route exact path="/" render={() => <HomeScreen setSlug={setSlug} />} />
-                  <Route exact path="/:set" render={() => <HomeScreen setSlug={setSlug} />} />
+                  <Route exact path="/" render={() => <HomeScreen />} />
+                  <Route exact path="/:set" render={() => <HomeScreen />} />
 
                   <Route path="/:set/:categorySlug/:id" component={VideoScreen} />
                   <Route path="/:set/:categorySlug" component={CategoryScreen} />

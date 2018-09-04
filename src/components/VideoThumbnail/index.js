@@ -6,10 +6,8 @@ import { AllHtmlEntities as Entities } from 'html-entities';
 import createDOMPurify from 'dompurify';
 
 // Helpers
-import {
-  getVideoURL,
-  convertSecondsToMinutesSeconds,
-} from '../../utils/video';
+import { getVideoURL } from '../../utils/navigation';
+import { convertSecondsToMinutesSeconds } from '../../utils/video';
 
 // Styles
 import './index.css';

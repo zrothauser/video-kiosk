@@ -6,6 +6,11 @@ import { AllHtmlEntities as Entities } from 'html-entities';
 import Transition from 'react-transition-group/Transition';
 
 // Helpers
+import {
+  getCategoryURL,
+  getVideoURL,
+} from '../../utils/navigation';
+
 import { convertSecondsToMinutesSeconds } from '../../utils/video';
 
 // Components
@@ -62,7 +67,7 @@ class VideoControls extends React.Component {
         {previousVideo &&
           <Link
             className="b-video-controls__pagination__button"
-            to={`/category/${parentCategory}/${previousVideo}`}
+            to={getVideoURL(parentCategory, previousVideo)}
             rel="prev"
           >
             <img
@@ -85,7 +90,7 @@ class VideoControls extends React.Component {
         {nextVideo &&
           <Link
             className="b-video-controls__pagination__button"
-            to={`/category/${parentCategory}/${nextVideo}`}
+            to={getVideoURL(parentCategory, nextVideo)}
             rel="next"
           >
             <img
@@ -155,7 +160,7 @@ class VideoControls extends React.Component {
               <span className="b-video-controls__lower__right">
                 <Link
                   className="b-video-controls__topic-link"
-                  to={`/category/${parentCategory}`}
+                  to={getCategoryURL(parentCategory)}
                 >
                   <img
                     src={UpSVG}

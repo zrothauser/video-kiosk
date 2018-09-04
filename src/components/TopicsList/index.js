@@ -3,6 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+// Helpers
+import { getCategoryURL } from '../../utils/navigation';
+
 // Styles
 import './index.css';
 
@@ -27,7 +30,7 @@ const TopicsList = props => (
             key={category.slug}
           >
             <Link
-              to={`/category/${category.slug}`}
+              to={getCategoryURL(category.slug)}
               className={linkClasses.join(' ')}
             >
               {category.title}

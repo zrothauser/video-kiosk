@@ -38,14 +38,12 @@ export class HomeScreen extends React.Component {
     const {
       isLoading,
       categories,
-      setSlug,
     } = this.props;
 
     return (
       <MainMenu
         isLoading={isLoading}
         categories={categories}
-        setSlug={setSlug}
       />
     );
   }
@@ -88,7 +86,6 @@ HomeScreen.propTypes = {
   isErrored: PropTypes.bool.isRequired,
   error: PropTypes.string,
   backgroundVideoID: PropTypes.number,
-  setSlug: PropTypes.string.isRequired,
   fetchAppData: PropTypes.func.isRequired,
 };
 

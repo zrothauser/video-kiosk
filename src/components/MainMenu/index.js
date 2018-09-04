@@ -3,13 +3,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+// Helpers
+import { getCategoryURL } from '../../utils/navigation';
+
+
 // Styles
 import './index.css';
 
 const MainMenu = (props) => {
   const {
     categories,
-    setSlug,
   } = props;
 
   return (
@@ -24,7 +27,7 @@ const MainMenu = (props) => {
             key={category.slug}
           >
             <Link
-              to={`/${setSlug}/${category.slug}`}
+              to={getCategoryURL(category.slug)}
               className="b-main-menu__link"
               style={{
                 animation: `pulse ${categories.length * 3}s infinite`,
@@ -42,7 +45,6 @@ const MainMenu = (props) => {
 
 MainMenu.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setSlug: PropTypes.string.isRequired,
 };
 
 export default MainMenu;

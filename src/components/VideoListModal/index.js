@@ -7,10 +7,8 @@ import ScrollLock from 'react-scrolllock';
 import Transition from 'react-transition-group/Transition';
 
 // Helpers
-import {
-  getVideoURL,
-  convertSecondsToMinutesSeconds,
-} from '../../utils/video';
+import { getVideoURL } from '../../utils/navigation';
+import { convertSecondsToMinutesSeconds } from '../../utils/video';
 
 // Styles
 import './index.css';
