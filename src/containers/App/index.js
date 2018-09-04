@@ -89,7 +89,8 @@ const mapStateToProps = (state, ownProps) => {
   const videoPlayerInterface = state.videoPlayer.interface;
   const { location } = state.routing;
 
-  const setSlug = ownProps.location.pathname.replace(/\//g, '') || ownProps.setSlug;
+  const urlPathParts = ownProps.location.pathname.split('/');
+  const setSlug = urlPathParts[1] || ownProps.setSlug;
 
   // If we're on the video player page and controls
   // are hidden, the header bar should be hidden as well.
