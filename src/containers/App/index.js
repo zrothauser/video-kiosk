@@ -16,7 +16,11 @@ import VideoIndex from '../VideoIndex';
 import Header from '../../components/Header';
 
 // Actions
-import { fetchAppData, toggleVideoIndex, closeVideoIndex } from '../../redux/actions/app';
+import {
+  fetchAppData,
+  toggleVideoIndex,
+  closeVideoIndex,
+} from '../../redux/actions/app';
 
 // Styles
 import './index.css';

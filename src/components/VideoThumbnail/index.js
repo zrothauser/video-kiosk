@@ -6,7 +6,10 @@ import { AllHtmlEntities as Entities } from 'html-entities';
 import createDOMPurify from 'dompurify';
 
 // Helpers
-import { convertSecondsToMinutesSeconds } from '../../utils/video';
+import {
+  getVideoURL,
+  convertSecondsToMinutesSeconds,
+} from '../../utils/video';
 
 // Styles
 import './index.css';
@@ -28,7 +31,7 @@ const VideoThumbnail = (props) => {
   return (
     <div className="b-video-thumbnail">
 
-      <Link to={`/category/${categorySlug}/${id}`}>
+      <Link to={getVideoURL(categorySlug, id)}>
         <div className="b-video-thumbnail__wrap">
           {thumbnail &&
             <img

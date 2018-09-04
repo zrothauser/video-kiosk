@@ -1,5 +1,20 @@
 /* eslint import/prefer-default-export: 0 */
 
+import store from '../redux/configureStore';
+
+/**
+ * Builds a video link based on the category and ID.
+ *
+ * @param {string} Video category.
+ * @param {Number} videoID Video ID.
+ *
+ * @returns string The relative path to the video.
+ */
+export function getVideoURL(category, videoID) {
+  const setName = store.getState().app.selectedSet;
+  return `/${setName}/${category}/${videoID}`;
+}
+
 /**
  * Formats a time value from seconds (eg. 101.235) to mm:ss (eg. 1:41).
  *

@@ -13,6 +13,7 @@ const initialState = {
     isVideoIndexOpen: false,
     videoIndexSorting: 'title',
   },
+  selectedSet: '',
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +25,7 @@ export default (state = initialState, action) => {
           ...state.data,
           isLoading: true,
         },
+        selectedSet: action.setName,
       };
 
     case types.FETCH_APP_DATA_ERROR:

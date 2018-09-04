@@ -7,7 +7,10 @@ import ScrollLock from 'react-scrolllock';
 import Transition from 'react-transition-group/Transition';
 
 // Helpers
-import { convertSecondsToMinutesSeconds } from '../../utils/video';
+import {
+  getVideoURL,
+  convertSecondsToMinutesSeconds,
+} from '../../utils/video';
 
 // Styles
 import './index.css';
@@ -29,7 +32,7 @@ class VideoListModal extends React.Component {
       <tr className="b-video-index__row" key={video.id}>
         <td className="b-video-index__cell">
           <Link
-            to={`/category/${video.parentCategorySlug}/${video.id}`}
+            to={getVideoURL(video.parentCategorySlug, video.id)}
             onClick={() => this.props.toggleVideoIndex()}
           >
             {entities.decode(video.title)}
