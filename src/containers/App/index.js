@@ -3,7 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 
 // Other containers
@@ -25,6 +25,9 @@ import {
 // Styles
 import './index.css';
 
+// Default set - this will be replaced later and is only temporary
+const defaultSet = 'media-channel';
+
 class App extends React.Component {
   componentDidMount() {
     this.props.fetchAppData(this.props.setSlug);
@@ -38,6 +41,9 @@ class App extends React.Component {
 
     return (
       <div className="b-app">
+
+        <Route exact path="/" render={() => <Redirect to={`/${defaultSet}/`} />} />
+
         <Header
           toggleVideoIndex={this.props.toggleVideoIndex}
           closeVideoIndex={this.props.closeVideoIndex}
@@ -53,11 +59,10 @@ class App extends React.Component {
             >
               <div key={location.pathname}>
                 <Switch location={location}>
-                  <Route exact path="/" render={() => <HomeScreen />} />
                   <Route exact path="/:set" render={() => <HomeScreen />} />
 
-                  <Route path="/:set/:categorySlug/:id" component={VideoScreen} />
-                  <Route path="/:set/:categorySlug" component={CategoryScreen} />
+                  <Route exact path="/:set/:categorySlug/:id" component={VideoScreen} />
+                  <Route exact path="/:set/:categorySlug" component={CategoryScreen} />
                 </Switch>
               </div>
             </ReactCSSTransitionReplace>
@@ -71,17 +76,13 @@ class App extends React.Component {
   }
 }
 
-App.defaultProps = {
-  setSlug: 'media-channel',
-};
-
 App.propTypes = {
   fetchAppData: PropTypes.func.isRequired,
   isVideoIndexOpen: PropTypes.bool.isRequired,
   toggleVideoIndex: PropTypes.func.isRequired,
   closeVideoIndex: PropTypes.func.isRequired,
   showHeader: PropTypes.bool.isRequired,
-  setSlug: PropTypes.string,
+  setSlug: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -90,7 +91,7 @@ const mapStateToProps = (state, ownProps) => {
   const { location } = state.routing;
 
   const urlPathParts = ownProps.location.pathname.split('/');
-  const setSlug = urlPathParts[1] || ownProps.setSlug;
+  const setSlug = urlPathParts[1] || defaultSet;
 
   // If we're on the video player page and controls
   // are hidden, the header bar should be hidden as well.
