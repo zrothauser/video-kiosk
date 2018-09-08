@@ -8,6 +8,12 @@ export function fetchAppData(setName) {
   };
 }
 
+export function fetchAppSettings() {
+  return {
+    type: types.FETCH_APP_SETTINGS,
+  };
+}
+
 export function toggleVideoIndex() {
   return {
     type: types.INTERFACE_TOGGLE_VIDEO_INDEX,

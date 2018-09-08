@@ -2,6 +2,12 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
+  settings: {
+    defaultSet: '',
+    isLoading: false,
+    isErrored: false,
+    error: null,
+  },
   data: {
     title: null,
     backgroundVideo: null,
@@ -18,6 +24,48 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case types.FETCH_APP_SETTINGS:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          isLoading: true,
+          isErrored: false,
+          error: null,
+        },
+      };
+
+    case types.FETCH_APP_SETTINGS_ERROR:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          isLoading: false,
+          isErrored: true,
+          error: action.error.message,
+        },
+      };
+
+    case types.FETCH_APP_SETTINGS_RECEIVED: {
+      if (!action.data.length) {
+        // TODO handle a 404 error
+        return {
+          ...state,
+          settings: {
+            ...state.settings,
+            isLoading: false,
+            isErrored: false,
+            error: null,
+            defaultSet: action.data.default_set,
+          },
+        };
+      }
+
+      return {
+        ...state,
+      };
+    }
+
     case types.FETCH_APP_DATA:
       return {
         ...state,

@@ -1,7 +1,12 @@
 // App action types
+export const FETCH_APP_SETTINGS = 'api/settings/fetch';
+export const FETCH_APP_SETTINGS_ERROR = 'api/settings/errorReceived';
+export const FETCH_APP_SETTINGS_RECEIVED = 'api/settings/dataReceived';
+
 export const FETCH_APP_DATA = 'api/app/fetchData';
 export const FETCH_APP_DATA_ERROR = 'api/app/errorReceived';
 export const FETCH_APP_DATA_RECEIVED = 'api/app/dataReceived';
+
 export const INTERFACE_TOGGLE_VIDEO_INDEX = 'interface/toggleVideoIndex';
 export const INTERFACE_CLOSE_VIDEO_INDEX = 'interface/closeVideoIndex';
 

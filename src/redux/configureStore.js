@@ -8,7 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import rootReducer from './reducers';
 
 // Our API middleware
-import { apiData } from '../utils/api';
+import { apiData, settingsData } from '../utils/api';
 
 export const history = createHistory({ basename: '/kiosk-dev' });
 
@@ -17,6 +17,7 @@ const enhancers = [];
 const middleware = [
   thunk,
   routerMiddleware(history),
+  settingsData,
   apiData,
 ];
 
