@@ -163,18 +163,6 @@ const mapStateToProps = (state, ownProps) => {
     allVideosInCategory.findIndex(id => videoID === parseInt(id, 10)) :
     0;
 
-  // Sort out the captions - there may be multiple tracks, but only one is active
-  let captionTrack = {};
-
-  if (videoData && videoData.captions && videoData.captions.length) {
-    const selectedVideoTrack = videoData.captions.filter(track =>
-      track.active && track.active === true);
-
-    if (selectedVideoTrack.length) {
-      [captionTrack] = selectedVideoTrack;
-    }
-  }
-
   return {
     id: videoID,
     title: (videoData.title && videoData.title.rendered) ? videoData.title.rendered : '',
@@ -188,7 +176,7 @@ const mapStateToProps = (state, ownProps) => {
     volume: playerState.volume,
     currentTime: playerState.currentTime,
     duration: videoData.duration || 0,
-    captions: captionTrack,
+    captions: videoData.captions || {},
     showCaptions: interfaceState.showCaptions,
     showControls: interfaceState.showControls,
     showVolumeControl: interfaceState.showVolumeControl,
