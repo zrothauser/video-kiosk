@@ -2,7 +2,7 @@
  "name": "clyfford-still-kiosk",
  "version": "0.1.0",
  "private": true,
- "homepage": "http://video.clyffordstillmuseum.org/kiosk-dev",
+ "homepage": "http://video.clyffordstillmuseum.org",
  "dependencies": {
   "dompurify": "^1.0.3",
   "dragscroll": "^0.0.8",
