@@ -38,11 +38,18 @@ class VideoPlayer extends React.Component {
   }
 
   /**
-   * Show captions if needed.
+   * Control the video element on mount.
+   */
+  componentDidMount() {
+    this.updateVideoElement();
+  }
+
+  /**
+   * Control the video element or display other DOM elements
+   * when needed.
    */
   componentDidUpdate(prevProps) {
     const {
-      isPlaying,
       volume,
       showCaptions,
       mp4Link,
@@ -55,11 +62,7 @@ class VideoPlayer extends React.Component {
 
     // If we need to pause or play the video, do that now
     if (mp4Link) {
-      if (isPlaying && this.videoElement.paused) {
-        this.videoElement.play();
-      } else if (!isPlaying && !this.videoElement.paused) {
-        this.videoElement.pause();
-      }
+      this.updateVideoElement();
     }
 
     // Update the volume, if needed
@@ -110,6 +113,22 @@ class VideoPlayer extends React.Component {
       this.setState({
         progressTrackerAnimationFrame: window.requestAnimationFrame(this.setProgress),
       });
+    }
+  }
+
+  /**
+   * We need to control the video element manually
+   * when props change, or on initial component load.
+   */
+  updateVideoElement() {
+    const {
+      isPlaying,
+    } = this.props;
+
+    if (isPlaying && this.videoElement.paused) {
+      this.videoElement.play();
+    } else if (!isPlaying && !this.videoElement.paused) {
+      this.videoElement.pause();
     }
   }
 
