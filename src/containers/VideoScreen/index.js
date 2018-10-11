@@ -7,6 +7,9 @@ import { withRouter } from 'react-router-dom';
 // Components
 import VideoPlayer from '../../components/VideoPlayer';
 
+// Helpers
+import { getCategoryURL } from '../../utils/navigation';
+
 // Action types
 import * as videoPlayerActions from '../../redux/actions/videoPlayer';
 
@@ -58,7 +61,7 @@ export class VideoScreen extends React.Component {
       parentCategory,
     } = this.props;
 
-    history.push(`/category/${parentCategory}`);
+    history.push(getCategoryURL(parentCategory));
   }
 
   render() {

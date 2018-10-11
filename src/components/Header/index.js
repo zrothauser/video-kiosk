@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 
-// Helpers
-import { getHomeURL } from '../../utils/navigation';
-
 // Transition
 import * as transitions from '../transitions';
 
@@ -33,7 +30,7 @@ const Header = props => (
       >
         <h1 className="b-header__title">
           <Link
-            to={getHomeURL()}
+            to={props.homeURL}
             className="b-header__link"
             onClick={() => props.closeVideoIndex()}
           >
@@ -58,6 +55,7 @@ Header.propTypes = {
   toggleVideoIndex: PropTypes.func.isRequired,
   closeVideoIndex: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
+  homeURL: PropTypes.string.isRequired,
 };
 
 export default Header;

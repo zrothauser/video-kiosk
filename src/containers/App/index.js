@@ -78,6 +78,7 @@ class App extends React.Component {
     const {
       showHeader,
       isVideoIndexOpen,
+      homeURL,
     } = this.props;
 
     return (
@@ -86,6 +87,7 @@ class App extends React.Component {
           toggleVideoIndex={this.props.toggleVideoIndex}
           closeVideoIndex={this.props.closeVideoIndex}
           visible={showHeader}
+          homeURL={homeURL}
         />
 
         <main className="b-main">
@@ -128,11 +130,13 @@ App.propTypes = {
   showHeader: PropTypes.bool.isRequired,
   setSlug: PropTypes.string.isRequired,
   defaultSet: PropTypes.string.isRequired,
+  homeURL: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const {
     settings,
+    selectedSet,
     interface: interfaceState,
   } = state.app;
   const videoPlayerInterface = state.videoPlayer.interface;
@@ -154,6 +158,7 @@ const mapStateToProps = (state, ownProps) => {
     showHeader,
     setSlug,
     defaultSet: settings.defaultSet,
+    homeURL: `/${selectedSet}/`,
   };
 };
 

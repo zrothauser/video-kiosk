@@ -3,16 +3,6 @@
 import store from '../redux/configureStore';
 
 /**
- * Gets the home link, based on the selected set.
- *
- * @returns string The relative path to the category.
- */
-export function getHomeURL() {
-  const setName = store.getState().app.selectedSet;
-  return `/${setName}/`;
-}
-
-/**
  * Builds a category link.
  *
  * @param {string} Video category.
