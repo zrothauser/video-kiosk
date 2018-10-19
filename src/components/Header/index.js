@@ -34,7 +34,7 @@ const Header = props => (
             className="b-header__link"
             onClick={() => props.closeVideoIndex()}
           >
-            Clyfford Still Museum Media Channel
+            Clyfford Still Museum Video Channel
           </Link>
         </h1>
 
@@ -43,7 +43,7 @@ const Header = props => (
             onClick={() => props.toggleVideoIndex()}
             className="b-header__link"
           >
-            Video Index
+            Index
           </button>
         </span>
       </header>
