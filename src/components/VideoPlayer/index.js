@@ -126,7 +126,18 @@ class VideoPlayer extends React.Component {
     } = this.props;
 
     if (isPlaying && this.videoElement.paused) {
-      this.videoElement.play();
+      const playbackPromise = this.videoElement.play();
+
+      // Handle errors from Playback, which can happen from
+      // Safari blocking autoplay videos.
+      if (playbackPromise !== undefined) {
+        playbackPromise.catch(() => {
+          // Auto-play was prevented, stop trying to play it.
+          this.props.togglePlay(false);
+        }).then(() => {
+          // Auto-play started
+        });
+      }
     } else if (!isPlaying && !this.videoElement.paused) {
       this.videoElement.pause();
     }
