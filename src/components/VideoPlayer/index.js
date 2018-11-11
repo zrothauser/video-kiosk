@@ -297,8 +297,8 @@ class VideoPlayer extends React.Component {
     // Stop the timer
     this.cancelProgressTracker();
 
-    // And go back to the Topic screen
-    this.props.navigateToTopic();
+    // And go back to the beginning of the video.
+    this.seek(0);
   }
 
   render() {
@@ -406,7 +406,6 @@ VideoPlayer.propTypes = {
   toggleVolumeControl: PropTypes.func.isRequired,
   toggleControls: PropTypes.func.isRequired,
   toggleCaptions: PropTypes.func.isRequired,
-  navigateToTopic: PropTypes.func.isRequired,
 };
 
 export default VideoPlayer;

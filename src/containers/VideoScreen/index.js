@@ -110,7 +110,6 @@ export class VideoScreen extends React.Component {
         toggleVolumeControl={toggleVolumeControl}
         toggleControls={toggleControls}
         toggleCaptions={toggleCaptions}
-        navigateToTopic={() => this.navigateToTopic()}
       />
     );
   }
