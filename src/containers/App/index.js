@@ -46,21 +46,27 @@ class App extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { setSlug, defaultSet } = this.props;
+  componentDidUpdate(prevProps) {
+    const {
+      setSlug,
+      defaultSet
+    } = this.props;
 
-    if (nextProps.defaultSet !== defaultSet) {
+    if (
+      defaultSet !== prevProps.defaultSet &&
+      setSlug !== defaultSet
+    ) {
       this.setState({
         shouldRedirect: true,
       });
-    } else {
+    } else if (this.state.shouldRedirect === true) {
       this.setState({
         shouldRedirect: false,
       });
     }
 
-    if (nextProps.setSlug !== setSlug) {
-      this.props.fetchAppData(nextProps.setSlug);
+    if (setSlug !== prevProps.setSlug) {
+      this.props.fetchAppData(setSlug);
     }
   }
 

@@ -31,18 +31,20 @@ class Slider extends React.Component {
   /**
    * If the video time has changed, reset our internal state.
    */
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(props, state) {
     // Return if nothing changed
-    if (nextProps.value === this.state.currentValue) {
-      return;
+    if (props.value === state.currentValue) {
+      return null;
     }
 
-    // Don't update the value if we're dragging
-    if (this.state.isMouseDown) {
-      return;
+     // Don't update the value if we're dragging
+     if (state.isMouseDown) {
+      return null;
     }
 
-    this.setState({ currentValue: nextProps.value });
+    return {
+      currentValue: props.value,
+    };
   }
 
   /**

@@ -20,7 +20,9 @@ const target = document.querySelector('#root');
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
     </ConnectedRouter>
   </Provider>,
   target,
