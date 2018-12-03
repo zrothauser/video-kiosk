@@ -147,15 +147,6 @@ float: right;
   height: 2.85vh;
 }
 
-.b-video-controls__volume-slider {
-  border: 0 none;
-  overflow: visible;
-  height: 21px;
-  width: 100px;
-  padding-left: 15px;
-  margin-right: 1.562vw;
-}
-
 .b-video-controls__cc-button {
   margin:  0 0.15625vw 0 1.562vw;
   padding: 0;

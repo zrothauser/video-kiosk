@@ -45,12 +45,3 @@ export function setVolume(volume) {
     volume,
   };
 }
-
-/**
- * By default the volume control is hidden, this will toggle it.
- */
-export function toggleVolumeControl() {
-  return {
-    type: types.VIDEO_PLAYER_TOGGLE_VOLUME_CONTROL,
-  };
-}

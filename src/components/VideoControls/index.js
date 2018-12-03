@@ -19,6 +19,7 @@ import Slider from '../Slider';
 // Icons
 import CCSVG from '../../resources/icons/cc.svg';
 import VolumeSVG from '../../resources/icons/volume.svg';
+import VolumeMutedSVG from '../../resources/icons/volume-muted.svg';
 import PreviousSVG from '../../resources/icons/notch-left.svg';
 import NextSVG from '../../resources/icons/notch-right.svg';
 import UpSVG from '../../resources/icons/notch-up.svg';
@@ -31,7 +32,6 @@ import * as transitions from '../transitions';
 
 const {
   durations,
-  shortFadeStyles,
   mediumFadeStyles,
 } = transitions;
 
@@ -39,6 +39,29 @@ const {
 const entities = new Entities();
 
 class VideoControls extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // Binding
+    this.toggleVolumeOnAndOff = this.toggleVolumeOnAndOff.bind(this);
+  }
+
+  /**
+   * Event handler for the volume button.
+   */
+  toggleVolumeOnAndOff() {
+    const {
+      volume,
+      handleVolumeChange,
+    } = this.props;
+
+    if (volume === 0) {
+      handleVolumeChange(65);
+    } else {
+      handleVolumeChange(0);
+    }
+  }
+
   /**
    * Renders the pagination controls part of the Controls.
    *
@@ -64,7 +87,7 @@ class VideoControls extends React.Component {
 
     return (
       <span className="b-video-controls__pagination">
-        {previousVideo &&
+        {previousVideo && (
           <Link
             className="b-video-controls__pagination__button"
             to={getVideoURL(parentCategory, previousVideo)}
@@ -75,6 +98,7 @@ class VideoControls extends React.Component {
               alt="Previous Video"
             />
           </Link>
+        )
         }
 
         <span className="b-video-controls__pagination__numbers">
@@ -87,7 +111,7 @@ class VideoControls extends React.Component {
           </span>
         </span>
 
-        {nextVideo &&
+        {nextVideo && (
           <Link
             className="b-video-controls__pagination__button"
             to={getVideoURL(parentCategory, nextVideo)}
@@ -97,7 +121,7 @@ class VideoControls extends React.Component {
               src={NextSVG}
               alt="Next Video"
             />
-          </Link>
+          </Link>)
         }
       </span>
     );
@@ -111,13 +135,10 @@ class VideoControls extends React.Component {
       duration,
       currentTime,
       hasCaptions,
-      volume,
-      showVolumeControl,
       handleSeek,
-      handleVolumeChange,
-      toggleVolumeControl,
       toggleCaptions,
       visible,
+      volume,
     } = this.props;
 
     return (
@@ -152,7 +173,8 @@ class VideoControls extends React.Component {
 
               <span className="b-video-controls__title">
                 <span className="b-video-controls__title__category">
-                  {parentCategoryTitle}:
+                  {parentCategoryTitle}
+                  :
                 </span>
                 {entities.decode(title)}
               </span>
@@ -171,50 +193,30 @@ class VideoControls extends React.Component {
                 </Link>
 
                 <span className="b-video-controls__lower__right__buttons">
-                  <Transition
-                    in={showVolumeControl}
-                    timeout={durations.shortest}
-                  >
-                    {controlState => (
-                      <div
-                        className="b-video-controls__volume-slider"
-                        style={{
-                          ...shortFadeStyles.default,
-                          ...shortFadeStyles[controlState],
-                        }}
-                      >
-                        <Slider
-                          minimum={0}
-                          maximum={100}
-                          value={volume}
-                          handleSeek={handleVolumeChange}
-                        />
-                      </div>
-                    )}
-                  </Transition>
-
                   <button
                     className="b-video-controls__volume-button"
-                    onClick={() => toggleVolumeControl()}
+                    onClick={this.toggleVolumeOnAndOff}
+                    type="button"
                   >
                     <img
-                      src={VolumeSVG}
+                      src={volume ? VolumeSVG : VolumeMutedSVG}
                       alt="Volume Controls"
                       className="b-video-controls__volume-icon"
                     />
                   </button>
 
-                  {hasCaptions &&
+                  {hasCaptions && (
                     <button
                       className="b-video-controls__cc-button"
                       onClick={() => toggleCaptions()}
+                      type="button"
                     >
                       <img
                         src={CCSVG}
                         alt="Closed Captions Button"
                         className="b-video-controls__cc-icon"
                       />
-                    </button>
+                    </button>)
                   }
                 </span>
               </span>
@@ -238,10 +240,8 @@ VideoControls.propTypes = {
   indexInCategory: PropTypes.number.isRequired,
   hasCaptions: PropTypes.bool.isRequired,
   volume: PropTypes.number.isRequired,
-  showVolumeControl: PropTypes.bool.isRequired,
   handleSeek: PropTypes.func.isRequired,
   handleVolumeChange: PropTypes.func.isRequired,
-  toggleVolumeControl: PropTypes.func.isRequired,
   toggleCaptions: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
 };

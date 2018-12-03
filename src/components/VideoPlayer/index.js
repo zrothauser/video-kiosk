@@ -123,6 +123,7 @@ class VideoPlayer extends React.Component {
   updateVideoElement() {
     const {
       isPlaying,
+      togglePlay,
     } = this.props;
 
     if (isPlaying && this.videoElement.paused) {
@@ -133,7 +134,7 @@ class VideoPlayer extends React.Component {
       if (playbackPromise !== undefined) {
         playbackPromise.catch(() => {
           // Auto-play was prevented, stop trying to play it.
-          this.props.togglePlay(false);
+          togglePlay(false);
         }).then(() => {
           // Auto-play started
         });
@@ -316,9 +317,7 @@ class VideoPlayer extends React.Component {
       allVideosInCategory,
       togglePlay,
       showControls,
-      showVolumeControl,
       handleVolumeChange,
-      toggleVolumeControl,
       toggleCaptions,
     } = this.props;
 
@@ -369,13 +368,11 @@ class VideoPlayer extends React.Component {
             indexInCategory={indexInCategory}
             allVideosInCategory={allVideosInCategory}
             hasCaptions={!!captions.link}
-            showVolumeControl={showVolumeControl}
             volume={volume}
             currentTime={currentTime}
             duration={duration}
             handleSeek={time => this.seek(time)}
             handleVolumeChange={handleVolumeChange}
-            toggleVolumeControl={toggleVolumeControl}
             toggleCaptions={toggleCaptions}
             visible={showControls}
           />
@@ -399,11 +396,9 @@ VideoPlayer.propTypes = {
   togglePlay: PropTypes.func.isRequired,
   volume: PropTypes.number.isRequired,
   showControls: PropTypes.bool.isRequired,
-  showVolumeControl: PropTypes.bool.isRequired,
   showCaptions: PropTypes.bool.isRequired,
   updateProgress: PropTypes.func.isRequired,
   handleVolumeChange: PropTypes.func.isRequired,
-  toggleVolumeControl: PropTypes.func.isRequired,
   toggleControls: PropTypes.func.isRequired,
   toggleCaptions: PropTypes.func.isRequired,
 };

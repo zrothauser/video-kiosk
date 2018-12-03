@@ -80,10 +80,8 @@ export class VideoScreen extends React.Component {
       duration,
       showCaptions,
       showControls,
-      showVolumeControl,
       updateProgress,
       handleVolumeChange,
-      toggleVolumeControl,
       toggleControls,
       toggleCaptions,
     } = this.props;
@@ -104,10 +102,8 @@ export class VideoScreen extends React.Component {
         duration={duration}
         showCaptions={showCaptions}
         showControls={showControls}
-        showVolumeControl={showVolumeControl}
         updateProgress={updateProgress}
         handleVolumeChange={handleVolumeChange}
-        toggleVolumeControl={toggleVolumeControl}
         toggleControls={toggleControls}
         toggleCaptions={toggleCaptions}
       />
@@ -131,12 +127,10 @@ VideoScreen.propTypes = {
   duration: PropTypes.number.isRequired,
   showCaptions: PropTypes.bool.isRequired,
   showControls: PropTypes.bool.isRequired,
-  showVolumeControl: PropTypes.bool.isRequired,
   setCurrentVideoID: PropTypes.func.isRequired,
   playPauseVideo: PropTypes.func.isRequired,
   updateProgress: PropTypes.func.isRequired,
   handleVolumeChange: PropTypes.func.isRequired,
-  toggleVolumeControl: PropTypes.func.isRequired,
   toggleControls: PropTypes.func.isRequired,
   toggleCaptions: PropTypes.func.isRequired,
 };
@@ -181,7 +175,6 @@ const mapStateToProps = (state, ownProps) => {
     captions: videoData.captions || {},
     showCaptions: interfaceState.showCaptions,
     showControls: interfaceState.showControls,
-    showVolumeControl: interfaceState.showVolumeControl,
   };
 };
 
@@ -191,7 +184,6 @@ function mapDispatchToProps(dispatch) {
     playPauseVideo: play => dispatch(videoPlayerActions.playPauseVideo(play)),
     updateProgress: time => dispatch(videoPlayerActions.updateProgress(time)),
     handleVolumeChange: volume => dispatch(videoPlayerActions.setVolume(volume)),
-    toggleVolumeControl: () => dispatch(videoPlayerActions.toggleVolumeControl()),
     toggleControls: show => dispatch(videoPlayerActions.toggleControls(show)),
     toggleCaptions: () => dispatch(videoPlayerActions.toggleCaptions()),
   };

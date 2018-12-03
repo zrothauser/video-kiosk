@@ -17,4 +17,3 @@ export const VIDEO_PLAYER_UPDATE_PROGRESS = 'interface/player/updateProgress';
 export const VIDEO_PLAYER_TOGGLE_CONTROLS = 'interface/player/controlsVisibility';
 export const VIDEO_PLAYER_TOGGLE_CAPTIONS = 'interface/player/captionsVisibility';
 export const VIDEO_PLAYER_SET_VOLUME = 'interface/player/setVolume';
-export const VIDEO_PLAYER_TOGGLE_VOLUME_CONTROL = 'interface/player/toggleVolumeControl';

@@ -11,7 +11,6 @@ const initialState = {
   },
   interface: {
     showControls: true,
-    showVolumeControl: false,
     showCaptions: false,
   },
 };
@@ -74,16 +73,6 @@ export default (state = initialState, action) => {
         playerState: {
           ...state.playerState,
           volume: action.volume,
-        },
-      };
-    }
-
-    case types.VIDEO_PLAYER_TOGGLE_VOLUME_CONTROL: {
-      return {
-        ...state,
-        interface: {
-          ...state.interface,
-          showVolumeControl: !state.interface.showVolumeControl,
         },
       };
     }
