@@ -17,7 +17,8 @@ import { convertSecondsToMinutesSeconds } from '../../utils/video';
 import Slider from '../Slider';
 
 // Icons
-import CCSVG from '../../resources/icons/cc.svg';
+import CaptionsOffSVG from '../../resources/icons/captions-off.svg';
+import CaptionsOnSVG from '../../resources/icons/captions-on.svg';
 import VolumeSVG from '../../resources/icons/volume.svg';
 import VolumeMutedSVG from '../../resources/icons/volume-muted.svg';
 import PreviousSVG from '../../resources/icons/notch-left.svg';
@@ -139,6 +140,7 @@ class VideoControls extends React.Component {
       toggleCaptions,
       visible,
       volume,
+      areCaptionsVisible,
     } = this.props;
 
     return (
@@ -212,7 +214,7 @@ class VideoControls extends React.Component {
                       type="button"
                     >
                       <img
-                        src={CCSVG}
+                        src={areCaptionsVisible ? CaptionsOnSVG : CaptionsOffSVG}
                         alt="Closed Captions Button"
                         className="b-video-controls__cc-icon"
                       />
@@ -244,6 +246,7 @@ VideoControls.propTypes = {
   handleVolumeChange: PropTypes.func.isRequired,
   toggleCaptions: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
+  areCaptionsVisible: PropTypes.bool.isRequired,
 };
 
 export default VideoControls;

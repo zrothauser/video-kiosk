@@ -319,6 +319,7 @@ class VideoPlayer extends React.Component {
       showControls,
       handleVolumeChange,
       toggleCaptions,
+      showCaptions,
     } = this.props;
 
     const captionSource = captions.link ? captions.link : null;
@@ -375,6 +376,7 @@ class VideoPlayer extends React.Component {
             handleVolumeChange={handleVolumeChange}
             toggleCaptions={toggleCaptions}
             visible={showControls}
+            areCaptionsVisible={showCaptions}
           />
         </div>
       </div>

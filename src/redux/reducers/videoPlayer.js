@@ -11,7 +11,7 @@ const initialState = {
   },
   interface: {
     showControls: true,
-    showCaptions: false,
+    showCaptions: true,
   },
 };
 
