@@ -3,7 +3,12 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Redirect,
+  withRouter,
+} from 'react-router-dom';
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 
 // Other containers
@@ -16,12 +21,7 @@ import VideoIndex from '../VideoIndex';
 import Header from '../../components/Header';
 
 // Actions
-import {
-  fetchAppSettings,
-  fetchAppData,
-  toggleVideoIndex,
-  closeVideoIndex,
-} from '../../redux/actions/app';
+import * as appActions from '../../redux/actions/app';
 
 // Styles
 import './index.css';
@@ -37,36 +37,49 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    const { setSlug } = this.props;
+    const {
+      setSlug,
+      fetchAppData,
+      fetchAppSettings,
+    } = this.props;
 
     if (setSlug) {
-      this.props.fetchAppData(setSlug);
+      fetchAppData(setSlug);
     } else {
-      this.props.fetchAppSettings();
+      fetchAppSettings();
     }
   }
 
   componentDidUpdate(prevProps) {
     const {
       setSlug,
-      defaultSet
+      defaultSet,
+      fetchAppData,
     } = this.props;
 
+    const { shouldRedirect } = this.state;
+
     if (
-      defaultSet !== prevProps.defaultSet &&
-      setSlug !== defaultSet
+      defaultSet !== prevProps.defaultSet
+      && setSlug !== defaultSet
     ) {
+      // Disabling the eslint line because using setState here
+      // is a valid use case of setting state in componentDidUpdate,
+      // see: https://reactjs.org/docs/react-component.html#componentdidupdate
+      //
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         shouldRedirect: true,
       });
-    } else if (this.state.shouldRedirect === true) {
+    } else if (shouldRedirect === true) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         shouldRedirect: false,
       });
     }
 
     if (setSlug !== prevProps.setSlug) {
-      this.props.fetchAppData(setSlug);
+      fetchAppData(setSlug);
     }
   }
 
@@ -75,8 +88,10 @@ export class App extends React.Component {
    * gets the default Set name from the API then needs to go to that set.
    */
   renderRedirect() {
+    const { defaultSet } = this.props;
+
     return (
-      <Redirect to={`/${this.props.defaultSet}/`} />
+      <Redirect to={`/${defaultSet}/`} />
     );
   }
 
@@ -85,13 +100,15 @@ export class App extends React.Component {
       showHeader,
       isVideoIndexOpen,
       homeURL,
+      toggleVideoIndex,
+      closeVideoIndex,
     } = this.props;
 
     return (
       <div className="b-app">
         <Header
-          toggleVideoIndex={this.props.toggleVideoIndex}
-          closeVideoIndex={this.props.closeVideoIndex}
+          toggleVideoIndex={toggleVideoIndex}
+          closeVideoIndex={closeVideoIndex}
           visible={showHeader}
           homeURL={homeURL}
         />
@@ -123,7 +140,9 @@ export class App extends React.Component {
   }
 
   render() {
-    return this.state.shouldRedirect ? this.renderRedirect() : this.renderApp();
+    const { shouldRedirect } = this.state;
+
+    return shouldRedirect ? this.renderRedirect() : this.renderApp();
   }
 }
 
@@ -155,9 +174,9 @@ const mapStateToProps = (state, ownProps) => {
   // are hidden, the header bar should be hidden as well.
   // But not if the Video Index is open.
   const isVideoPlayerOpen = location.pathname && location.pathname.includes('/video/');
-  const showHeader = isVideoPlayerOpen ?
-    videoPlayerInterface.showControls || interfaceState.isVideoIndexOpen :
-    true;
+  const showHeader = isVideoPlayerOpen
+    ? videoPlayerInterface.showControls || interfaceState.isVideoIndexOpen
+    : true;
 
   return {
     isVideoIndexOpen: interfaceState.isVideoIndexOpen,
@@ -168,12 +187,20 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
+const mapDispatchToProps = (dispatch) => {
+  const {
     fetchAppSettings,
     fetchAppData,
     toggleVideoIndex,
     closeVideoIndex,
-  }, dispatch));
+  } = appActions;
+
+  return bindActionCreators({
+    fetchAppSettings,
+    fetchAppData,
+    toggleVideoIndex,
+    closeVideoIndex,
+  }, dispatch);
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

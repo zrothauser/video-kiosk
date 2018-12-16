@@ -9,14 +9,17 @@ import ScrollLock from 'react-scrolllock';
 import MainMenu from '../../components/MainMenu';
 
 // Actions
-import { fetchAppData } from '../../redux/actions/app';
+import * as appActions from '../../redux/actions/app';
 
 // Styles
 import './index.css';
 
 export class HomeScreen extends React.Component {
   renderError() {
-    const { error } = this.props;
+    const {
+      error,
+      fetchAppData,
+    } = this.props;
 
     // eslint-disable-next-line no-console
     console.error(`API error:  ${error}`);
@@ -26,7 +29,8 @@ export class HomeScreen extends React.Component {
         There was an error loading the video data.
         <button
           className="b-homescreen__action"
-          onClick={() => this.props.fetchAppData()}
+          onClick={() => fetchAppData()}
+          type="button"
         >
           Try again?
         </button>
@@ -59,14 +63,14 @@ export class HomeScreen extends React.Component {
     return (
       <div className="b-homescreen">
         <div className="b-homescreen__wrapper">
-          {backgroundVideoID &&
+          {backgroundVideoID && (
             <iframe
               className="b-homescreen__background-video"
               title="BackgroundVideo"
               src={`https://player.vimeo.com/video/${backgroundVideoID}?api=1&background=1`}
               frameBorder="0"
             />
-          }
+          )}
           {(isErrored && !isLoading) ? this.renderError() : this.renderCategories()}
         </div>
         <ScrollLock />
@@ -104,8 +108,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ fetchAppData }, dispatch));
+const mapDispatchToProps = (dispatch) => {
+  const { fetchAppData } = appActions;
+
+  return bindActionCreators({ fetchAppData }, dispatch);
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
-

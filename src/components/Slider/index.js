@@ -24,7 +24,7 @@ class Slider extends React.Component {
     // Initial state
     this.state = {
       currentValue: props.value,
-      isMouseDown: false,
+      isMouseDown: false, // eslint-disable-line react/no-unused-state
     };
   }
 
@@ -37,8 +37,8 @@ class Slider extends React.Component {
       return null;
     }
 
-     // Don't update the value if we're dragging
-     if (state.isMouseDown) {
+    // Don't update the value if we're dragging
+    if (state.isMouseDown) {
       return null;
     }
 
@@ -53,7 +53,7 @@ class Slider extends React.Component {
    * @param {Event} event Mousedown event.
    */
   handleMouseDown(event) {
-    this.setState({ isMouseDown: true });
+    this.setState({ isMouseDown: true }); // eslint-disable-line react/no-unused-state
 
     // Pass to handleDrag(), so that we can go
     // ahead and update the position
@@ -87,9 +87,9 @@ class Slider extends React.Component {
 
     // Find the cursor/touch point position: we get different data from
     // touch events than from mouse events
-    const mouseX = (event.changedTouches && event.changedTouches.length) ?
-      event.changedTouches[0].pageX :
-      event.pageX;
+    const mouseX = (event.changedTouches && event.changedTouches.length)
+      ? event.changedTouches[0].pageX
+      : event.pageX;
 
     // Calculate distance from the beginning, and get a percent of the total
     // width from that. Then convert to a value based on the minimum and maxium
@@ -119,7 +119,7 @@ class Slider extends React.Component {
     const { handleSeek } = this.props;
     const { currentValue } = this.state;
 
-    this.setState({ isMouseDown: false });
+    this.setState({ isMouseDown: false }); // eslint-disable-line react/no-unused-state
 
     // Remove event handlers
     document.removeEventListener('mousemove', this.handleDrag);

@@ -8,13 +8,17 @@ import PropTypes from 'prop-types';
 import VideoListModal from '../../components/VideoListModal';
 
 // Actions
-import { toggleVideoIndex } from '../../redux/actions/app';
+import * as appActions from '../../redux/actions/app';
 
-export const VideoIndex = props => (
+export const VideoIndex = ({
+  videos,
+  toggleVideoIndex,
+  visible,
+}) => (
   <VideoListModal
-    videos={props.videos}
-    toggleVideoIndex={props.toggleVideoIndex}
-    visible={props.visible}
+    videos={videos}
+    toggleVideoIndex={toggleVideoIndex}
+    visible={visible}
   />
 );
 
@@ -51,7 +55,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleVideoIndex }, dispatch));
+const mapDispatchToProps = (dispatch) => {
+  const { toggleVideoIndex } = appActions;
+
+  return bindActionCreators({ toggleVideoIndex }, dispatch);
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoIndex);

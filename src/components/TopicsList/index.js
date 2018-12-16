@@ -9,17 +9,20 @@ import { getCategoryURL } from '../../utils/navigation';
 // Styles
 import './index.css';
 
-const TopicsList = props => (
+const TopicsList = ({
+  categories,
+  selectedCategorySlug,
+}) => (
   <div className="b-topics-list">
     <h2 className="b-topics-list__title">
       Topics
     </h2>
     <ul className="b-topics-list__list">
-      {props.categories.map((category) => {
+      {categories.map((category) => {
         // Build classes for the link, so we can mark the active one
         const linkClasses = ['b-topics-list__link'];
 
-        if (props.selectedCategorySlug === category.slug) {
+        if (selectedCategorySlug === category.slug) {
           linkClasses.push('b-topics-list__link--selected');
         }
 

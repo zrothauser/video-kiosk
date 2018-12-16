@@ -69,6 +69,7 @@ class PlayPauseButton extends React.Component {
               ...mediumFadeStyles.default,
               ...mediumFadeStyles[state],
             }}
+            type="button"
           >
             {buttonContent}
           </button>

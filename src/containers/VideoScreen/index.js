@@ -18,8 +18,10 @@ export class VideoScreen extends React.Component {
    * Load the video data.
    */
   componentDidMount() {
+    const { id } = this.props;
+
     // Load the video data, if the ID is available yet
-    if (this.props.id) {
+    if (id) {
       this.loadVideoData();
     }
   }
@@ -28,8 +30,10 @@ export class VideoScreen extends React.Component {
    * If the video ID changed, load the new data.
    */
   componentDidUpdate(prevProps) {
+    const { id } = this.props;
+
     // Don't do anything if the ID didn't change
-    if (prevProps.id === this.props.id) {
+    if (prevProps.id === id) {
       return;
     }
 
@@ -155,9 +159,9 @@ const mapStateToProps = (state, ownProps) => {
   const allVideosInCategory = categoryData.videos || [];
 
   // Find the index of this video
-  const indexInCategory = allVideosInCategory.length ?
-    allVideosInCategory.findIndex(id => videoID === parseInt(id, 10)) :
-    0;
+  const indexInCategory = allVideosInCategory.length
+    ? allVideosInCategory.findIndex(id => videoID === parseInt(id, 10))
+    : 0;
 
   return {
     id: videoID,

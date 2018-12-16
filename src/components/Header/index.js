@@ -15,9 +15,14 @@ const {
   mediumFadeStyles,
 } = transitions;
 
-const Header = props => (
+const Header = ({
+  visible,
+  homeURL,
+  closeVideoIndex,
+  toggleVideoIndex,
+}) => (
   <Transition
-    in={props.visible}
+    in={visible}
     timeout={durations.medium}
   >
     {state => (
@@ -30,9 +35,9 @@ const Header = props => (
       >
         <h1 className="b-header__title">
           <Link
-            to={props.homeURL}
+            to={homeURL}
             className="b-header__link"
-            onClick={() => props.closeVideoIndex()}
+            onClick={() => closeVideoIndex()}
           >
             Clyfford Still Museum Video Channel
           </Link>
@@ -40,8 +45,9 @@ const Header = props => (
 
         <span className="b-header__index">
           <button
-            onClick={() => props.toggleVideoIndex()}
+            onClick={() => toggleVideoIndex()}
             className="b-header__link"
+            type="button"
           >
             Index
           </button>

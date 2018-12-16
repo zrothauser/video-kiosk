@@ -26,12 +26,16 @@ const entities = new Entities();
 
 class VideoListModal extends React.Component {
   renderRow(video) {
+    const {
+      toggleVideoIndex,
+    } = this.props;
+
     return (
       <tr className="b-video-index__row" key={video.id}>
         <td className="b-video-index__cell">
           <Link
             to={getVideoURL(video.parentCategorySlug, video.id)}
-            onClick={() => this.props.toggleVideoIndex()}
+            onClick={() => toggleVideoIndex()}
           >
             {entities.decode(video.title)}
           </Link>

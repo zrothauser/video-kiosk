@@ -8,13 +8,16 @@ import VideoThumbnail from '../VideoThumbnail';
 // Styles
 import './index.css';
 
-const VideoGrid = props => (
+const VideoGrid = ({
+  videos,
+  categorySlug,
+}) => (
   <div className="b-video-grid">
-    {props.videos.map(video => (
+    {videos.map(video => (
       <VideoThumbnail
         id={video.id}
         title={video.title.rendered}
-        categorySlug={props.categorySlug}
+        categorySlug={categorySlug}
         description={video.description}
         thumbnail={video.thumbnail_url}
         duration={video.duration}

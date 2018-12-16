@@ -31,13 +31,13 @@ const VideoThumbnail = (props) => {
 
       <Link to={getVideoURL(categorySlug, id)}>
         <div className="b-video-thumbnail__wrap">
-          {thumbnail &&
+          {thumbnail && (
             <img
               src={thumbnail}
               className="b-video-thumbnail__image"
               alt={title}
             />
-          }
+          )}
 
           <div className="b-video-thumbnail__time">
             {convertSecondsToMinutesSeconds(duration)}
@@ -49,14 +49,14 @@ const VideoThumbnail = (props) => {
         </h3>
 
         <div className="b-video-thumbnail__description">
-          {description &&
+          {description && (
             <span
               // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={
                 { __html: DOMPurify.sanitize(description) }
               }
             />
-          }
+          )}
         </div>
       </Link>
     </div>

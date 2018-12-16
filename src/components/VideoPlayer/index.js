@@ -163,19 +163,27 @@ class VideoPlayer extends React.Component {
    * declarative way.
    */
   applyVideoVolume() {
+    const {
+      volume,
+    } = this.props;
+
     // Skip if we don't have an element rendered yet
     if (!this.videoElement) {
       return;
     }
 
-    this.videoElement.volume = (this.props.volume / 100);
+    this.videoElement.volume = (volume / 100);
   }
 
   /**
    * Cancels the animation frame - stops keeping track of the current time.
    */
   cancelProgressTracker() {
-    window.cancelAnimationFrame(this.state.progressTrackerAnimationFrame);
+    const {
+      progressTrackerAnimationFrame,
+    } = this.state;
+
+    window.cancelAnimationFrame(progressTrackerAnimationFrame);
     this.setState({ progressTrackerAnimationFrame: null });
   }
 
@@ -183,16 +191,22 @@ class VideoPlayer extends React.Component {
    * Hides the controls, controlled by the timer.
    */
   hideControls() {
-    this.props.toggleControls(false);
+    const { toggleControls } = this.props;
+    toggleControls(false);
   }
 
   /**
    * Shows the controls, controlled by the timer.
    */
   showControls() {
-    this.props.toggleControls(true);
+    const {
+      toggleControls,
+      isPlaying,
+    } = this.props;
 
-    if (this.props.isPlaying) {
+    toggleControls(true);
+
+    if (isPlaying) {
       this.startOrResetControlsTimer();
     }
   }
@@ -201,7 +215,9 @@ class VideoPlayer extends React.Component {
    * Handles internal timer state, for showing/hiding controls.
    */
   startOrResetControlsTimer() {
-    clearTimeout(this.state.controlsTimer);
+    const { controlsTimer } = this.state;
+
+    clearTimeout(controlsTimer);
     this.setState({
       controlsTimer: setTimeout(this.hideControls, 4000),
     });
@@ -213,8 +229,10 @@ class VideoPlayer extends React.Component {
    * is paused
    */
   cancelControlsTimer() {
+    const { controlsTimer } = this.state;
+
     // Stop keeping track of the time
-    clearTimeout(this.state.controlsTimer);
+    clearTimeout(controlsTimer);
 
     // Remove the timer from state
     this.setState({ controlsTimer: null });
@@ -224,9 +242,11 @@ class VideoPlayer extends React.Component {
    * Keep track of mousedown State
    */
   handleMouseDown() {
+    const { isPlaying } = this.props;
+
     // If the video isn't, the controls timer isn't active, and
     // we don't need to do anything
-    if (this.props.isPlaying) {
+    if (isPlaying) {
       this.cancelControlsTimer();
     }
   }
@@ -237,7 +257,9 @@ class VideoPlayer extends React.Component {
    * as the user drags/scrubs.
    */
   handleMouseUp() {
-    if (this.props.isPlaying) {
+    const { isPlaying } = this.props;
+
+    if (isPlaying) {
       this.startOrResetControlsTimer();
     }
   }
@@ -249,12 +271,17 @@ class VideoPlayer extends React.Component {
    * the video controls.
    */
   handleVideoClick() {
+    const {
+      isPlaying,
+      showControls,
+    } = this.props;
+
     // If the video is paused, the controls will already be showing
-    if (!this.props.isPlaying) {
+    if (!isPlaying) {
       return;
     }
 
-    if (this.props.showControls) {
+    if (showControls) {
       this.hideControls();
     } else {
       this.showControls();
@@ -265,11 +292,12 @@ class VideoPlayer extends React.Component {
    * Updates state and plays the video once it's ready.
    */
   handleLoad() {
+    const { togglePlay } = this.props;
     // Sets the volume, because we can't do that declaratively
     this.applyVideoVolume();
 
     // And play the video
-    this.props.togglePlay(true);
+    togglePlay(true);
   }
 
   /**
@@ -347,13 +375,13 @@ class VideoPlayer extends React.Component {
             onClick={this.handleVideoClick}
             crossOrigin="anonymous"
           >
-            {captionSource &&
+            {captionSource && (
               <track
                 kind="captions"
                 src={captionSource}
                 srcLang="en"
               />
-            }
+            )}
           </video>
         </div>
 
