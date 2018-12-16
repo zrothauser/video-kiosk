@@ -3,26 +3,28 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
-import MainMenu from './index';
+import VideoListModal from './index';
 
 describe('components', () => {
-  describe('MainMenu', () => {
+  describe('VideoListModal', () => {
     const mockProps = {
-      categories: [],
+      videos: [],
+      toggleVideoIndex: jest.fn(),
+      visible: true,
     };
 
     it('renders without crashing', () => {
-      shallow(<MainMenu {...mockProps} />);
+      shallow(<VideoListModal {...mockProps} />);
     });
 
     it('renders correctly', () => {
-      const MainMenuComponent = renderer.create(
+      const VideoListModalComponent = renderer.create(
         <Router>
-          <MainMenu {...mockProps} />
+          <VideoListModal {...mockProps} />
         </Router>,
       );
 
-      expect(MainMenuComponent).toMatchSnapshot();
+      expect(VideoListModalComponent).toMatchSnapshot();
     });
   });
 });

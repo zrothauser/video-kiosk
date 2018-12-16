@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components MainMenu renders correctly 1`] = `
+<div
+  className="b-topics-list"
+>
+  <h2
+    className="b-topics-list__title"
+  >
+    Topics
+  </h2>
+  <ul
+    className="b-topics-list__list"
+  >
+    <li
+      className="b-topics-list__item"
+    >
+      <a
+        className="b-topics-list__link b-topics-list__link--selected"
+        href="//clyfford-still-basics/"
+        onClick={[Function]}
+      >
+        Clyfford Still Basics
+      </a>
+    </li>
+    <li
+      className="b-topics-list__item"
+    >
+      <a
+        className="b-topics-list__link"
+        href="//go-deeper/"
+        onClick={[Function]}
+      >
+        Go Deeper
+      </a>
+    </li>
+    <li
+      className="b-topics-list__item"
+    >
+      <a
+        className="b-topics-list__link"
+        href="//from-the-archives/"
+        onClick={[Function]}
+      >
+        From the Archives
+      </a>
+    </li>
+  </ul>
+</div>
+`;

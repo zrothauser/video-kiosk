@@ -1,4 +1,7 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import TopicsList from './index';
 
@@ -24,6 +27,16 @@ describe('components', () => {
 
     it('renders without crashing', () => {
       shallow(<TopicsList {...mockProps} />);
+    });
+
+    it('renders correctly', () => {
+      const TopicsListComponent = renderer.create(
+        <Router>
+          <TopicsList {...mockProps} />
+        </Router>,
+      );
+
+      expect(TopicsListComponent).toMatchSnapshot();
     });
   });
 });

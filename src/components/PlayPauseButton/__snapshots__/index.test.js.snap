@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components PlayPauseButton renders correctly 1`] = `
+<button
+  className="b-play-pause-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "opacity": 0,
+      "transition": "opacity 400ms ease-in-out",
+    }
+  }
+>
+  <img
+    alt="Pause"
+    src="pause.svg"
+  />
+</button>
+`;

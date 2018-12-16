@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components Header renders correctly 1`] = `
+<header
+  className="b-header"
+  style={
+    Object {
+      "opacity": 1,
+      "transition": "opacity 400ms ease-in-out",
+    }
+  }
+>
+  <h1
+    className="b-header__title"
+  >
+    <a
+      className="b-header__link"
+      href="/https://video.clyffordstillmuseum.org"
+      onClick={[Function]}
+    >
+      Clyfford Still Museum Video Channel
+    </a>
+  </h1>
+  <span
+    className="b-header__index"
+  >
+    <button
+      className="b-header__link"
+      onClick={[Function]}
+    >
+      Index
+    </button>
+  </span>
+</header>
+`;

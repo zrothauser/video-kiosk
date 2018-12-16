@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components VideoListModal renders correctly 1`] = `
+<div
+  className="b-video-index"
+  style={
+    Object {
+      "opacity": 0,
+      "transition": "opacity 400ms ease-in-out",
+    }
+  }
+>
+  <div
+    className="b-video-index__container"
+  >
+    <table
+      className="b-video-index__table"
+    >
+      <thead
+        className="b-video-index__head"
+      >
+        <tr>
+          <td
+            className="b-video-index__cell"
+          >
+            TITLE
+          </td>
+          <td
+            className="b-video-index__cell"
+          >
+            TOPIC
+          </td>
+          <td
+            className="b-video-index__cell"
+          >
+            TIME
+          </td>
+        </tr>
+      </thead>
+      <tbody
+        className="b-video-index__body"
+      />
+    </table>
+  </div>
+</div>
+`;

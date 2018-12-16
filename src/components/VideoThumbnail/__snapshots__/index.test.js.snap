@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components VideoThumbnail renders correctly 1`] = `
+<div
+  className="b-video-thumbnail"
+>
+  <a
+    href="//clyfford-still-basics/1000"
+    onClick={[Function]}
+  >
+    <div
+      className="b-video-thumbnail__wrap"
+    >
+      <img
+        alt="Video Title"
+        className="b-video-thumbnail__image"
+        src="https://file.local/thumbnail.jpg"
+      />
+      <div
+        className="b-video-thumbnail__time"
+      >
+        2:00
+      </div>
+    </div>
+    <h3
+      className="b-video-thumbnail__title"
+    >
+      Video Title
+    </h3>
+    <div
+      className="b-video-thumbnail__description"
+    >
+      <span
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Video Description",
+          }
+        }
+      />
+    </div>
+  </a>
+</div>
+`;

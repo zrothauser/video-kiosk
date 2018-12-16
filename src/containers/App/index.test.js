@@ -1,26 +1,33 @@
-// Dependencies
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-// Component to test
 import { App } from './index';
 
 describe('containers', () => {
   describe('App', () => {
-    it('renders without crashing', () => {
-      const mockProps = {
-        fetchAppSettings: jest.fn(),
-        fetchAppData: jest.fn(),
-        isVideoIndexOpen: true,
-        toggleVideoIndex: jest.fn(),
-        closeVideoIndex: jest.fn(),
-        showHeader: true,
-        setSlug: 'media-channel',
-        defaultSet: 'media-channel',
-        homeURL: 'http://video.clyffordstillmuseum.org',
-      };
+    const mockProps = {
+      fetchAppSettings: jest.fn(),
+      fetchAppData: jest.fn(),
+      isVideoIndexOpen: true,
+      toggleVideoIndex: jest.fn(),
+      closeVideoIndex: jest.fn(),
+      showHeader: true,
+      setSlug: 'media-channel',
+      defaultSet: 'media-channel',
+      homeURL: 'http://video.clyffordstillmuseum.org',
+    };
 
+    it('renders without crashing', () => {
       shallow(<App {...mockProps} />);
+    });
+
+    it('renders correctly', () => {
+      const AppComponent = shallow(<App {...mockProps} />);
+
+      expect(AppComponent).toMatchSnapshot();
     });
   });
 });
