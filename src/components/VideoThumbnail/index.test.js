@@ -9,6 +9,9 @@ describe('components', () => {
         id: 1000,
         title: 'Video Title',
         description: 'Video Description',
+        thumbnail: 'https://file.local/thumbnail.jpg',
+        duration: 120,
+        categorySlug: 'clyfford-still-basics',
       };
 
       shallow(<VideoThumbnail {...mockProps} />);

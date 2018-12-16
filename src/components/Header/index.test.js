@@ -5,7 +5,14 @@ import Header from './index';
 describe('components', () => {
   describe('Header', () => {
     it('renders without crashing', () => {
-      shallow(<Header />);
+      const mockProps = {
+        toggleVideoIndex: jest.fn(),
+        closeVideoIndex: jest.fn(),
+        visible: true,
+        homeURL: 'https://video.clyffordstillmuseum.org',
+      };
+
+      shallow(<Header {...mockProps} />);
     });
   });
 });

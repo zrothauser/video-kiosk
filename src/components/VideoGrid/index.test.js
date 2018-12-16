@@ -6,6 +6,7 @@ describe('components', () => {
   describe('VideoGrid', () => {
     it('renders without crashing', () => {
       const mockProps = {
+        categorySlug: 'clyfford-still-basics',
         videos: [],
       };
 

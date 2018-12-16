@@ -13,6 +13,8 @@ describe('containers', () => {
       isLoading: true,
       isErrored: false,
       error: null,
+      backgroundVideoID: 1000,
+      fetchAppData: jest.fn(),
     };
 
     beforeEach(() => {

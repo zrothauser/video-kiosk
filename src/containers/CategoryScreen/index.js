@@ -14,7 +14,7 @@ import TopicsList from '../../components/TopicsList';
 // Styles
 import './index.css';
 
-class CategoryScreen extends React.Component {
+export class CategoryScreen extends React.Component {
   componentDidMount() {
     // Need to reset dragscroll, it may have run before render()
     // happened

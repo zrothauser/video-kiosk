@@ -9,26 +9,28 @@ describe('containers', () => {
   describe('VideoScreen', () => {
     let wrapper;
 
-    // Mocking mapDispatchToProps
-    const mockfetchMP4Data = jest.fn();
-    const mockFetchCaptionData = jest.fn();
-
     const mockProps = {
-      title: '',
-      id: null,
-      description: '',
-      mp4Link: null,
-      thumbnailFull: null,
-      captions: [{
-        uri: null,
-      }],
-      match: {
-        params: {
-          id: '1000',
-        },
-      },
-      getMP4Data: mockfetchMP4Data,
-      getCaptionData: mockFetchCaptionData,
+      history: { push: jest.fn() },
+      title: 'Test Title',
+      id: 1000,
+      mp4Link: 'https://test.local/file.mp4',
+      captions: { link: 'https://test.local/captions.srt' },
+      parentCategory: 'clyfford-still-basics',
+      parentCategoryTitle: 'Clyfford Still Basics',
+      indexInCategory: 0,
+      allVideosInCategory: [],
+      isPlaying: true,
+      volume: 60,
+      currentTime: 30,
+      duration: 120,
+      showCaptions: true,
+      showControls: true,
+      setCurrentVideoID: jest.fn(),
+      playPauseVideo: jest.fn(),
+      updateProgress: jest.fn(),
+      handleVolumeChange: jest.fn(),
+      toggleControls: jest.fn(),
+      toggleCaptions: jest.fn(),
     };
 
     beforeEach(() => {

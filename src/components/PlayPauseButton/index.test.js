@@ -7,6 +7,8 @@ describe('components', () => {
     it('renders without crashing', () => {
       const mockProps = {
         isPlaying: true,
+        togglePlay: jest.fn(),
+        visible: true,
       };
 
       shallow(<PlayPauseButton {...mockProps} />);

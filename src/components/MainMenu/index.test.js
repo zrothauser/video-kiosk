@@ -6,7 +6,6 @@ describe('components', () => {
   describe('MainMenu', () => {
     it('renders without crashing', () => {
       const mockProps = {
-        isLoading: false,
         categories: [],
       };
 

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 // Helpers
 import { getCategoryURL } from '../../utils/navigation';
 
-
 // Styles
 import './index.css';
 

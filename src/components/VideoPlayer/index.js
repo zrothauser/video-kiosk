@@ -126,7 +126,7 @@ class VideoPlayer extends React.Component {
       togglePlay,
     } = this.props;
 
-    if (isPlaying && this.videoElement.paused) {
+    if (isPlaying && this.videoElement && this.videoElement.paused) {
       const playbackPromise = this.videoElement.play();
 
       // Handle errors from Playback, which can happen from

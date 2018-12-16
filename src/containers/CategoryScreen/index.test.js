@@ -12,8 +12,9 @@ describe('containers', () => {
   describe('CategoryScreen', () => {
     let wrapper;
     const mockProps = {
-      title: 'Category Title',
+      selectedCategorySlug: 'clyfford-still-basics',
       videos: [],
+      allCategories: [],
     };
 
     beforeEach(() => {
