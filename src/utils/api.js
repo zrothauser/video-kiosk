@@ -5,8 +5,8 @@ import request from 'superagent';
 import * as types from '../redux/actions/actionTypes';
 
 // API URLs
-const API_SETTINGS_URL = 'http://video.clyffordstillmuseum.org/wp/wp-json/still/v1/settings';
-const API_BASE_URL = 'http://video.clyffordstillmuseum.org/wp/wp-json/wp/v2/set';
+const API_SETTINGS_URL = 'http://video.clyffordstillmuseum.org/wp-json/still/v1/settings';
+const API_BASE_URL = 'http://video.clyffordstillmuseum.org/wp-json/wp/v2/set';
 
 /**
  * Middleware to retrieve base API data.
