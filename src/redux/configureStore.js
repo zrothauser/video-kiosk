@@ -10,7 +10,9 @@ import rootReducer from './reducers';
 // Our API middleware
 import { apiData, settingsData } from '../utils/api';
 
-export const history = createHistory({ basename: '/' });
+export const history = createHistory({
+  basename: '/watch/',
+});
 
 const initialState = {};
 const enhancers = [];
