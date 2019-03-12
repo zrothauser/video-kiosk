@@ -29,6 +29,7 @@ class VideoPlayer extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleVideoClick = this.handleVideoClick.bind(this);
+    this.handleError = this.handleError.bind(this);
 
     // Initial state
     this.state = {
@@ -330,6 +331,21 @@ class VideoPlayer extends React.Component {
     this.seek(0);
   }
 
+  /**
+   * Handles errors.
+   */
+  handleError() {
+    // Log the error, so that we can check into it later if not handled
+    // by the reload.
+    if (this.videoElement && this.videoElement.error) {
+      // eslint-disable-next-line
+      console.warn(`Error ${this.videoElement.error.code}; details: ${this.videoElement.error.message}`);
+    }
+
+    // Try to force reloading the video
+    this.videoElement.src = this.videoElement.src;
+  }
+
   render() {
     const {
       isPlaying,
@@ -373,6 +389,7 @@ class VideoPlayer extends React.Component {
             onPause={this.handlePause}
             onEnded={this.handleOnEnd}
             onClick={this.handleVideoClick}
+            onError={this.handleError}
             crossOrigin="anonymous"
           >
             {captionSource && (
